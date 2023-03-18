@@ -8,9 +8,8 @@
 import Foundation
 import UIKit
 
-// MARK:- 设置 UILabel 属性
+//MARK: - 设置 UILabel 属性
 extension UILabel {
-    
     /// UILabel - 设置属性：text、textColor、font、fontFamily、fontSize、weight、aligment
     /// 注意：font、（fontFamily、fontSize）、（fontSize、weight）三者设置一种即可，其它的设置为 nil
     public func jjc_params(text: String,
@@ -44,9 +43,8 @@ extension UILabel {
     }
 }
 
-// MARK:- 获取 UILabel 尺寸
+//MARK: - 获取 UILabel 尺寸
 extension UILabel {
-    
     /// UILabel - 根据文字 font 和 maxSize 获取 UILabel 尺寸
     public func jjc_textSize(font: UIFont?, maxSize: CGSize) -> CGSize {
         if let text = self.text {

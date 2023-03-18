@@ -8,9 +8,8 @@
 import Foundation
 import UIKit
 
-// MARK:- UIBarButtonItem 扩展存储属性
+//MARK: - UIBarButtonItem 扩展存储属性
 extension UIBarButtonItem {
-    
     /// UIBarButtonItem -
     private struct AssociatedKey {
         static var itemWidth: CGFloat = 30.0
@@ -30,9 +29,8 @@ extension UIBarButtonItem {
     }
 }
 
-// MARK:- UIBarButtonItem 扩展方法
+//MARK: - UIBarButtonItem 扩展方法
 extension UIBarButtonItem {
-    
     /// UIBarButtonItem - 初始化导航栏按钮（图片）
     public static func jjc_params(frame: CGRect? = nil,
                                   image: UIImage,

@@ -8,10 +8,9 @@
 import Foundation
 import UIKit
 
-// MARK:- String 字符串判断是否为空、有效
+//MARK: - String 字符串判断是否为空、有效
 extension String {
-    
-    /// String - 类方法 - 判断字符串是否为空或无效（目标字符串可为 Optional 类型）
+    /// String - 判断字符串是否为空或无效（目标字符串可为 Optional 类型）
     public static func jjc_isEmptyOrInvalid(_ string: String?) -> Bool {
         if let targetString = string {
             // 过滤特殊字符
@@ -30,22 +29,22 @@ extension String {
         return true
     }
     
-    /// String - 类方法 - 判断字符串是否不为空或有效（目标字符串可为 Optional 类型）
+    /// String - 判断字符串是否不为空或有效（目标字符串可为 Optional 类型）
     public static func jjc_isNotEmptyOrValid(_ string: String?) -> Bool {
         return !String.jjc_isEmptyOrInvalid(string)
     }
     
-    /// String - 实例方法 - 判断字符串是否为空或无效
+    /// String - 判断字符串是否为空或无效
     public func jjc_isEmptyOrInvalid() -> Bool {
         return String.jjc_isEmptyOrInvalid(self)
     }
     
-    /// String - 实例方法 - 判断字符串是否不为空或有效
+    /// String - 判断字符串是否不为空或有效
     public func jjc_isNotEmptyOrValid() -> Bool {
         return !String.jjc_isEmptyOrInvalid(self)
     }
     
-    /// String - 类方法 - 判断字符串是否是合法的 url（目标字符串可为 Optional 类型）
+    /// String - 判断字符串是否是合法的 url（目标字符串可为 Optional 类型）
     public static func jjc_isVaildUrlWithHTTP(_ string: String?) -> Bool {
         guard !String.jjc_isEmptyOrInvalid(string) else {
             return false
@@ -58,12 +57,12 @@ extension String {
         return false
     }
     
-    /// String - 实例方法 - 判断字符串是否是合法的 url
+    /// String - 判断字符串是否是合法的 url
     public func jjc_isVaildUrlWithHTTP() -> Bool {
         return String.jjc_isVaildUrlWithHTTP(self)
     }
     
-    /// String - 实例方法 - 判断字符串是否包含中文
+    /// String - 判断字符串是否包含中文
     public func jjc_isContainsChinese() -> Bool {
         for char in self {
             if char >= "\u{4E00}" && char <= "\u{9FA5}" {
@@ -74,10 +73,9 @@ extension String {
     }
 }
 
-// MARK:- String 字符串截取、替换、移除
+//MARK: - String 字符串截取、替换、移除
 extension String {
-    
-    /// String - 实例方法 - 字符串截取
+    /// String - 字符串截取
     public func jjc_subRange(_ start: Int, _ end: Int) -> String {
         var targetString = ""
         let startIndex = self.index(self.startIndex, offsetBy: start)
@@ -86,7 +84,7 @@ extension String {
         return targetString
     }
     
-    /// String - 实例方法 - 字符替换
+    /// String - 字符替换
     public mutating func jjc_raplaceRange(_ start: Int, _ end: Int, withString: String) -> String {
         let startIndex = self.index(self.startIndex, offsetBy: start)
         let endIndex   = self.index(self.startIndex, offsetBy: ((end + 1) > self.count ? self.count : (end + 1)))
@@ -95,7 +93,7 @@ extension String {
         return self
     }
     
-    /// String - 实例方法 - 去除转义符
+    /// String - 去除转义符
     /**
      \a - Sound alert       \b - 退格         \f - Form feed
      \n - 换行               \r - 回车         \t - 水平制表符
@@ -111,7 +109,7 @@ extension String {
         return targetString
     }
     
-    /// String - 实例方法 - 字符串批量替换（多种字符替换成多种，一对一替换）[String] -> [String]
+    /// String - 字符串批量替换（多种字符替换成多种，一对一替换）[String] -> [String]
     public func jjc_replaceCharacters(of characters: [String], with replaces: [String]) -> String {
         guard characters.count == replaces.count else {
             return self
@@ -123,7 +121,7 @@ extension String {
         return targetString
     }
     
-    /// String - 实例方法 - 字符串批量替换（多种字符替换成一种）[String] -> String
+    /// String - 字符串批量替换（多种字符替换成一种）[String] -> String
     public func jjc_replaceCharacters(of characters: [String], with replace: String) -> String {
         var targetString = self
         for character in characters {
@@ -132,16 +130,15 @@ extension String {
         return targetString
     }
     
-    /// String - 实例方法 - 去除字符串 字符数组
+    /// String - 去除字符串 字符数组
     public func jjc_removeCharacters(_ characters: [String]) -> String {
         return jjc_replaceCharacters(of: characters, with: "")
     }
 }
 
-// MARK:- String 字符串转换
+//MARK: - String 字符串转换
 extension String {
-    
-    /// String - 实例方法 - 根据正则获取字符串中匹配的字符串
+    /// String - 根据正则获取字符串中匹配的字符串
     /**
      参考链接：菜鸟工具 - https://c.runoob.com/front-end/854
      
@@ -190,7 +187,7 @@ extension String {
         return array
     }
     
-    /// String - 实例方法 - 中文转拼音（isTone：是否带声调）
+    /// String - 中文转拼音（isTone：是否带声调）
     public func jjc_toPinYin(isTone: Bool? = nil, isDealü: Bool? = nil) -> String {
         var mutableString = NSMutableString(string: self)
         CFStringTransform(mutableString, nil, kCFStringTransformToLatin, false)
@@ -209,7 +206,7 @@ extension String {
         return targetString
     }
     
-    /// String - 实例方法 - 月历转数字（英文全、英文简、中文、数字）
+    /// String - 月历转数字（英文全、英文简、中文、数字）
     public func jjc_toMonth() -> (enAll: String, en: String, cn: String, num: String) {
         var targetStringEnAll = ""
         var targetStringEn = ""
@@ -231,7 +228,7 @@ extension String {
         return (targetStringEnAll, targetStringEn, targetStringCn, targetStringNum)
     }
     
-    /// String - 类方法 - 获取当前时间（默认：yyyy-MM-dd HH:mm:ss）
+    /// String - 获取当前时间（默认：yyyy-MM-dd HH:mm:ss）
     public static func jjc_curTimeString(_ dateFormat: String? = nil) -> String {
         var targetString = ""
         let dateFormatter = DateFormatter()
@@ -245,10 +242,9 @@ extension String {
     }
 }
 
-// MARK:- String 字符串 URL 处理
+//MARK: - String 字符串 URL 处理
 extension String {
-    
-    /// String - 实例方法 - url 拼接路径
+    /// String - url 拼接路径
     public func jjc_appendPath(_ path: String) -> String {
         var targetString = self
         if targetString.hasSuffix("/") {
@@ -259,7 +255,7 @@ extension String {
         return targetString
     }
     
-    /// String - 实例方法 - 获取 url 路径下最后一个参数（如：https://m.baidu.com/chapter/12345/tag/index.html 获取的就是 index.html）
+    /// String - 获取 url 路径下最后一个参数（如：https://m.baidu.com/chapter/12345/tag/index.html 获取的就是 index.html）
     public func jjc_getLastURLParam() -> String {
         var targetString = self
         let params = targetString.components(separatedBy: "/")
@@ -273,7 +269,7 @@ extension String {
         return targetString
     }
     
-    /// String - 实例方法 - 移除 url 路径下最后一个参数（如：https://m.baidu.com/chapter/12345/tag/index.html 移除的就是 index.html）
+    /// String - 移除 url 路径下最后一个参数（如：https://m.baidu.com/chapter/12345/tag/index.html 移除的就是 index.html）
     public func jjc_removeLastURLParam() -> String {
         var targetString = self
         let params = targetString.components(separatedBy: "/")
@@ -297,15 +293,14 @@ extension String {
     }
 }
 
-// MARK:- String 字符串编码解码
+//MARK: - String 字符串编码解码
 extension String {
-    
-    /// String - 类方法 - 获取编码类型
+    /// String - 获取编码类型
     public static func jjc_getEncodingType(_ encodingType: CFStringEncodings) -> String.Encoding {
         return String.Encoding(rawValue: CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(encodingType.rawValue)))
     }
     
-    /// String - 实例方法 - 根据编码类型转编码
+    /// String - 根据编码类型转编码
     /// - 参考链接：https://shino.space/2017/swift%E4%B8%ADUTF8%E4%B8%8EGBK%E7%9A%84%E8%BD%AC%E6%8D%A2/
     public func jjc_toEncodingString(_ encodingType: CFStringEncodings) -> String {
         let enc = String.jjc_getEncodingType(encodingType)
@@ -319,7 +314,7 @@ extension String {
         return targetString
     }
     
-    /// String - 类方法 - 根据 Data 和编码类型 转编码
+    /// String - 根据 Data 和编码类型 转编码
     public static func jjc_toEncodingString(data: Data, encodingType: CFStringEncodings) -> String {
         let enc = String.jjc_getEncodingType(encodingType)
         var targetString = ""
@@ -331,18 +326,18 @@ extension String {
     
     /******************** GBK_2312 *****************/
     
-    /// String - 类方法 - 获取 GBK_2312 编码类型
+    /// String - 获取 GBK_2312 编码类型
     public static func jjc_getEncodingTypeGBK2312() -> String.Encoding {
         return String.jjc_getEncodingType(.GB_18030_2000)
     }
     
-    /// String - 实例方法 - 转 GBK_2312 编码
+    /// String - 转 GBK_2312 编码
     /// - 参考链接：https://shino.space/2017/swift%E4%B8%ADUTF8%E4%B8%8EGBK%E7%9A%84%E8%BD%AC%E6%8D%A2/
     public func jjc_toEncodingStringWithGBK2312S() -> String {
         return jjc_toEncodingString(.GB_18030_2000)
     }
     
-    /// String - 类方法 - Data 转 GBK_2312 编码 HtmlString
+    /// String - Data 转 GBK_2312 编码 HtmlString
     public static func jjc_toEncodingStringWithGBK2312S(_ data: Data) -> String {
         let enc = String.jjc_getEncodingType(.GB_18030_2000)
         var targetString = ""
@@ -368,7 +363,7 @@ extension String {
     
     /******************** GBK_2312 *****************/
     
-    /// String - 实例方法 - Base64 编码、解码
+    /// String - Base64 编码、解码
     /// - reverse：是否反向：
     ///   - true  - 编码；
     ///   - false - 解码。
@@ -388,7 +383,7 @@ extension String {
         return targetString
     }
     
-    /// String - 实例方法 - Unicode 编码、解码
+    /// String - Unicode 编码、解码
     /// - reverse：是否反向：
     ///   - true  - 编码；
     ///   - false - 解码。
@@ -410,12 +405,12 @@ extension String {
         return targetString
     }
     
-    /// String - 实例方法 - 字符串 和 UTF-8 互转
+    /// String - 字符串 和 UTF-8 互转
     /// - reverse：是否反向：
     ///   - true  - 字符串 转 UTF-8（String -> UTF-8 String）；
     ///   - false - UTF-8 转 字符串（UTF-8 String -> String）。
 
-    /// String - 实例方法 - 字符串 转 UTF-8（String -> UTF-8 String）
+    /// String - 字符串 转 UTF-8（String -> UTF-8 String）
     public func jjc_toUTF8String(_ reverse: Bool = true) -> String {
         if reverse {
             return self.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
@@ -425,10 +420,9 @@ extension String {
     }
 }
 
-// MARK:- String - 获取字符串宽高
+//MARK: - String - 获取字符串宽高
 extension String {
-    
-    /// String - 类方法 - 获取字符串尺寸（CGSize）
+    /// String - 获取字符串尺寸（CGSize）
     public static func jjc_getContentSize(_ content: String,
                                           font: UIFont? = nil,
                                           fontFamily: String? = nil,
@@ -465,7 +459,7 @@ extension String {
         return contentSize
     }
     
-    /// String - 类方法 - 获取字符串尺寸
+    /// String - 获取字符串尺寸
     public static func jjc_getContentSize(_ content: String,
                                           font: UIFont? = nil,
                                           fontFamily: String? = nil,
@@ -516,7 +510,7 @@ extension String {
         return contentSize
     }
     
-    /// String - 实例方法 - 获取字符串尺寸（CGSize）
+    /// String - 获取字符串尺寸（CGSize）
     public func jjc_getContentSize(font: UIFont? = nil,
                                    fontFamily: String? = nil,
                                    fontSize: CGFloat? = nil,
@@ -534,7 +528,7 @@ extension String {
                                   paragraphStyle: paragraphStyle)
     }
     
-    /// String - 实例方法 - 获取字符串尺寸
+    /// String - 获取字符串尺寸
     public func jjc_getContentSize(font: UIFont? = nil,
                                    fontFamily: String? = nil,
                                    fontSize: CGFloat? = nil,
