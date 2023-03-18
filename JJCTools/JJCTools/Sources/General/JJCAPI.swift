@@ -8,8 +8,7 @@
 import Foundation
 import UIKit
 
-// MARK:- 全局常量
-
+//MARK: - 全局常量
 /// JJCAPI - 屏幕尺寸
 public let JJC_ScreenSize = UIScreen.main.responds(to: #selector(getter: UIScreen.nativeBounds)) ? CGSize(width: UIScreen.main.nativeBounds.size.width / UIScreen.main.nativeScale, height: UIScreen.main.nativeBounds.size.height / UIScreen.main.nativeScale) : UIScreen.main.bounds.size
 /// JJCAPI - 屏幕宽度
@@ -18,8 +17,6 @@ public let JJC_ScreenW = JJC_ScreenSize.width
 public let JJC_ScreenH = JJC_ScreenSize.height
 /// JJCAPI - 导航栏高度
 public let JJC_NaviH: CGFloat = 44.0
-/// JJCAPI - KeyWindow
-public let JJC_KeyWindow: UIWindow = UIApplication.shared.windows[0]
 
 /// JJCAPI - 基础间隙
 public let JJC_Margin: CGFloat = 10
@@ -50,17 +47,33 @@ public let JJC_DebugVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundle
 public let JJC_FullVersion = "\(JJC_ReleaseVersion)(\(JJC_DebugVersion))"
 
 
-// MARK:- 全局函数
-
+//MARK: - 全局函数
 /// JJCAPI - 系统信息 - 版本 version 信息
 public func JJC_Version() -> (release: String, debug: String, full: String) {
     return (JJC_ReleaseVersion, JJC_DebugVersion, JJC_FullVersion)
 }
 
+/// JJCAPI - Windows
+/// - 参考资料：
+///   - https://blog.csdn.net/u014651417/article/details/123423893
+///   - http://events.jianshu.io/p/a74f593191d1
+public func JJC_Windows() -> [UIWindow] {
+    if #available(iOS 15.0, *) {
+        return UIApplication.shared.connectedScenes.map({ $0 as? UIWindowScene }).compactMap({ $0 }).first?.windows ?? []
+    } else {
+        return UIApplication.shared.windows
+    }
+}
+
+/// JJCAPI - KeyWindow
+public func JJC_KeyWindow() -> UIWindow? {
+    return JJC_Windows().first
+}
+
 /// JJCAPI - 是否是刘海屏
 public func JJC_IsIPhoneX() -> Bool {
     if #available(iOS 11.0, *) {
-        return UIApplication.shared.windows[0].safeAreaInsets.bottom > 0
+        return JJC_KeyWindow()?.safeAreaInsets.bottom ?? 0 > 0
     } else {
         return false
     }
@@ -69,7 +82,7 @@ public func JJC_IsIPhoneX() -> Bool {
 /// JJCAPI - 状态栏高度
 public func JJC_StatusH() -> CGFloat {
     if #available(iOS 13.0, *) {
-        return UIApplication.shared.windows[0].windowScene?.statusBarManager?.statusBarFrame.height ?? 0
+        return JJC_KeyWindow()?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
     } else {
         return UIApplication.shared.statusBarFrame.height
     }
@@ -78,7 +91,7 @@ public func JJC_StatusH() -> CGFloat {
 /// JJCAPI - （状态栏+导航栏）高度
 public func JJC_StatusNaviH() -> CGFloat {
     if #available(iOS 13.0, *) {
-        return (UIApplication.shared.windows[0].windowScene?.statusBarManager?.statusBarFrame.height ?? 0) + JJC_NaviH
+        return (JJC_KeyWindow()?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0) + JJC_NaviH
     } else {
         return UIApplication.shared.statusBarFrame.height + JJC_NaviH
     }
@@ -109,10 +122,20 @@ public func JJC_HexColorA(_ hexString: String, _ a: CGFloat? = 1.0) -> UIColor {
     return UIColor(hexString: hexString, alpha: a ?? 1.0)
 }
 
+/// JJCAPI - 时间 - 获取指定时间信息
+public func JJC_TimeInfo(_ date: Date? = nil, dateFormat: String? = nil) -> JJCTimeInfo {
+    Date.jjc_timeInfo(date, dateFormat: dateFormat)
+}
+
+/// JJCAPI - 时间 - 获取当前时间信息
+public func JJC_CurTimeInfo(_ dateFormat: String? = nil) -> JJCTimeInfo {
+    return JJC_TimeInfo(Date(), dateFormat: dateFormat)
+}
+
 /// JJCAPI - 终端日志 DEBUG - isLineBreak：最后一行是否添加换行
 public func JJC_Print<T>(_ log: T, file: String = #file, method: String = #function, line: Int = #line, isLineBreak: Bool = true) {
     #if DEBUG
-    print("\(Date()) <\((file as NSString).lastPathComponent)> [\(line)] ---- \(method)：")
+    print("\(JJC_CurTimeInfo().time) <\((file as NSString).lastPathComponent)> [\(line)] ---- \(method)：")
     debugPrint(log)
     if isLineBreak {
         print()
@@ -202,68 +225,67 @@ public func JJC_NotiName(_ name: String) -> Notification.Name {
     return Notification.Name(rawValue: name)
 }
 
-/// UUID
+/// JJCAPI - UUID
 public func JJC_UUID() -> String {
     return Bundle.main.bundleIdentifier ?? "" + "_" + UUID().uuidString
 }
 
-/// 获取当前控制器视图 UIViewController
+/// JJCAPI - 获取当前控制器视图 UIViewController
 public func JJC_CurViewController() -> UIViewController {
     // 定义一个变量存放当前屏幕显示的 viewController
     var currentVC = UIViewController()
     // 得到当前应用程序的主窗口（需要在 viewDidLoad 加载完成才会有值）
-    var keyWindow = UIApplication.shared.windows[0]
-    
-    // windowLevel 是在 Z轴方向上的窗口位置，默认值是 UIWindowLevel
-    if keyWindow.windowLevel != UIWindow.Level.normal {
-        // 获取应用程序的所有窗口并进行遍历
-        for window in UIApplication.shared.windows {
-            // 找到程序的默认窗口（正在显示的窗口）
-            if window.windowLevel == UIWindow.Level.normal {
-                // 将关键窗口赋值为默认窗口
-                keyWindow = window
-                break
+    if var keyWindow = JJC_KeyWindow() {
+        // windowLevel 是在 Z轴方向上的窗口位置，默认值是 UIWindowLevel
+        if keyWindow.windowLevel != UIWindow.Level.normal {
+            // 获取应用程序的所有窗口并进行遍历
+            for window in JJC_Windows() {
+                // 找到程序的默认窗口（正在显示的窗口）
+                if window.windowLevel == UIWindow.Level.normal {
+                    // 将关键窗口赋值为默认窗口
+                    keyWindow = window
+                    break
+                }
             }
         }
-    }
-    
-    // 根据获取到的主窗口获取当前根控制器，并判断是否存在
-    if let rootVC = keyWindow.rootViewController {
-        // 获取窗口的当前显示图，并判断是否存在
-        if let frontView = keyWindow.subviews.first {
-            // 获取视图的下一个响应者，UIView 视图调用这个方法的返回值为 UIViewController 或它的父视图
-            var nextResponder = frontView.next
-            
-            // 判断显示视图的下一个响应者是否为一个 UITabBarController 的类对象
-            if rootVC.isKind(of: UITabBarController.self) {
-                nextResponder = rootVC
-            }
-            // 判断显示视图的下一个响应者是否为一个 UIViewController 的类对象
-            if var presetedVC = rootVC.presentedViewController {
-                while (presetedVC.presentedViewController != nil) {
-                    presetedVC = presetedVC.presentedViewController!
+        
+        // 根据获取到的主窗口获取当前根控制器，并判断是否存在
+        if let rootVC = keyWindow.rootViewController {
+            // 获取窗口的当前显示图，并判断是否存在
+            if let frontView = keyWindow.subviews.first {
+                // 获取视图的下一个响应者，UIView 视图调用这个方法的返回值为 UIViewController 或它的父视图
+                var nextResponder = frontView.next
+                // 判断显示视图的下一个响应者是否为一个 UITabBarController 的类对象
+                if rootVC.isKind(of: UITabBarController.self) {
+                    nextResponder = rootVC
                 }
-                nextResponder = presetedVC
-            }
-            
-            if (nextResponder?.isKind(of: UITabBarController.self)) ?? false {
-                let tabBarVC = nextResponder as! UITabBarController
-                if let viewControllers = tabBarVC.viewControllers {
-                    let naviVC = viewControllers[tabBarVC.selectedIndex]
+                // 判断显示视图的下一个响应者是否为一个 UIViewController 的类对象
+                if var presetedVC = rootVC.presentedViewController {
+                    while (presetedVC.presentedViewController != nil) {
+                        presetedVC = presetedVC.presentedViewController!
+                    }
+                    nextResponder = presetedVC
+                }
+                
+                if (nextResponder?.isKind(of: UITabBarController.self)) ?? false {
+                    let tabBarVC = nextResponder as! UITabBarController
+                    if let viewControllers = tabBarVC.viewControllers {
+                        let naviVC = viewControllers[tabBarVC.selectedIndex]
+                        if let lastVC = naviVC.children.last {
+                            currentVC = lastVC
+                        }
+                    }
+                } else if (nextResponder?.isKind(of: UINavigationController.self)) ?? false {
+                    let naviVC = nextResponder as! UINavigationController
                     if let lastVC = naviVC.children.last {
                         currentVC = lastVC
                     }
-                }
-            } else if (nextResponder?.isKind(of: UINavigationController.self)) ?? false {
-                let naviVC = nextResponder as! UINavigationController
-                if let lastVC = naviVC.children.last {
-                    currentVC = lastVC
-                }
-            } else {
-                if (nextResponder?.isKind(of: UIView.self)) ?? false {
-                    
                 } else {
-                    currentVC = nextResponder as! UIViewController
+                    if (nextResponder?.isKind(of: UIView.self)) ?? false {
+                        
+                    } else {
+                        currentVC = nextResponder as! UIViewController
+                    }
                 }
             }
         }

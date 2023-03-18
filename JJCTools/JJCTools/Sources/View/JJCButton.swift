@@ -49,7 +49,7 @@ public class JJCButton: UIControl {
 extension JJCButton {
     
     /// Action - 核心方法
-    public func params(style: UIButtonStyle,
+    public func params(style: UIButtonImgLabelStyle,
                        image: UIImage?,
                        title: String?,
                        color: UIColor,
@@ -133,7 +133,7 @@ extension JJCButton {
     }
     
     /// Action - 核心方法（简版）
-    public func params(style: UIButtonStyle,
+    public func params(style: UIButtonImgLabelStyle,
                        image: UIImage? = nil,
                        title: String? = nil,
                        color: UIColor,

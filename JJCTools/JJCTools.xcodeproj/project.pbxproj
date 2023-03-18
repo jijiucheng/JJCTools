@@ -27,7 +27,6 @@
 		7D306CA029C57948005CAE61 /* JJCLocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D306C8429C57948005CAE61 /* JJCLocal.swift */; };
 		7D306CA129C57948005CAE61 /* JJCAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D306C8529C57948005CAE61 /* JJCAPI.swift */; };
 		7D306CA229C57948005CAE61 /* JJCAppInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D306C8629C57948005CAE61 /* JJCAppInfo.swift */; };
-		7D306CA329C57948005CAE61 /* JJCEnumAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D306C8729C57948005CAE61 /* JJCEnumAPI.swift */; };
 		7D306CA429C57948005CAE61 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7D306C8929C57948005CAE61 /* Localizable.strings */; };
 		7D306CA529C57948005CAE61 /* JJCSwiftTools.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 7D306C8A29C57948005CAE61 /* JJCSwiftTools.bundle */; };
 		7D306CA629C57948005CAE61 /* Root.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7D306C8B29C57948005CAE61 /* Root.plist */; };
@@ -70,7 +69,6 @@
 		7D306C8429C57948005CAE61 /* JJCLocal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JJCLocal.swift; sourceTree = "<group>"; };
 		7D306C8529C57948005CAE61 /* JJCAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JJCAPI.swift; sourceTree = "<group>"; };
 		7D306C8629C57948005CAE61 /* JJCAppInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JJCAppInfo.swift; sourceTree = "<group>"; };
-		7D306C8729C57948005CAE61 /* JJCEnumAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JJCEnumAPI.swift; sourceTree = "<group>"; };
 		7D306C8929C57948005CAE61 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		7D306C8A29C57948005CAE61 /* JJCSwiftTools.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = JJCSwiftTools.bundle; sourceTree = "<group>"; };
 		7D306C8B29C57948005CAE61 /* Root.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Root.plist; sourceTree = "<group>"; };
@@ -174,7 +172,6 @@
 				7D306C8429C57948005CAE61 /* JJCLocal.swift */,
 				7D306C8529C57948005CAE61 /* JJCAPI.swift */,
 				7D306C8629C57948005CAE61 /* JJCAppInfo.swift */,
-				7D306C8729C57948005CAE61 /* JJCEnumAPI.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -285,7 +282,7 @@
 				Base,
 			);
 			mainGroup = 7D306C5029C5775D005CAE61;
-			productRefGroup = 7D306C5029C5775D005CAE61 /* Products */;
+			productRefGroup = 7D306C5029C5775D005CAE61;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -340,7 +337,6 @@
 				7D306CAA29C57948005CAE61 /* JJCImageTitleModel.swift in Sources */,
 				7D306C9A29C57948005CAE61 /* String+JJCAPI.swift in Sources */,
 				7D306C5F29C5775D005CAE61 /* JJCTools.docc in Sources */,
-				7D306CA329C57948005CAE61 /* JJCEnumAPI.swift in Sources */,
 				7D306C9E29C57948005CAE61 /* UILabel+JJCAPI.swift in Sources */,
 				7D306C9F29C57948005CAE61 /* JJCDevice.swift in Sources */,
 			);

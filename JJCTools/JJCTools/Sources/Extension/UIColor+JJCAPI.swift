@@ -8,9 +8,8 @@
 import Foundation
 import UIKit
 
-// MARK:- 便利构造 UIColor 方法
+//MARK: - 便利构造 UIColor 方法
 extension UIColor {
-    
     /// UIColor - 获取十六进制字符串 UIColor -> Hex String
     public var jjc_hexString: String? {
         var red: CGFloat = 0
@@ -62,9 +61,8 @@ extension UIColor {
     }
 }
 
-// MARK:- UIColor 转换方法
+//MARK: - UIColor 转换方法
 extension UIColor {
-    
     /// UIColor - 颜色转图片
     public func jjc_toImage() -> UIImage? {
         let rect = CGRect(x: 0, y: 0, width: 1, height: 1)

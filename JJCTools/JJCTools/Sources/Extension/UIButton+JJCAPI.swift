@@ -8,9 +8,17 @@
 import Foundation
 import UIKit
 
-// MARK:- 设置属性 - 图片相关
+//MARK: - UIButton 图文相对位置
+public enum UIButtonImgLabelStyle: Int {
+    case top = 0    // 上图下文
+    case left       // 左图右文
+    case bottom     // 下图上文
+    case right      // 右图左文
+}
+
+
+//MARK: - 设置属性 - 图片相关
 extension UIButton {
-    
     /// UIButton - 设置属性：image、selectImage、highlightImage、horizontalAlignment、verticalAlignment
     public func jjc_params(image: UIImage? = nil,
                            selectImage: UIImage? = nil,
@@ -36,9 +44,8 @@ extension UIButton {
     }
 }
 
-// MARK:- 设置属性 - 文字相关
+//MARK: - 设置属性 - 文字相关
 extension UIButton {
-    
     /// UIButton - 设置属性：title、titleColor、font、fontFamily、fontSize、weight、state、horizontalAlignment、verticalAlignment
     /// 注意：font、（fontFamily、fontSize）、（fontSize、weight）三者设置一种即可，其它的设置为 nil
     public func jjc_params(title: String?,
@@ -79,11 +86,10 @@ extension UIButton {
     }
 }
 
-// MARK:- 设置图文相对位置
+//MARK: - 设置图文相对位置
 extension UIButton {
-    
     /// UIButton - 更新图文相对位置
-    public func jjc_layoutButtonStyle(style: UIButtonStyle, margin: CGFloat) {
+    public func jjc_layoutButtonStyle(style: UIButtonImgLabelStyle, margin: CGFloat) {
         DispatchQueue.main.async {
             guard let imageView: UIImageView = self.imageView else {
                 return
