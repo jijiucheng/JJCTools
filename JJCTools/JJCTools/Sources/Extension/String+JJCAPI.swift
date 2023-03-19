@@ -222,7 +222,7 @@ extension String {
 extension String {
     /// String - URL - 拼接路径
     public func jjc_appendURLPath(_ path: String) -> String {
-        var targetString = self
+        let targetString = self
         return targetString + (targetString.hasSuffix("/") ? "" : "/") + path
     }
     
