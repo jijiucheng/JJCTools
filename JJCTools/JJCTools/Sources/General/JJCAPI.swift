@@ -132,15 +132,13 @@ public func JJC_CurTimeInfo(_ dateFormat: String? = nil) -> JJCTimeInfo {
     return JJC_TimeInfo(Date(), dateFormat: dateFormat)
 }
 
-/// JJCAPI - 终端日志 DEBUG - isLineBreak：最后一行是否添加换行
-public func JJC_Print<T>(_ log: T, file: String = #file, method: String = #function, line: Int = #line, isLineBreak: Bool = true) {
-    #if DEBUG
-    print("\(JJC_CurTimeInfo().time) <\((file as NSString).lastPathComponent)> [\(line)] ---- \(method)：")
+/// JJCAPI - 日志 - isLineBreak：最后一行是否添加换行，isModule 是否显示 framework 所属
+public func JJC_Log<T>(_ log: T, file: String = #file, method: String = #function, line: Int = #line, isLineBreak: Bool = false, isModule: Bool = false) {
+    print("\(isModule ? "[JJCTools] ": "")\(JJC_CurTimeInfo().time) <\((file as NSString).lastPathComponent)> [\(line)] ---- \(method)：")
     debugPrint(log)
     if isLineBreak {
         print()
     }
-    #endif
 }
 
 /// JJJCAPI - 本地语言 - 获取当前手机系统语言【设置->通用->语言->首选语言顺序】

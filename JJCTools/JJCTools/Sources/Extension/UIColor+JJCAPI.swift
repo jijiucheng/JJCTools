@@ -36,7 +36,7 @@ extension UIColor {
     }
     
     /// UIColor - 初始化 RGBA 颜色，无需输入 255
-    public convenience init(color255 red: CGFloat, _ green: CGFloat, _ blue: CGFloat, alpha: CGFloat? = 1.0) {
+    public convenience init(RGBA255 red: CGFloat, _ green: CGFloat, _ blue: CGFloat, alpha: CGFloat? = 1.0) {
         self.init(red: red / 255.0, green: green / 255.0, blue: blue / 255.0, alpha: alpha ?? 1.0)
     }
     

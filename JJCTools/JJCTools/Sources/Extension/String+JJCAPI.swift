@@ -10,64 +10,59 @@ import UIKit
 
 //MARK: - String 字符串判断是否为空、有效
 extension String {
-    /// String - 判断字符串是否为空或无效（目标字符串可为 Optional 类型）
+    /// String - 字符串判断 - 判断字符串是否为空或无效（目标字符串可为 Optional 类型）
     public static func jjc_isEmptyOrInvalid(_ string: String?) -> Bool {
-        if let targetString = string {
-            // 过滤特殊字符
-            let content = targetString.trimmingCharacters(in: .whitespacesAndNewlines)
-            if content.isEmpty || content.count == 0 {
-                return true
-            }
-            let contentArray = ["null", "<null>", "(null)", "NULL", "<NULL>", "(NULL)"]
-            for string in contentArray {
-                if content == string  {
-                    return true
-                }
-            }
+        guard let tempString = string else {
+            return true
+        }
+        // 过滤特殊字符
+        let content = tempString.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !content.isEmpty && content.count != 0 else {
+            return true
+        }
+        // 判断是否是特殊空字符串
+        let contentArray = ["null", "<null>", "(null)", "NULL", "<NULL>", "(NULL)"]
+        for string in contentArray where content == string {
+            return true
+        }
+        return false
+    }
+    
+    /// String - 字符串判断 - 判断字符串是否不为空或有效（目标字符串可为 Optional 类型）
+    public static func jjc_isNotEmptyOrValid(_ string: String?) -> Bool {
+        return !String.jjc_isEmptyOrInvalid(string)
+    }
+    
+    /// String - 字符串判断 - 判断字符串是否为空或无效
+    public func jjc_isEmptyOrInvalid() -> Bool {
+        return String.jjc_isEmptyOrInvalid(self)
+    }
+    
+    /// String - 字符串判断 - 判断字符串是否不为空或有效
+    public func jjc_isNotEmptyOrValid() -> Bool {
+        return !String.jjc_isEmptyOrInvalid(self)
+    }
+    
+    /// String - 字符串判断 - 判断字符串是否是合法的 url（目标字符串可为 Optional 类型）
+    public static func jjc_isVaildUrl(_ string: String?) -> Bool {
+        guard String.jjc_isNotEmptyOrValid(string) else {
+            return false
+        }
+        guard let tempString = string, tempString.hasPrefix("http") else {
             return false
         }
         return true
     }
     
-    /// String - 判断字符串是否不为空或有效（目标字符串可为 Optional 类型）
-    public static func jjc_isNotEmptyOrValid(_ string: String?) -> Bool {
-        return !String.jjc_isEmptyOrInvalid(string)
+    /// String - 字符串判断 - 判断字符串是否是合法的 url
+    public func jjc_isVaildUrl() -> Bool {
+        return String.jjc_isVaildUrl(self)
     }
     
-    /// String - 判断字符串是否为空或无效
-    public func jjc_isEmptyOrInvalid() -> Bool {
-        return String.jjc_isEmptyOrInvalid(self)
-    }
-    
-    /// String - 判断字符串是否不为空或有效
-    public func jjc_isNotEmptyOrValid() -> Bool {
-        return !String.jjc_isEmptyOrInvalid(self)
-    }
-    
-    /// String - 判断字符串是否是合法的 url（目标字符串可为 Optional 类型）
-    public static func jjc_isVaildUrlWithHTTP(_ string: String?) -> Bool {
-        guard !String.jjc_isEmptyOrInvalid(string) else {
-            return false
-        }
-        if let targetString = string {
-            if targetString.hasPrefix("http") {
-                return true
-            }
-        }
-        return false
-    }
-    
-    /// String - 判断字符串是否是合法的 url
-    public func jjc_isVaildUrlWithHTTP() -> Bool {
-        return String.jjc_isVaildUrlWithHTTP(self)
-    }
-    
-    /// String - 判断字符串是否包含中文
+    /// String - 字符串判断 - 判断字符串是否包含中文
     public func jjc_isContainsChinese() -> Bool {
-        for char in self {
-            if char >= "\u{4E00}" && char <= "\u{9FA5}" {
-                return true
-            }
+        for char in self where char >= "\u{4E00}" && char <= "\u{9FA5}" {
+            return true
         }
         return false
     }
@@ -75,42 +70,56 @@ extension String {
 
 //MARK: - String 字符串截取、替换、移除
 extension String {
-    /// String - 字符串截取
-    public func jjc_subRange(_ start: Int, _ end: Int) -> String {
-        var targetString = ""
-        let startIndex = self.index(self.startIndex, offsetBy: start)
-        let endIndex   = self.index(self.startIndex, offsetBy: end)
-        targetString = String(self[startIndex...endIndex])
-        return targetString
-    }
-    
-    /// String - 字符替换
-    public mutating func jjc_raplaceRange(_ start: Int, _ end: Int, withString: String) -> String {
+    /// String - 字符串截取 - start、end
+    public func jjc_subRange(byStart start: Int, _ end: Int) -> String {
         let startIndex = self.index(self.startIndex, offsetBy: start)
         let endIndex   = self.index(self.startIndex, offsetBy: ((end + 1) > self.count ? self.count : (end + 1)))
-        let range: Range = startIndex..<endIndex
-        self.replaceSubrange(range, with: withString)
-        return self
+        return String(self[startIndex...endIndex])
     }
     
-    /// String - 去除转义符
-    /**
-     \a - Sound alert       \b - 退格         \f - Form feed
-     \n - 换行               \r - 回车         \t - 水平制表符
-     \v - 垂直制表符          \\ - 反斜杠       \" - 双引号
-     \' - 单引号             \0 - 空字符
-     */
-    public func jjc_removeEscapeCharacter() -> String {
-        let escapeArray = ["\\a", "\\b", "\\f", "\\n", "\\r", "\\t", "\\v", "\\", "\"", "\'", "\0"]
+    /// String - 字符串截取 - location、length
+    public func jjc_subRange(byLocation location: Int, _ length: Int) -> String {
+        return jjc_subRange(byStart: location, (location + length))
+    }
+    
+    /// String - 字符串截取 - Range
+    public func jjc_subRange(byRange range: Range<String.Index>) -> String {
+        return jjc_subRange(byStart: range.lowerBound.hashValue, range.upperBound.hashValue)
+    }
+    
+    /// String - 字符串截取 - NSRange
+    public func jjc_subRange(byNSRange range: NSRange) -> String {
+        return jjc_subRange(byStart: range.location, (range.location + range.length))
+    }
+    
+    /// String - 字符串替换 - Range、replaceString
+    public func jjc_replace(byRange range: Range<String.Index>, with replace: String) -> String {
         var targetString = self
-        for escape in escapeArray {
-            targetString = targetString.replacingOccurrences(of: escape, with: "")
-        }
+        targetString.replaceSubrange(range, with: replace)
         return targetString
     }
     
-    /// String - 字符串批量替换（多种字符替换成多种，一对一替换）[String] -> [String]
-    public func jjc_replaceCharacters(of characters: [String], with replaces: [String]) -> String {
+    /// String - 字符串替换 - start、end、replaceString
+    public func jjc_replace(byStart start: Int, _ end: Int, with replace: String) -> String {
+        let startIndex = self.index(self.startIndex, offsetBy: start)
+        let endIndex   = self.index(self.startIndex, offsetBy: ((end + 1) > self.count ? self.count : (end + 1)))
+        var targetString = self
+        targetString.replaceSubrange(startIndex..<endIndex, with: replace)
+        return targetString
+    }
+    
+    /// String - 字符串替换 - location、length、replaceString
+    public func jjc_replace(byLocation location: Int, _ length: Int, with replace: String) -> String {
+        return jjc_replace(byStart: location, (location + length), with: replace)
+    }
+    
+    /// String - 字符串替换 - NSRange、replaceString
+    public func jjc_replace(byNSRange range: NSRange, with replace: String) -> String {
+        return jjc_replace(byStart: range.location, (range.location + range.length), with: replace)
+    }
+    
+    /// String - 字符串替换 - 批量替换（多种字符替换成多种，一对一替换）[String] -> [String]
+    public func jjc_replace(byCharacters characters: [String], replaces: [String]) -> String {
         guard characters.count == replaces.count else {
             return self
         }
@@ -121,24 +130,34 @@ extension String {
         return targetString
     }
     
-    /// String - 字符串批量替换（多种字符替换成一种）[String] -> String
-    public func jjc_replaceCharacters(of characters: [String], with replace: String) -> String {
+    /// String - 字符串替换 - 批量替换（多种字符替换成一种）[String] -> String
+    public func jjc_replace(byCharacters characters: [String], replace: String) -> String {
         var targetString = self
-        for character in characters {
-            targetString = targetString.replacingOccurrences(of: character, with: replace)
-        }
+        characters.forEach({ targetString = targetString.replacingOccurrences(of: $0, with: replace) })
         return targetString
     }
     
-    /// String - 去除字符串 字符数组
-    public func jjc_removeCharacters(_ characters: [String]) -> String {
-        return jjc_replaceCharacters(of: characters, with: "")
+    /// String - 字符串移除 - 移除字符数组
+    public func jjc_remove(byCharacters characters: [String]) -> String {
+        return jjc_replace(byCharacters: characters, replace: "")
+    }
+    
+    /// String - 字符串移除 - 移除转移符
+    /**
+     \a - Sound alert       \b - 退格         \f - Form feed
+     \n - 换行               \r - 回车         \t - 水平制表符
+     \v - 垂直制表符          \\ - 反斜杠       \" - 双引号
+     \' - 单引号             \0 - 空字符
+     */
+    public func jjc_removeByEscapeCharacter() -> String {
+        let escapeArray = ["\\a", "\\b", "\\f", "\\n", "\\r", "\\t", "\\v", "\\", "\"", "\'", "\0"]
+        return jjc_remove(byCharacters: escapeArray)
     }
 }
 
 //MARK: - String 字符串转换
 extension String {
-    /// String - 根据正则获取字符串中匹配的字符串
+    /// String - 字符串转换 - 根据正则获取字符串中匹配的字符串
     /**
      参考链接：菜鸟工具 - https://c.runoob.com/front-end/854
      
@@ -172,121 +191,61 @@ extension String {
         NSRegularExpressionUseUnicodeWordBoundaries    = 1 << 6  //使用Unicode TR#29标准作为词的边界，否则所有传统正则表达式的词边界都有效
      };
      */
-    public func jjc_getRegexStringArray(_ pattern: String) -> [String] {
+    public func jjc_getRegexStrings(_ pattern: String) -> [String] {
         var array = [String]()
         do {
             let regex = try NSRegularExpression(pattern: pattern, options: [.caseInsensitive, .dotMatchesLineSeparators])
             let results = regex.matches(in: self, options: [], range: NSRange(location: 0, length: self.count))
-            for result in results {
-                let regexString = (self as NSString).substring(with: result.range)
-                array.append(regexString)
-            }
-        } catch _ {
-            print("Error：根据正则获取字符串中匹配的字符串")
+            results.forEach({ array.append((self as NSString).substring(with: $0.range)) })
+        } catch let error {
+            JJC_Log("[Error] 根据正则获取字符串中匹配的字符串失败 - \(error)")
         }
         return array
     }
     
-    /// String - 中文转拼音（isTone：是否带声调）
+    /// String - 字符串转换 - 中文转拼音（isTone：是否带声调，isDealü：是否处理特殊拼音 ü）
     public func jjc_toPinYin(isTone: Bool? = nil, isDealü: Bool? = nil) -> String {
         var mutableString = NSMutableString(string: self)
         CFStringTransform(mutableString, nil, kCFStringTransformToLatin, false)
         // 特殊处理 ǖ、ǘ、ǚ、ǜ、ü -> v
-        if let newIsDealü = isDealü {
-            if newIsDealü {
-                mutableString = NSMutableString(string: String(mutableString).jjc_replaceCharacters(of: ["ǖ", "ǘ", "ǚ", "ǜ", "ü"], with: "v"))
-            }
+        if let tempIsDealü = isDealü, tempIsDealü {
+            mutableString = NSMutableString(string: String(mutableString).jjc_replace(byCharacters: ["ǖ", "ǘ", "ǚ", "ǜ", "ü"], replace: "v"))
         }
-        if let newIsTone = isTone {
-            if !newIsTone {
-                CFStringTransform(mutableString, nil, kCFStringTransformStripDiacritics, false)
-            }
+        if let tempIsTone = isTone, !tempIsTone {
+            CFStringTransform(mutableString, nil, kCFStringTransformStripDiacritics, false)
         }
-        let targetString = String(mutableString).jjc_replaceCharacters(of: [" "], with: "")
-        return targetString
-    }
-    
-    /// String - 月历转数字（英文全、英文简、中文、数字）
-    public func jjc_toMonth() -> (enAll: String, en: String, cn: String, num: String) {
-        var targetStringEnAll = ""
-        var targetStringEn = ""
-        var targetStringCn = ""
-        var targetStringNum = ""
-        let enAllMonths = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-        let enMonths = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-        let cnMonths = ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"]
-        let numMonths = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"]
-        for (index, _) in enAllMonths.enumerated() {
-            if self == enAllMonths[index] || self == enMonths[index] || self == cnMonths[index] || Int(self) == Int(numMonths[index]) {
-                targetStringEnAll = enAllMonths[index]
-                targetStringEn = enMonths[index]
-                targetStringCn = cnMonths[index]
-                targetStringNum = numMonths[index]
-                break
-            }
-        }
-        return (targetStringEnAll, targetStringEn, targetStringCn, targetStringNum)
-    }
-    
-    /// String - 获取当前时间（默认：yyyy-MM-dd HH:mm:ss）
-    public static func jjc_curTimeString(_ dateFormat: String? = nil) -> String {
-        var targetString = ""
-        let dateFormatter = DateFormatter()
-        if let newDateFormat = dateFormat {
-            dateFormatter.dateFormat = newDateFormat
-        } else {
-            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        }
-        targetString = dateFormatter.string(from: Date())
-        return targetString
+        return String(mutableString).jjc_replace(byCharacters: [" "], replace: "")
     }
 }
 
 //MARK: - String 字符串 URL 处理
 extension String {
-    /// String - url 拼接路径
-    public func jjc_appendPath(_ path: String) -> String {
+    /// String - URL - 拼接路径
+    public func jjc_appendURLPath(_ path: String) -> String {
         var targetString = self
-        if targetString.hasSuffix("/") {
-            targetString = targetString + path
-        } else {
-            targetString = targetString + "/" + path
+        return targetString + (targetString.hasSuffix("/") ? "" : "/") + path
+    }
+    
+    /// String - URL - 获取 url 路径下最后一个参数（如：https://m.baidu.com/chapter/12345/tag/index.html 获取的就是 index.html）
+    public func jjc_getURLLastParam() -> String {
+        var targetString = self
+        let params = targetString.components(separatedBy: "/")
+        if params.count > 0 {
+            let diffNum = params.count > 1 && targetString.hasSuffix("/") ? 2 : 1
+            targetString = params[params.count - diffNum]
         }
         return targetString
     }
     
-    /// String - 获取 url 路径下最后一个参数（如：https://m.baidu.com/chapter/12345/tag/index.html 获取的就是 index.html）
-    public func jjc_getLastURLParam() -> String {
+    /// String - URL - 移除 url 路径下最后一个参数（如：https://m.baidu.com/chapter/12345/tag/index.html 移除的就是 index.html）
+    public func jjc_removeURLLastParam() -> String {
         var targetString = self
         let params = targetString.components(separatedBy: "/")
         if params.count > 0 {
-            if params.count > 1 && targetString.hasSuffix("/") {
-                targetString = params[params.count - 2]
-            } else {
-                targetString = params[params.count - 1]
-            }
-        }
-        return targetString
-    }
-    
-    /// String - 移除 url 路径下最后一个参数（如：https://m.baidu.com/chapter/12345/tag/index.html 移除的就是 index.html）
-    public func jjc_removeLastURLParam() -> String {
-        var targetString = self
-        let params = targetString.components(separatedBy: "/")
-        if params.count > 0 {
+            let diffNum = params.count > 1 && targetString.hasSuffix("/") ? 2 : 1
             targetString = ""
-            if params.count > 1 && targetString.hasSuffix("/") {
-                for (index, value) in params.enumerated() {
-                    if index < params.count - 2 {
-                        targetString = targetString + value + "/"
-                    }
-                }
-            } else {
-                for (index, value) in params.enumerated() {
-                    if index < params.count - 1 {
-                        targetString = targetString + value + "/"
-                    }
-                }
+            for (index, value) in params.enumerated() where index < params.count - diffNum {
+                targetString = targetString + value + "/"
             }
         }
         return targetString

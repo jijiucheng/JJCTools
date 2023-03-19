@@ -61,12 +61,12 @@ extension Date {
         timeInfo.timestamp = Date.jjc_timestamp(tempDate)
         timeInfo.time = Date.jjc_timeString(tempDate, dateFormat: dateFormat)
         let timeString = timeInfo.time
-        timeInfo.year = timeString.jjc_subRange(0, 3)
-        timeInfo.month = Date.jjc_toMonth(timeString.jjc_subRange(5, 6))
-        timeInfo.day = timeString.jjc_subRange(8, 9)
-        timeInfo.hour = timeString.jjc_subRange(11, 12)
-        timeInfo.minute = timeString.jjc_subRange(14, 15)
-        timeInfo.second = timeString.jjc_subRange(17, 18)
+        timeInfo.year = timeString.jjc_subRange(byStart: 0, 3)
+        timeInfo.month = Date.jjc_toMonth(timeString.jjc_subRange(byStart: 5, 6))
+        timeInfo.day = timeString.jjc_subRange(byStart: 8, 9)
+        timeInfo.hour = timeString.jjc_subRange(byStart: 11, 12)
+        timeInfo.minute = timeString.jjc_subRange(byStart: 14, 15)
+        timeInfo.second = timeString.jjc_subRange(byStart: 17, 18)
         return timeInfo
     }
     
