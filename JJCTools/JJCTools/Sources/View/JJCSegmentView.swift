@@ -149,7 +149,7 @@ extension JJCSegmentView {
             UIView.animate(withDuration: 0.3) {
                 self.selectedBottomView.frame = CGRect(x: self.selectedBottomViewX, y: self.selectedBottomView.frame.origin.y, width: self.selectedBottomViewW, height: self.selectedBottomView.frame.size.height)
             }
-            
+             
             lastSelectedBtn = button
         }
         if let buttonActionBlock = self.buttonActionBlock {
