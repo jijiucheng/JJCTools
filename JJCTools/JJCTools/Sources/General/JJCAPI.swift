@@ -8,6 +8,8 @@
 import Foundation
 import UIKit
 
+public class JJCGlobalClass: NSObject {}
+
 //MARK: - 全局常量
 /// JJCAPI - 屏幕尺寸
 public let JJC_ScreenSize = UIScreen.main.responds(to: #selector(getter: UIScreen.nativeBounds)) ? CGSize(width: UIScreen.main.nativeBounds.size.width / UIScreen.main.nativeScale, height: UIScreen.main.nativeBounds.size.height / UIScreen.main.nativeScale) : UIScreen.main.bounds.size
@@ -102,6 +104,11 @@ public func JJC_TabBarH() -> CGFloat {
     return JJC_IsIPhoneX() ? (49.0 + 34.0) : 49.0
 }
 
+/// JJCAPI - 缩放比例(750*1334) px
+func JJC_IPhone6sRatio(_ padding: CGFloat) -> CGFloat {
+    return CGFloat((JJC_IsIPad ? roundf(Float(padding * 0.5) * 1.5) : roundf(Float(padding) * 0.5)))
+}
+
 /// JJCAPI - 生成随机数
 public func JJC_Random(min: Int, max: Int) -> Int {
     return Int.random(in: min...max)
@@ -132,6 +139,11 @@ public func JJC_CurTimeInfo(_ dateFormat: String? = nil) -> JJCTimeInfo {
     return JJC_TimeInfo(Date(), dateFormat: dateFormat)
 }
 
+/// JJCAPI - 获取内部图片资源
+public func JJC_Image(_ name: String) -> UIImage? {
+    return Bundle.jjc_bundleImage(name)
+}
+
 /// JJCAPI - 日志 - isLineBreak：最后一行是否添加换行，isModule 是否显示 framework 所属
 public func JJC_Log<T>(_ log: T, file: String = #file, method: String = #function, line: Int = #line, isLineBreak: Bool = false, isModule: Bool = false) {
     print("\(isModule ? "[JJCTools] ": "")\(JJC_CurTimeInfo().time) <\((file as NSString).lastPathComponent)> [\(line)] ---- \(method)：")
@@ -153,12 +165,16 @@ public func JJC_Language(_ bundle: Bundle = Bundle.main) -> String {
 }
 
 /// JJCAPI - 本地语言 - 带注释（根据 Bundle 获取 lproj 的语言文件）
-public func JJC_Local(_ key: String, _ comment: String? = nil, bundle: Bundle = Bundle.main, lproj: String? = nil) -> String {
+public func JJC_Local(byBundle key: String, _ comment: String? = nil, bundle: Bundle = Bundle.main, lproj: String? = nil) -> String {
     return JJCLocal.jjc_local(key, comment, bundle: bundle, lproj: lproj)
 }
 
+/// JJCLocal - 本地语言 - 获取 JJCTools 指定语言
+public func JJC_Local(_ key: String, _ comment: String? = nil, lproj: String? = nil) -> String {
+    return JJCLocal.jjc_local(byBundle: key, comment, bundleName: "JJCTools", objClass: JJCGlobalClass.self, lproj: lproj)
+}
+
 /// JJCAPI - 弹框 Alert - title、message、leftTitle、leftStyle、rightTitle、rightStyle、leftAction、rightAction
-fileprivate class JJCSwiftToolsBundles {}
 public func JJC_Alert(title: String? = nil,
                       message: String? = nil,
                       leftTitle: String? = nil,
@@ -170,24 +186,55 @@ public func JJC_Alert(title: String? = nil,
                       lproj: String? = nil) -> UIAlertController {
     var newTitle: String? = nil
     if title != nil && (title ?? "").jjc_isEmptyOrInvalid() {
-        newTitle = JJCLocal.jjc_local(byBundle: "Tips", "温馨提示", bundleName: "JJCSwiftTools", objClass: JJCSwiftToolsBundles.self, lproj: lproj)
+        newTitle = JJC_Local("Tips", "温馨提示", lproj: lproj)
     }
     let alertVC = UIAlertController(title: newTitle, message: message, preferredStyle: .alert)
     if var newLeftTitle = leftTitle {
         if newLeftTitle.jjc_isEmptyOrInvalid() {
-            newLeftTitle = JJCLocal.jjc_local(byBundle: "Cancel", "取消", bundleName: "JJCSwiftTools", objClass: JJCSwiftToolsBundles.self, lproj: lproj)
+            newLeftTitle = JJC_Local("Cancel", "取消", lproj: lproj)
         }
         let leftAction = UIAlertAction(title: newLeftTitle, style: leftStyle ?? .cancel) { _ in leftAction?() }
         alertVC.addAction(leftAction)
     }
     if var newRightTitle = rightTitle {
         if newRightTitle.jjc_isEmptyOrInvalid() {
-            newRightTitle = JJCLocal.jjc_local(byBundle: "Ensure", "确定", bundleName: "JJCSwiftTools", objClass: JJCSwiftToolsBundles.self, lproj: lproj)
+            newRightTitle = JJC_Local("Ensure", "确定", lproj: lproj)
         }
         let rightAction = UIAlertAction(title: newRightTitle, style: rightStyle ?? .default) { _ in rightAction?() }
         alertVC.addAction(rightAction)
     }
     return alertVC
+}
+
+/// JJCAPI - HUD - 纯文本类型弹框
+func JJC_HUD_Message(_ view: UIView? = nil,
+                    content: String,
+                    completion: (() -> Void)? = nil) {
+    let hud = JJCHUD.show(view ?? JJC_CurViewController().view)
+    hud.setConfig(.message, content: content)
+    hud.hideByDefault(completion)
+}
+
+/// JJCAPI - HUD - 成功失败弹框
+func JJC_HUD_SuccessOrFailure(_ view: UIView? = nil,
+                             isSuccess: Bool = true,
+                             content: String? = nil, lproj: String? = nil,
+                             completion: (() -> Void)? = nil) {
+    let hud = JJCHUD.show(view ?? JJC_CurViewController().view)
+    hud.setConfig(isSuccess ? .success : .failure,
+                  content: content ?? (isSuccess ? JJC_Local("Success", "成功", lproj: lproj) : JJC_Local("Failure", "失败", lproj: lproj)))
+    hud.hideByDefault(completion)
+}
+
+/// JJCAPI - HUD - 加载中、加载进度弹框
+func JJC_HUD_LoadingOrProgress(_ view: UIView? = nil,
+                              isLoading: Bool = true,
+                              content: String? = nil,
+                              lproj: String? = nil) -> JJCHUD {
+    let hud = JJCHUD.show(view ?? JJC_CurViewController().view)
+    hud.setConfig(isLoading ? .loading : .progress,
+                  content: content ?? "加载中...")
+    return hud
 }
 
 /// JJCAPI - 圆角 - 继承 UIView - view、radius、width、color

@@ -24,4 +24,9 @@ extension Bundle {
     public static func jjc_bundleImage(resource: String, ofType type: String, bundle: String) -> UIImage? {
         return UIImage(contentsOfFile: Bundle.jjc_bundle(bundle)?.path(forResource: resource, ofType: type) ?? "")
     }
+    
+    /// Bundle - 获取图片资源
+    public static func jjc_bundleImage(_ name: String, _ anyClass: AnyClass = JJCGlobalClass.self) -> UIImage? {
+        return UIImage(named: name, in: Bundle(for: anyClass), compatibleWith: nil)
+    }
 }
