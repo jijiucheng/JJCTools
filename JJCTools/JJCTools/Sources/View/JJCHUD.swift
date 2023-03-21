@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum JJCHUDType: Int {
+public enum JJCHUDType: Int {
     case message = 0        // 纯消息
     case success            // 成功
     case failure            // 失败
@@ -15,7 +15,7 @@ enum JJCHUDType: Int {
     case progress           // 进度
 }
 
-enum JJCHUDAlignment: Int {
+public enum JJCHUDAlignment: Int {
     case center = 0         // 居中
     case top                // 顶部
     case bottom             // 底部
@@ -27,7 +27,7 @@ enum JJCHUDAlignment: Int {
     case bottomRight        // 右下角
 }
 
-class JJCHUD: UIView {
+public class JJCHUD: UIView {
     /// 背景框宽度
     fileprivate var containerVW: CGFloat = JJC_IPhone6sRatio(240)
     /// 背景框高度
@@ -145,7 +145,7 @@ extension JJCHUD {
 //MARK: - 显示、隐藏
 extension JJCHUD {
     /// 显示
-    class func show(_ view: UIView, animate: Bool = true) -> JJCHUD {
+    public class func show(_ view: UIView, animate: Bool = true) -> JJCHUD {
         return JJCHUD().show(view, animate: animate)
     }
     
@@ -156,7 +156,7 @@ extension JJCHUD {
         return self
     }
     
-    func show(_ animate: Bool = true) {
+    public func show(_ animate: Bool = true) {
         superview?.subviews.forEach({
             if let hud = $0 as? JJCHUD, self != hud {
                 hud.stopTimer()
@@ -183,7 +183,7 @@ extension JJCHUD {
     }
     
     /// 隐藏
-    class func hide(_ view: UIView, animate: Bool = true, delay: Double = 0, completion: (() -> Void)? = nil) {
+    public class func hide(_ view: UIView, animate: Bool = true, delay: Double = 0, completion: (() -> Void)? = nil) {
         JJCHUD().hide(view, animate: animate, delay: delay, completion: completion)
     }
     
@@ -200,7 +200,7 @@ extension JJCHUD {
         }
     }
     
-    func hide(_ animate: Bool = true, delay: Double = 0, completion: (() -> Void)? = nil) {
+    public func hide(_ animate: Bool = true, delay: Double = 0, completion: (() -> Void)? = nil) {
         DispatchQueue.main.async {
             self.showCount -= 1
             self.maskBgView.alpha = 1
@@ -238,7 +238,7 @@ extension JJCHUD {
     }
     
     /// 初始化配置，状态类型及背景框位置及偏移量，默认居中
-    func setConfig(_ type: JJCHUDType, content: String, alignment: JJCHUDAlignment = .center, offset: CGPoint = .zero) {
+    public func setConfig(_ type: JJCHUDType, content: String, alignment: JJCHUDAlignment = .center, offset: CGPoint = .zero) {
         self.type = type
         self.content = content
         updateLayout(type, content: content, alignment: alignment, offset: offset)
@@ -349,18 +349,17 @@ extension JJCHUD {
 
 extension JJCHUD {
     /// 更新 背景框位置
-    func update(alignment: JJCHUDAlignment = .center,
-                offset: CGPoint = .zero) {
+    public func update(alignment: JJCHUDAlignment = .center, offset: CGPoint = .zero) {
         containerView.superview?.layoutIfNeeded()
         updateLayout(alignment, offset, width: containerView.frame.size.width, height: containerView.frame.size.height)
     }
     
     /// 更新信息（包含信息重置）
-    func update(content: String? = nil,
-                icon: UIImage? = nil,
-                progress: Float? = nil,
-                maskBgViewColor: UIColor? = nil,
-                containerViewColor: UIColor? = nil) {
+    public func update(content: String? = nil,
+                       icon: UIImage? = nil,
+                       progress: Float? = nil,
+                       maskBgViewColor: UIColor? = nil,
+                       containerViewColor: UIColor? = nil) {
         if let tempContent = content {
             contentLabel.text = tempContent
         }
@@ -383,9 +382,7 @@ extension JJCHUD {
     }
     
     /// 更新进度圆环信息
-    func update(lineWidth: CGFloat? = nil,
-                lineBackgroundColor: UIColor? = nil,
-                lineForeColor: UIColor? = nil) {
+    public func update(lineWidth: CGFloat? = nil, lineBackgroundColor: UIColor? = nil, lineForeColor: UIColor? = nil) {
         if type == .loading || type == .progress {
             progressView.update(lineWidth: lineWidth, lineBackgroundColor: lineBackgroundColor, lineForeColor: lineForeColor)
         }
