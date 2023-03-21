@@ -105,7 +105,7 @@ public func JJC_TabBarH() -> CGFloat {
 }
 
 /// JJCAPI - 缩放比例(750*1334) px
-func JJC_IPhone6sRatio(_ padding: CGFloat) -> CGFloat {
+public func JJC_IPhone6sRatio(_ padding: CGFloat) -> CGFloat {
     return CGFloat((JJC_IsIPad ? roundf(Float(padding * 0.5) * 1.5) : roundf(Float(padding) * 0.5)))
 }
 
@@ -207,7 +207,7 @@ public func JJC_Alert(title: String? = nil,
 }
 
 /// JJCAPI - HUD - 纯文本类型弹框
-func JJC_HUD_Message(_ view: UIView? = nil,
+public func JJC_HUD_Message(_ view: UIView? = nil,
                     content: String,
                     completion: (() -> Void)? = nil) {
     let hud = JJCHUD.show(view ?? JJC_CurViewController().view)
@@ -216,7 +216,7 @@ func JJC_HUD_Message(_ view: UIView? = nil,
 }
 
 /// JJCAPI - HUD - 成功失败弹框
-func JJC_HUD_SuccessOrFailure(_ view: UIView? = nil,
+public func JJC_HUD_SuccessOrFailure(_ view: UIView? = nil,
                              isSuccess: Bool = true,
                              content: String? = nil, lproj: String? = nil,
                              completion: (() -> Void)? = nil) {
@@ -227,7 +227,7 @@ func JJC_HUD_SuccessOrFailure(_ view: UIView? = nil,
 }
 
 /// JJCAPI - HUD - 加载中、加载进度弹框
-func JJC_HUD_LoadingOrProgress(_ view: UIView? = nil,
+public func JJC_HUD_LoadingOrProgress(_ view: UIView? = nil,
                               isLoading: Bool = true,
                               content: String? = nil,
                               lproj: String? = nil) -> JJCHUD {
