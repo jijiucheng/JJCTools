@@ -1,0 +1,19 @@
+/* 
+  Localizable.strings
+  
+
+  Created by mxgx on 2021/7/29.
+  
+*/
+
+/**
+ * 英语
+ */
+
+"Tips"      = "Tips";
+"Ensure"    = "Ensure";
+"Cancel"    = "Cancel";
+
+"Success"   = "Success";
+"Failure"   = "Failure";
+"Loading"   = "Loading...";

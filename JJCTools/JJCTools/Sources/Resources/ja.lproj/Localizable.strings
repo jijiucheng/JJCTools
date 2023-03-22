@@ -1,0 +1,19 @@
+/* 
+  Localizable.strings
+  
+
+  Created by mxgx on 2021/7/29.
+  
+*/
+
+/**
+ * 日语
+ */
+
+"Tips"      = "チップ";
+"Ensure"    = "もちろん";
+"Cancel"    = "キャンセル";
+
+"Success"   = "成功";
+"Failure"   = "失敗";
+"Loading"   = "読み込み中...";

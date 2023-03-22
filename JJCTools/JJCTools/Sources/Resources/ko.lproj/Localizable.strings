@@ -1,0 +1,19 @@
+/* 
+  Localizable.strings
+  
+
+  Created by mxgx on 2021/7/29.
+  
+*/
+
+/**
+ * 韩语
+ */
+
+"Tips"      = "팁";
+"Ensure"    = "확신하는";
+"Cancel"    = "취소";
+
+"Success"   = "성공";
+"Failure"   = "실패";
+"Loading"   = "로드 중...";

@@ -1,0 +1,19 @@
+/* 
+  Localizable.strings
+  
+
+  Created by mxgx on 2021/7/29.
+  
+*/
+
+/**
+ * 中文（繁体）
+ */
+
+"Tips"      = "溫馨提示";
+"Ensure"    = "確定";
+"Cancel"    = "取消";
+
+"Success"   = "成功";
+"Failure"   = "失敗";
+"Loading"   = "加載中...";

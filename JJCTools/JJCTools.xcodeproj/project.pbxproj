@@ -27,8 +27,6 @@
 		7D306CA029C57948005CAE61 /* JJCLocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D306C8429C57948005CAE61 /* JJCLocal.swift */; };
 		7D306CA129C57948005CAE61 /* JJCAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D306C8529C57948005CAE61 /* JJCAPI.swift */; };
 		7D306CA229C57948005CAE61 /* JJCAppInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D306C8629C57948005CAE61 /* JJCAppInfo.swift */; };
-		7D306CA429C57948005CAE61 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7D306C8929C57948005CAE61 /* Localizable.strings */; };
-		7D306CA529C57948005CAE61 /* JJCSwiftTools.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 7D306C8A29C57948005CAE61 /* JJCSwiftTools.bundle */; };
 		7D306CA629C57948005CAE61 /* Root.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7D306C8B29C57948005CAE61 /* Root.plist */; };
 		7D306CA729C57948005CAE61 /* JJCButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D306C8D29C57948005CAE61 /* JJCButton.swift */; };
 		7D306CA829C57948005CAE61 /* JJCSegmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D306C8E29C57948005CAE61 /* JJCSegmentView.swift */; };
@@ -37,6 +35,7 @@
 		7D306CAB29C57948005CAE61 /* JJCDataModelTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D306C9229C57948005CAE61 /* JJCDataModelTool.swift */; };
 		7D306CB129C9DADF005CAE61 /* JJCHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D306CB029C9DADF005CAE61 /* JJCHUD.swift */; };
 		7D306CB329C9DCA0005CAE61 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7D306CB229C9DCA0005CAE61 /* Assets.xcassets */; };
+		7D306CF729CAAA6C005CAE61 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7D306CF929CAAA6C005CAE61 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,8 +70,6 @@
 		7D306C8429C57948005CAE61 /* JJCLocal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JJCLocal.swift; sourceTree = "<group>"; };
 		7D306C8529C57948005CAE61 /* JJCAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JJCAPI.swift; sourceTree = "<group>"; };
 		7D306C8629C57948005CAE61 /* JJCAppInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JJCAppInfo.swift; sourceTree = "<group>"; };
-		7D306C8929C57948005CAE61 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
-		7D306C8A29C57948005CAE61 /* JJCSwiftTools.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = JJCSwiftTools.bundle; sourceTree = "<group>"; };
 		7D306C8B29C57948005CAE61 /* Root.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Root.plist; sourceTree = "<group>"; };
 		7D306C8D29C57948005CAE61 /* JJCButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JJCButton.swift; sourceTree = "<group>"; };
 		7D306C8E29C57948005CAE61 /* JJCSegmentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JJCSegmentView.swift; sourceTree = "<group>"; };
@@ -81,6 +78,11 @@
 		7D306C9229C57948005CAE61 /* JJCDataModelTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JJCDataModelTool.swift; sourceTree = "<group>"; };
 		7D306CB029C9DADF005CAE61 /* JJCHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JJCHUD.swift; sourceTree = "<group>"; };
 		7D306CB229C9DCA0005CAE61 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		7D306CF829CAAA6C005CAE61 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		7D306CFA29CAAA6E005CAE61 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		7D306CFB29CAAA6F005CAE61 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		7D306CFC29CAAA70005CAE61 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		7D306CFD29CAAA71005CAE61 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -183,8 +185,7 @@
 		7D306C8829C57948005CAE61 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				7D306C8929C57948005CAE61 /* Localizable.strings */,
-				7D306C8A29C57948005CAE61 /* JJCSwiftTools.bundle */,
+				7D306CF929CAAA6C005CAE61 /* Localizable.strings */,
 				7D306C8B29C57948005CAE61 /* Root.plist */,
 				7D306CB229C9DCA0005CAE61 /* Assets.xcassets */,
 			);
@@ -286,6 +287,10 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
+				"zh-Hant",
+				ja,
+				ko,
 			);
 			mainGroup = 7D306C5029C5775D005CAE61;
 			productRefGroup = 7D306C5029C5775D005CAE61;
@@ -303,10 +308,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7D306CA429C57948005CAE61 /* Localizable.strings in Resources */,
+				7D306CF729CAAA6C005CAE61 /* Localizable.strings in Resources */,
 				7D306CA629C57948005CAE61 /* Root.plist in Resources */,
 				7D306CB329C9DCA0005CAE61 /* Assets.xcassets in Resources */,
-				7D306CA529C57948005CAE61 /* JJCSwiftTools.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -367,6 +371,21 @@
 			targetProxy = 7D306C6629C5775D005CAE61 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		7D306CF929CAAA6C005CAE61 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7D306CF829CAAA6C005CAE61 /* en */,
+				7D306CFA29CAAA6E005CAE61 /* zh-Hans */,
+				7D306CFB29CAAA6F005CAE61 /* zh-Hant */,
+				7D306CFC29CAAA70005CAE61 /* ja */,
+				7D306CFD29CAAA71005CAE61 /* ko */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		7D306C6C29C5775D005CAE61 /* Debug */ = {

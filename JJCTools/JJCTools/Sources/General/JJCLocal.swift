@@ -158,9 +158,9 @@ extension JJCLocal {
     /// - bundle 和 objClass 两个参数需同时传递，且 objClass 必须为对应 bundle 所在 Module 任一 class 对象
     /// - objClass 设计原因是 Bundle 的 public init(for aClass: AnyClass) 方法，根据某个类获取当前工程下的主 Bundle，如果不进行如此操作，获取的就是 Demo 工程里的 Main Bundle
     /// - 参考链接：https://www.jianshu.com/p/b64ff9d8e7ce、https://www.jianshu.com/p/173076faa742
-    public static func jjc_local(byBundle key: String, _ comment: String? = nil, bundleName: String? = nil, objClass: AnyClass? = nil, lproj: String? = nil) -> String {
-        if let newBundleName: String = bundleName, let newObjClass: AnyClass = objClass {
-            let bundlePath = Bundle(for: newObjClass).path(forResource: newBundleName, ofType: "bundle") ?? ""
+    public static func jjc_local(byBundle key: String, _ comment: String? = nil, bundleName: String? = nil, objClass: AnyClass = JJCGlobalClass.self, lproj: String? = nil) -> String {
+        if let newBundleName: String = bundleName {
+            let bundlePath = Bundle(for: objClass).path(forResource: newBundleName, ofType: "bundle") ?? ""
             if let mainBundle = Bundle(path: bundlePath) {
                 return JJCLocal.jjc_local(key, comment, bundle: mainBundle, lproj: lproj)
             }

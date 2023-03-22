@@ -139,9 +139,13 @@ public func JJC_CurTimeInfo(_ dateFormat: String? = nil) -> JJCTimeInfo {
     return JJC_TimeInfo(Date(), dateFormat: dateFormat)
 }
 
-/// JJCAPI - 获取内部图片资源
-public func JJC_Image(_ name: String) -> UIImage? {
-    return Bundle.jjc_bundleImage(name)
+/// JJCAPI - 图片 - 获取图片资源
+public func JJC_Image(_ name: String, isModule: Bool = false) -> UIImage? {
+    if isModule {
+        return UIImage(named: name, in: Bundle(for: JJCGlobalClass.self), compatibleWith: nil)
+    } else {
+        return UIImage(named: name)
+    }
 }
 
 /// JJCAPI - 日志 - isLineBreak：最后一行是否添加换行，isModule 是否显示 framework 所属
@@ -171,12 +175,12 @@ public func JJC_Local(byBundle key: String, _ comment: String? = nil, bundle: Bu
 
 /// JJCLocal - 本地语言 - 获取 JJCTools 指定语言
 public func JJC_Local(_ key: String, _ comment: String? = nil, lproj: String? = nil) -> String {
-    return JJCLocal.jjc_local(byBundle: key, comment, bundleName: "JJCTools", objClass: JJCGlobalClass.self, lproj: lproj)
+    return JJCLocal.jjc_local(byBundle: key, comment, bundleName: "JJCTools")
 }
 
 /// JJCAPI - 弹框 Alert - title、message、leftTitle、leftStyle、rightTitle、rightStyle、leftAction、rightAction
 public func JJC_Alert(title: String? = nil,
-                      message: String? = nil,
+                      message: String,
                       leftTitle: String? = nil,
                       leftStyle: UIAlertAction.Style? = .cancel,
                       rightTitle: String? = nil,
@@ -185,7 +189,7 @@ public func JJC_Alert(title: String? = nil,
                       rightAction: (() -> Void)? = nil,
                       lproj: String? = nil) -> UIAlertController {
     var newTitle: String? = nil
-    if title != nil && (title ?? "").jjc_isEmptyOrInvalid() {
+    if title == nil || (title ?? "").jjc_isEmptyOrInvalid() {
         newTitle = JJC_Local("Tips", "温馨提示", lproj: lproj)
     }
     let alertVC = UIAlertController(title: newTitle, message: message, preferredStyle: .alert)
