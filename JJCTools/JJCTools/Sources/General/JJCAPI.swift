@@ -110,8 +110,26 @@ public func JJC_IPhone6sRatio(_ padding: CGFloat) -> CGFloat {
 }
 
 /// JJCAPI - 生成随机数
-public func JJC_Random(min: Int, max: Int) -> Int {
+public func JJC_RandomNum(_ min: Int, _ max: Int) -> Int {
     return Int.random(in: min...max)
+}
+
+/// 生成随机字符串
+/// https://www.cnblogs.com/strengthen/p/10091038.html
+public func JJC_RandomString(_ length: Int) -> String {
+    var targetString = ""
+    while targetString.count < 25 {
+        let random = arc4random() % 122
+        if random > 96 {
+            if let ascii = UnicodeScalar(random) {
+                targetString += String(Character(ascii))
+                if targetString.count == length {
+                    break
+                }
+            }
+        }
+    }
+    return targetString
 }
 
 /// JJCAPI - 颜色 - RGBA
