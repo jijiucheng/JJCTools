@@ -305,14 +305,11 @@ public func JJC_CurViewController() -> UIViewController {
     if var keyWindow = JJC_KeyWindow() {
         // windowLevel 是在 Z轴方向上的窗口位置，默认值是 UIWindowLevel
         if keyWindow.windowLevel != UIWindow.Level.normal {
-            // 获取应用程序的所有窗口并进行遍历
-            for window in JJC_Windows() {
-                // 找到程序的默认窗口（正在显示的窗口）
-                if window.windowLevel == UIWindow.Level.normal {
-                    // 将关键窗口赋值为默认窗口
-                    keyWindow = window
-                    break
-                }
+            // 获取应用程序的所有窗口并进行遍历，并找到程序的默认窗口（正在显示的窗口）
+            for window in JJC_Windows() where window.windowLevel == UIWindow.Level.normal {
+                // 将关键窗口赋值为默认窗口
+                keyWindow = window
+                break
             }
         }
         
@@ -328,30 +325,30 @@ public func JJC_CurViewController() -> UIViewController {
                 }
                 // 判断显示视图的下一个响应者是否为一个 UIViewController 的类对象
                 if var presetedVC = rootVC.presentedViewController {
-                    while (presetedVC.presentedViewController != nil) {
+                    while presetedVC.presentedViewController != nil {
                         presetedVC = presetedVC.presentedViewController!
                     }
                     nextResponder = presetedVC
                 }
                 
                 if (nextResponder?.isKind(of: UITabBarController.self)) ?? false {
-                    let tabBarVC = nextResponder as! UITabBarController
-                    if let viewControllers = tabBarVC.viewControllers {
+                    if let tabBarVC = nextResponder as? UITabBarController, let viewControllers = tabBarVC.viewControllers {
                         let naviVC = viewControllers[tabBarVC.selectedIndex]
                         if let lastVC = naviVC.children.last {
                             currentVC = lastVC
                         }
                     }
                 } else if (nextResponder?.isKind(of: UINavigationController.self)) ?? false {
-                    let naviVC = nextResponder as! UINavigationController
-                    if let lastVC = naviVC.children.last {
+                    if let naviVC = nextResponder as? UINavigationController, let lastVC = naviVC.children.last {
                         currentVC = lastVC
                     }
                 } else {
                     if (nextResponder?.isKind(of: UIView.self)) ?? false {
                         
                     } else {
-                        currentVC = nextResponder as! UIViewController
+                        if let tempCurrentVC = nextResponder as? UIViewController {
+                            currentVC = tempCurrentVC
+                        }
                     }
                 }
             }
