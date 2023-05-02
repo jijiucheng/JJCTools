@@ -9,7 +9,6 @@ import UIKit
 import WebKit
 
 public class JJCWebViewController: UIViewController {
-    
     /// ObserveKey - estimatedProgress - 进度
     private let WebViewProgressObserveKey: String = "estimatedProgress"
     /// ObserveKey - URL - 链接
@@ -51,7 +50,6 @@ public class JJCWebViewController: UIViewController {
 
 // MARK:- UI
 extension JJCWebViewController {
-    
     /// UI
     private func setUI() {
         
@@ -73,7 +71,6 @@ extension JJCWebViewController {
 
 // MARK:- Methods
 extension JJCWebViewController {
-    
     /// Action - 设置导航栏
     public func setNavigationParameters(bgColor: UIColor, title: String) {
         self.navigationController?.navigationBar.backgroundColor = bgColor
@@ -114,7 +111,6 @@ extension JJCWebViewController {
 
 // MARK:- WKNavigationDelegate、WKUIDelegate
 extension JJCWebViewController: WKNavigationDelegate, WKUIDelegate {
-    
     /// Delegate - 加载完成
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         print("Delegate - 加载完成")
