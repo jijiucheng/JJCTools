@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-//MARK: - String 字符串判断是否为空、有效
+// MARK: - String 字符串判断是否为空、有效
 extension String {
     /// String - 字符串判断 - 判断字符串是否为空或无效（目标字符串可为 Optional 类型）
     public static func jjc_isEmptyOrInvalid(_ string: String?) -> Bool {
@@ -68,7 +68,36 @@ extension String {
     }
 }
 
-//MARK: - String 字符串截取、替换、移除
+// MARK: - Emoji
+extension String {
+    var jjc_isContainsEmoji: Bool {
+        let pattern = "[^\\u0020-\\u007E\\u00A0-\\u00BE\\u2E80-\\uA4CF\\uF900-\\uFAFF\\uFE30-\\uFE4F\\uFF00-\\uFFEF\\u0080-\\u009F\\u2000-\\u201f\r\n]"
+        let regex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive)
+        let numberOfMatches = regex?.numberOfMatches(in: self, options: .withTransparentBounds, range: NSMakeRange(0, self.count))
+        return numberOfMatches == 0
+    }
+    
+    func jjc_emojiNum() -> Int {
+        let pattern = "[^\\u0020-\\u007E\\u00A0-\\u00BE\\u2E80-\\uA4CF\\uF900-\\uFAFF\\uFE30-\\uFE4F\\uFF00-\\uFFEF\\u0080-\\u009F\\u2000-\\u201f\r\n]"
+        let regex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive)
+        let numberOfMatches = regex?.numberOfMatches(in: self, options: .withTransparentBounds, range: NSMakeRange(0, self.count))
+        return numberOfMatches ?? 0
+    }
+    
+    func jjc_removeEmoji() -> String? {
+        let retString = NSMutableString(string: self)
+        let pattern = "[^\\u0020-\\u007E\\u00A0-\\u00BE\\u2E80-\\uA4CF\\uF900-\\uFAFF\\uFE30-\\uFE4F\\uFF00-\\uFFEF\\u0080-\\u009F\\u2000-\\u201f\r\n]"
+        if let regex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive) {
+            let checkingResult = regex.matches(in: self, options: .withTransparentBounds, range: NSMakeRange(0, self.count))
+            for result in checkingResult.reversed() {
+                retString.replaceCharacters(in: result.range, with: "")
+            }
+        }
+        return retString as String
+    }
+}
+
+// MARK: - String 字符串截取、替换、移除
 extension String {
     /// String - 字符串截取 - start、end
     public func jjc_subRange(byStart start: Int, _ end: Int) -> String {

@@ -9,7 +9,7 @@ import Foundation
 
 extension Array {
     /// Array - 数组将被拆分成多个指定长度数组的二级数组
-    static func split<T>(_ array: [T], length: Int) -> [[T]] {
+    static func jjc_split<T>(_ array: [T], length: Int) -> [[T]] {
         var result = [[T]]()
         let row = array.count % length == 0 ? (array.count / length) : (array.count / length + 1)
         for index in 0..<row {
@@ -28,6 +28,6 @@ extension Array {
     
     /// Array - 数组将被拆分成多个指定长度数组的二级数组
     public func jjc_split(_ length: Int) -> [Array] {
-        return Array.split(self, length: length)
+        return Array.jjc_split(self, length: length)
     }
 }
