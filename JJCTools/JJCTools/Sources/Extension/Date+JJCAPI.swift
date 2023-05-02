@@ -7,7 +7,7 @@
 
 import Foundation
 
-//MARK: - 月份转换格式信息
+// MARK: - 月份转换格式信息
 public struct JJCMonthInfo {
     var num: String = ""        // 数字样式
     var enAll: String = ""      // 英文全称
@@ -15,7 +15,7 @@ public struct JJCMonthInfo {
     var cn: String = ""         // 中文样式
 }
 
-//MARK: - 时间信息
+// MARK: - 时间信息
 public struct JJCTimeInfo {
     var origin: String = ""         // 原始样式时间，未处理时区
     var timestamp: Double = 0       // 时间戳（秒级）
@@ -29,7 +29,7 @@ public struct JJCTimeInfo {
 }
 
 
-//MARK: - Date 获取时间信息
+// MARK: - Date 获取时间信息
 extension Date {
     /// Date - 获取时间格式化对象 DateFormatter（默认：yyyy-MM-dd HH:mm:ss）
     public static func jjc_dateFormatter(_ dateFormat: String? = nil) -> DateFormatter {
@@ -86,7 +86,7 @@ extension Date {
     }
 }
 
-//MARK: - Date 时间转换
+// MARK: - Date 时间转换
 extension Date {
     /// Date - 时间戳转时间字符串
     /// - timestamp：秒级

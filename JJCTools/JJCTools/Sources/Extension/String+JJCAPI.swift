@@ -184,7 +184,7 @@ extension String {
     }
 }
 
-//MARK: - String 字符串转换
+// MARK: - String 字符串转换
 extension String {
     /// String - 字符串转换 - 根据正则获取字符串中匹配的字符串
     /**
@@ -247,7 +247,7 @@ extension String {
     }
 }
 
-//MARK: - String 字符串 URL 处理
+// MARK: - String 字符串 URL 处理
 extension String {
     /// String - URL - 拼接路径
     public func jjc_appendURLPath(_ path: String) -> String {
@@ -281,7 +281,7 @@ extension String {
     }
 }
 
-//MARK: - String 字符串编码解码
+// MARK: - String 字符串编码解码
 extension String {
     /// String - 获取编码类型
     public static func jjc_getEncodingType(_ encodingType: CFStringEncodings) -> String.Encoding {
@@ -408,7 +408,7 @@ extension String {
     }
 }
 
-//MARK: - String - 获取字符串宽高
+// MARK: - String - 获取字符串宽高
 extension String {
     /// String - 获取字符串尺寸（CGSize）
     public static func jjc_getContentSize(_ content: String,

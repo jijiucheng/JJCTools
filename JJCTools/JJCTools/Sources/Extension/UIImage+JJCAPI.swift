@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-//MARK: - UIImage 转换方法
+// MARK: - UIImage 转换方法
 extension UIImage {
     /// UIImage - 图片转 String
     public func jjc_toBase64String(_ isPNG: Bool? = false) -> String? {

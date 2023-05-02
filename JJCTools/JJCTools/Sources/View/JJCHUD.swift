@@ -101,7 +101,7 @@ public class JJCHUD: UIView {
     }
 }
 
-//MARK: - 定时器
+// MARK: - 定时器
 extension JJCHUD {
     /// 添加定时器
     fileprivate func startTimer(_ type: JJCHUDType) {
@@ -142,7 +142,7 @@ extension JJCHUD {
     }
 }
 
-//MARK: - 显示、隐藏
+// MARK: - 显示、隐藏
 extension JJCHUD {
     /// 显示
     public class func show(_ view: UIView, animate: Bool = true) -> JJCHUD {
@@ -225,7 +225,7 @@ extension JJCHUD {
     }
 }
 
-//MARK: - 配置、约束、类型
+// MARK: - 配置、约束、类型
 extension JJCHUD {
     /// 添加子视图
     fileprivate func setSubViews() {
@@ -390,8 +390,8 @@ extension JJCHUD {
 }
 
 
-//MARK: --------------------------------
-//MARK: - 圆环
+// MARK: --------------------------------
+// MARK: - 圆环
 class JJCHUDProgressView: UIView {
     /// 进度
     fileprivate var progress: Float = 0

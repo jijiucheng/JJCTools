@@ -10,7 +10,7 @@ import UIKit
 
 public class JJCGlobalClass: NSObject {}
 
-//MARK: - 全局常量
+// MARK: - 全局常量
 /// JJCAPI - 屏幕尺寸
 public let JJC_ScreenSize = UIScreen.main.responds(to: #selector(getter: UIScreen.nativeBounds)) ? CGSize(width: UIScreen.main.nativeBounds.size.width / UIScreen.main.nativeScale, height: UIScreen.main.nativeBounds.size.height / UIScreen.main.nativeScale) : UIScreen.main.bounds.size
 /// JJCAPI - 屏幕宽度
@@ -49,7 +49,7 @@ public let JJC_DebugVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundle
 public let JJC_FullVersion = "\(JJC_ReleaseVersion)(\(JJC_DebugVersion))"
 
 
-//MARK: - 全局函数
+// MARK: - 全局函数
 /// JJCAPI - 系统信息 - 版本 version 信息
 public func JJC_Version() -> (release: String, debug: String, full: String) {
     return (JJC_ReleaseVersion, JJC_DebugVersion, JJC_FullVersion)

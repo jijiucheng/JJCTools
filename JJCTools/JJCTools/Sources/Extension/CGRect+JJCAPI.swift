@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-//MARK: - 设置 CGRect 属性
+// MARK: - 设置 CGRect 属性
 extension CGRect {
     /// CGRect - 获取 宽度为屏幕宽度，高度为 0 的 CGRect
     public static func jjc_screenWidthZero() -> CGRect {

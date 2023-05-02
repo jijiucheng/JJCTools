@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-//MARK: - 便利构造 UIColor 方法
+// MARK: - 便利构造 UIColor 方法
 extension UIColor {
     /// UIColor - 获取十六进制字符串 UIColor -> Hex String
     public var jjc_hexString: String? {
@@ -61,7 +61,7 @@ extension UIColor {
     }
 }
 
-//MARK: - UIColor 转换方法
+// MARK: - UIColor 转换方法
 extension UIColor {
     /// UIColor - 颜色转图片
     public func jjc_toImage() -> UIImage? {

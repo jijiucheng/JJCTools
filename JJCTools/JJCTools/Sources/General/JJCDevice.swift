@@ -11,7 +11,7 @@ import AdSupport
 
 public class JJCDevice: NSObject {}
 
-//MARK: - 获取系统属性
+// MARK: - 获取系统属性
 extension JJCDevice {
     /// JJCDevice - 获取设备号 ID【通过访问 IDFA 获取】
     public static func jjc_deviceID() -> String {

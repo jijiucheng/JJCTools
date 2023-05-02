@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-//MARK: - Bundle - 获取资源文件
+// MARK: - Bundle - 获取资源文件
 extension Bundle {
     /// Bundle - 获取主工程或子模块的主 Bundle
     ///
@@ -49,7 +49,7 @@ extension Bundle {
     }
 }
 
-//MARK: - Bundle - JJCTools 内部使用
+// MARK: - Bundle - JJCTools 内部使用
 extension Bundle {
     /// Bundle - JJCTools - 获取主 Bundle
     static func jjc_mainBundleByJJCTools() -> Bundle? {

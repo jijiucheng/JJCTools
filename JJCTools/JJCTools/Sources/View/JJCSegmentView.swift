@@ -53,7 +53,7 @@ public class JJCSegmentView: UIView {
     }
 }
 
-//MARK: - UI
+// MARK: - UI
 extension JJCSegmentView {
     /// UI
     fileprivate func setUI() {
@@ -63,7 +63,7 @@ extension JJCSegmentView {
     }
 }
 
-//MARK: - Methods
+// MARK: - Methods
 extension JJCSegmentView {
     /// Action - 核心方法
     public func setTitles(_ titles: [String], titleColor: UIColor, titleFont: UIFont, selectedTitleColor: UIColor, selectedTitleFont: UIFont) {

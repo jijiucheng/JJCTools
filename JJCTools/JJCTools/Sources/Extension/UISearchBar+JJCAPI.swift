@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-//MARK: - 设置系统属性
+// MARK: - 设置系统属性
 extension UISearchBar {
     /// UISearchBar - 去除搜索框黑线
     public func jjc_removeBlackLine() {
