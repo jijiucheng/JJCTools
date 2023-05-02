@@ -116,9 +116,9 @@ public func JJC_RandomNum(_ min: Int, _ max: Int) -> Int {
 
 /// 生成随机字符串
 /// https://www.cnblogs.com/strengthen/p/10091038.html
-public func JJC_RandomString(_ length: Int) -> String {
+public func JJC_RandomString(_ length: Int, maxLength: Int = 25) -> String {
     var targetString = ""
-    while targetString.count < 25 {
+    while targetString.count < maxLength {
         let random = arc4random() % 122
         if random > 96 {
             if let ascii = UnicodeScalar(random) {
@@ -132,6 +132,7 @@ public func JJC_RandomString(_ length: Int) -> String {
     return targetString
 }
 
+// MARK: - 颜色
 /// JJCAPI - 颜色 - RGBA
 public func JJC_RGBA(_ r: CGFloat, _ g: CGFloat, _ b: CGFloat, _ a: CGFloat? = 1.0) -> UIColor {
     return UIColor(red: r, green: g, blue: b, alpha: a ?? 1.0)
@@ -175,6 +176,7 @@ public func JJC_Log<T>(_ log: T, file: String = #file, method: String = #functio
     }
 }
 
+// MARK: - 本地化
 /// JJJCAPI - 本地语言 - 获取当前手机系统语言【设置->通用->语言->首选语言顺序】
 /// - 此处也可以通过 UserDefaults.standard.value(forKey: "AppleLanguages") 获取
 public func JJC_systemLanguage() -> String {
@@ -196,6 +198,7 @@ public func JJC_Local(_ key: String, _ comment: String? = nil, lproj: String? = 
     return JJCLocal.jjc_local(byBundle: key, comment, bundleName: "JJCTools")
 }
 
+// MARK: - 弹框提醒
 /// JJCAPI - 弹框 Alert - title、message、leftTitle、leftStyle、rightTitle、rightStyle、leftAction、rightAction
 public func JJC_Alert(title: String? = nil,
                       message: String,
@@ -240,7 +243,8 @@ public func JJC_HUD_Message(_ view: UIView? = nil,
 /// JJCAPI - HUD - 成功失败弹框
 public func JJC_HUD_SuccessOrFailure(_ view: UIView? = nil,
                                      isSuccess: Bool = true,
-                                     content: String? = nil, lproj: String? = nil,
+                                     content: String? = nil,
+                                     lproj: String? = nil,
                                      completion: (() -> Void)? = nil) {
     let hud = JJCHUD.show(view ?? JJC_CurViewController().view)
     hud.setConfig(isSuccess ? .success : .failure,
@@ -259,6 +263,7 @@ public func JJC_HUD_LoadingOrProgress(_ view: UIView? = nil,
     return hud
 }
 
+// MARK: - 圆角
 /// JJCAPI - 圆角 - 继承 UIView - view、radius、width、color
 public func JJC_RadiusBorder<T: UIView>(_ view: T, radius: CGFloat?, borderWidth: CGFloat?, borderColor: UIColor?) {
     if let newRadius = radius {

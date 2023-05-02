@@ -39,6 +39,7 @@
 		7D306CB329C9DCA0005CAE61 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7D306CB229C9DCA0005CAE61 /* Assets.xcassets */; };
 		7D306CF729CAAA6C005CAE61 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7D306CF929CAAA6C005CAE61 /* Localizable.strings */; };
 		7D306D0129CAFEC7005CAE61 /* Array+JJCAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D306D0029CAFEC7005CAE61 /* Array+JJCAPI.swift */; };
+		7DEE5EE42A00977F00E7110E /* UITableViewCell+JJCAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEE5EE32A00977F00E7110E /* UITableViewCell+JJCAPI.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,6 +90,7 @@
 		7D306CFC29CAAA70005CAE61 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7D306CFD29CAAA71005CAE61 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7D306D0029CAFEC7005CAE61 /* Array+JJCAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+JJCAPI.swift"; sourceTree = "<group>"; };
+		7DEE5EE32A00977F00E7110E /* UITableViewCell+JJCAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+JJCAPI.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -186,6 +188,7 @@
 				7D306C7F29C57948005CAE61 /* UIView+JJCAPI.swift */,
 				7D306C8029C57948005CAE61 /* UIBarButtonItem+JJCAPI.swift */,
 				7D306C8129C57948005CAE61 /* UILabel+JJCAPI.swift */,
+				7DEE5EE32A00977F00E7110E /* UITableViewCell+JJCAPI.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -350,6 +353,7 @@
 				7D306CA829C57948005CAE61 /* JJCSegmentView.swift in Sources */,
 				7D306C9629C57948005CAE61 /* UIButton+JJCAPI.swift in Sources */,
 				7D306C9829C57948005CAE61 /* Date+JJCAPI.swift in Sources */,
+				7DEE5EE42A00977F00E7110E /* UITableViewCell+JJCAPI.swift in Sources */,
 				7D306C9929C57948005CAE61 /* CGRect+JJCAPI.swift in Sources */,
 				7D306C9529C57948005CAE61 /* UISearchBar+JJCAPI.swift in Sources */,
 				7D306CA029C57948005CAE61 /* JJCLocal.swift in Sources */,

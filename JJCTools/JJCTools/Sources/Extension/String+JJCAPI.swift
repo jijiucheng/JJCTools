@@ -70,21 +70,24 @@ extension String {
 
 // MARK: - Emoji
 extension String {
-    var jjc_isContainsEmoji: Bool {
+    /// String - 字符串判断 - 判断字符串中是否包含 Emoji 字符
+    public func jjc_isContainsEmoji() -> Bool {
         let pattern = "[^\\u0020-\\u007E\\u00A0-\\u00BE\\u2E80-\\uA4CF\\uF900-\\uFAFF\\uFE30-\\uFE4F\\uFF00-\\uFFEF\\u0080-\\u009F\\u2000-\\u201f\r\n]"
         let regex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive)
         let numberOfMatches = regex?.numberOfMatches(in: self, options: .withTransparentBounds, range: NSMakeRange(0, self.count))
         return numberOfMatches == 0
     }
     
-    func jjc_emojiNum() -> Int {
+    /// String - 字符串判断 - 判断字符串中 Emoji 字符个数
+    public func jjc_emojiNum() -> Int {
         let pattern = "[^\\u0020-\\u007E\\u00A0-\\u00BE\\u2E80-\\uA4CF\\uF900-\\uFAFF\\uFE30-\\uFE4F\\uFF00-\\uFFEF\\u0080-\\u009F\\u2000-\\u201f\r\n]"
         let regex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive)
         let numberOfMatches = regex?.numberOfMatches(in: self, options: .withTransparentBounds, range: NSMakeRange(0, self.count))
         return numberOfMatches ?? 0
     }
     
-    func jjc_removeEmoji() -> String? {
+    /// String - 字符串判断 - 移除当前字符串中的 Emoji 字符
+    public func jjc_removeEmoji() -> String? {
         let retString = NSMutableString(string: self)
         let pattern = "[^\\u0020-\\u007E\\u00A0-\\u00BE\\u2E80-\\uA4CF\\uF900-\\uFAFF\\uFE30-\\uFE4F\\uFF00-\\uFFEF\\u0080-\\u009F\\u2000-\\u201f\r\n]"
         if let regex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive) {

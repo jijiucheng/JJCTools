@@ -52,12 +52,12 @@ extension Bundle {
 // MARK: - Bundle - JJCTools 内部使用
 extension Bundle {
     /// Bundle - JJCTools - 获取主 Bundle
-    static func jjc_mainBundleByJJCTools() -> Bundle? {
+    public static func jjc_mainBundleByJJCTools() -> Bundle? {
         return Bundle(for: JJCGlobalClass.self)
     }
     
     /// Bundle - JJCTools - 根据 Bundle 名称获取对应的 Bundle 文件
-    static func jjc_bundleByJJCTools(bundle: String? = nil) -> Bundle? {
+    public static func jjc_bundleByJJCTools(bundle: String? = nil) -> Bundle? {
         if let mainBundle = Bundle.jjc_mainBundleByJJCTools(),
             let path = mainBundle.path(forResource: bundle, ofType: "bundle") {
             return Bundle(path: path)
@@ -66,7 +66,7 @@ extension Bundle {
     }
     
     /// Bundle - JJCTools - 根据 Bundle 名称获取内部资源文件路径
-    static func jjc_bundleByJJCTools(file: String, ofType type: String, bundle: String? = nil) -> String? {
+    public static func jjc_bundleByJJCTools(file: String, ofType type: String, bundle: String? = nil) -> String? {
         if let fileBundle = Bundle.jjc_bundleByJJCTools(bundle: bundle) {
             return fileBundle.path(forResource: file, ofType: type)
         }
@@ -74,7 +74,7 @@ extension Bundle {
     }
     
     /// Bundle - JJCTools - 根据 Bundle 名称获取内部图片文件
-    static func jjc_bundleByJJCTools(image imageName: String, ofType type: String, bundle: String? = nil) -> UIImage? {
+    public static func jjc_bundleByJJCTools(image imageName: String, ofType type: String, bundle: String? = nil) -> UIImage? {
         if let path = Bundle.jjc_bundleByJJCTools(file: imageName, ofType: type, bundle: bundle) {
             return UIImage(contentsOfFile: path)
         }
