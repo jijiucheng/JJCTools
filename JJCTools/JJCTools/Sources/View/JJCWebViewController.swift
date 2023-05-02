@@ -110,7 +110,7 @@ extension JJCWebViewController {
 }
 
 // MARK:- WKNavigationDelegate、WKUIDelegate
-extension JJCWebViewController: WKNavigationDelegate, WKUIDelegate { 
+extension JJCWebViewController: WKNavigationDelegate, WKUIDelegate {
     /// Delegate - 加载完成
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         print("Delegate - 加载完成")
