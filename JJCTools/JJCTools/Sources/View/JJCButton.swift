@@ -8,7 +8,6 @@
 import UIKit
 
 public class JJCButton: UIControl {
-    
     /// UIImage - normal
     private var imageNormal: UIImage?
     /// UIImage - selected
@@ -47,7 +46,6 @@ public class JJCButton: UIControl {
 
 /// MARK:- Methods
 extension JJCButton {
-    
     /// Action - 核心方法
     public func params(style: UIButtonImgLabelStyle,
                        image: UIImage?,
@@ -163,7 +161,6 @@ extension JJCButton {
 
 // MARK:- 设置图片文字参数属性
 extension JJCButton {
-    
     /// Action - 设置图片文字参数属性
     public func params(image: UIImage, title: String, color: UIColor, font: UIFont, alignment: NSTextAlignment, state: UIControl.State) {
         
@@ -199,7 +196,6 @@ extension JJCButton {
 
 // MARK:- 根据 UIControl.State 状态获取当前属性
 extension JJCButton {
-    
     /// Parameters - image
     public func stateImage(_ state: UIControl.State) -> UIImage {
         return ((state == .selected ? self.imageSelected : self.imageNormal) ?? (self.imageView.image ?? UIImage()))
@@ -228,7 +224,6 @@ extension JJCButton {
 
 // MARK:- 设置 UIControl.State
 extension JJCButton {
-    
     public override var isSelected: Bool {
         didSet {
             if isSelected == true {
