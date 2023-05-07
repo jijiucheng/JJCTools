@@ -12,7 +12,7 @@ public class JJCAppInfo: NSObject {}
 // MARK: - 获取 App 相关信息
 extension JJCAppInfo {
     /// JJCAppInfo - 获取 App 的唯一识别号 BundleIdentifier【CFBundleIdentifier】
-    public static func jjc_bundleIdentifier() -> String {
+    public static func jjc_bundleId() -> String {
         return Bundle.main.object(forInfoDictionaryKey: "CFBundleIdentifier") as? String ?? ""
     }
     

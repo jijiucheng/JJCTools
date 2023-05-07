@@ -105,7 +105,7 @@ extension String {
     /// String - 字符串截取 - start、end
     public func jjc_subRange(byStart start: Int, _ end: Int) -> String {
         let startIndex = self.index(self.startIndex, offsetBy: start)
-        let endIndex   = self.index(self.startIndex, offsetBy: ((end + 1) > self.count ? self.count : (end + 1)))
+        let endIndex   = self.index(self.startIndex, offsetBy: ((end + 1) > self.count ? self.count : end))
         return String(self[startIndex...endIndex])
     }
     

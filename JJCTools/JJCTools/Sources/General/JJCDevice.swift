@@ -44,6 +44,11 @@ extension JJCDevice {
     public static func jjc_name() -> String {
         return UIDevice.current.name
     }
+    
+    /// JJCDevice - 获取当前设备方向
+    public static func jjc_interfaceOrientation() -> UIDeviceOrientation {
+        return UIDevice.current.orientation
+    }
 }
 
 // MARK: - 获取设备类型
