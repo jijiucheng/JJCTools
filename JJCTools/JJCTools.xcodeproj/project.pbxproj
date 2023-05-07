@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7D09774229D6DBDA00636439 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D09774129D6DBDA00636439 /* Foundation.framework */; };
-		7D09774429D6DC6200636439 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D09774329D6DC6200636439 /* UIKit.framework */; };
 		7D306C5F29C5775D005CAE61 /* JJCTools.docc in Sources */ = {isa = PBXBuildFile; fileRef = 7D306C5E29C5775D005CAE61 /* JJCTools.docc */; };
 		7D306C6529C5775D005CAE61 /* JJCTools.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D306C5A29C5775D005CAE61 /* JJCTools.framework */; };
 		7D306C6A29C5775D005CAE61 /* JJCToolsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D306C6929C5775D005CAE61 /* JJCToolsTests.swift */; };
@@ -53,8 +51,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		7D09774129D6DBDA00636439 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		7D09774329D6DC6200636439 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/System/iOSSupport/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		7D306C5A29C5775D005CAE61 /* JJCTools.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = JJCTools.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D306C5D29C5775D005CAE61 /* JJCTools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JJCTools.h; sourceTree = "<group>"; };
 		7D306C5E29C5775D005CAE61 /* JJCTools.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = JJCTools.docc; sourceTree = "<group>"; };
@@ -98,8 +94,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7D09774229D6DBDA00636439 /* Foundation.framework in Frameworks */,
-				7D09774429D6DC6200636439 /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,8 +111,6 @@
 		7D09774029D6DBDA00636439 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				7D09774329D6DC6200636439 /* UIKit.framework */,
-				7D09774129D6DBDA00636439 /* Foundation.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
