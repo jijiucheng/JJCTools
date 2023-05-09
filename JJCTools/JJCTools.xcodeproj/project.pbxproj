@@ -38,6 +38,8 @@
 		7D306CF729CAAA6C005CAE61 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7D306CF929CAAA6C005CAE61 /* Localizable.strings */; };
 		7D306D0129CAFEC7005CAE61 /* Array+JJCAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D306D0029CAFEC7005CAE61 /* Array+JJCAPI.swift */; };
 		7DEE5EE42A00977F00E7110E /* UITableViewCell+JJCAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEE5EE32A00977F00E7110E /* UITableViewCell+JJCAPI.swift */; };
+		7DF2C87B2A09D88100E30A40 /* JJCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DF2C87A2A09D88100E30A40 /* JJCViewController.swift */; };
+		7DF2C87D2A09D89E00E30A40 /* JJCNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DF2C87C2A09D89E00E30A40 /* JJCNavigationController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +89,8 @@
 		7D306CFD29CAAA71005CAE61 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7D306D0029CAFEC7005CAE61 /* Array+JJCAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+JJCAPI.swift"; sourceTree = "<group>"; };
 		7DEE5EE32A00977F00E7110E /* UITableViewCell+JJCAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+JJCAPI.swift"; sourceTree = "<group>"; };
+		7DF2C87A2A09D88100E30A40 /* JJCViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JJCViewController.swift; sourceTree = "<group>"; };
+		7DF2C87C2A09D89E00E30A40 /* JJCNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JJCNavigationController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,6 +163,7 @@
 				7D306C7529C57948005CAE61 /* Extension */,
 				7D306C9029C57948005CAE61 /* Utility */,
 				7D306C8C29C57948005CAE61 /* View */,
+				7DF2C8792A09D85D00E30A40 /* Controller */,
 				7D306C8829C57948005CAE61 /* Resources */,
 			);
 			path = Sources;
@@ -212,7 +217,6 @@
 				7D306C8D29C57948005CAE61 /* JJCButton.swift */,
 				7D306CB029C9DADF005CAE61 /* JJCHUD.swift */,
 				7D306C8E29C57948005CAE61 /* JJCSegmentView.swift */,
-				7D306C8F29C57948005CAE61 /* JJCWebViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -224,6 +228,16 @@
 				7D306C9229C57948005CAE61 /* JJCDataModelTool.swift */,
 			);
 			path = Utility;
+			sourceTree = "<group>";
+		};
+		7DF2C8792A09D85D00E30A40 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				7DF2C87A2A09D88100E30A40 /* JJCViewController.swift */,
+				7DF2C87C2A09D89E00E30A40 /* JJCNavigationController.swift */,
+				7D306C8F29C57948005CAE61 /* JJCWebViewController.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -346,12 +360,14 @@
 				7D306C9629C57948005CAE61 /* UIButton+JJCAPI.swift in Sources */,
 				7D306C9829C57948005CAE61 /* Date+JJCAPI.swift in Sources */,
 				7DEE5EE42A00977F00E7110E /* UITableViewCell+JJCAPI.swift in Sources */,
+				7DF2C87D2A09D89E00E30A40 /* JJCNavigationController.swift in Sources */,
 				7D306C9929C57948005CAE61 /* CGRect+JJCAPI.swift in Sources */,
 				7D306C9529C57948005CAE61 /* UISearchBar+JJCAPI.swift in Sources */,
 				7D306CA029C57948005CAE61 /* JJCLocal.swift in Sources */,
 				7D306CA729C57948005CAE61 /* JJCButton.swift in Sources */,
 				7D306CAB29C57948005CAE61 /* JJCDataModelTool.swift in Sources */,
 				7D306C9B29C57948005CAE61 /* UIColor+JJCAPI.swift in Sources */,
+				7DF2C87B2A09D88100E30A40 /* JJCViewController.swift in Sources */,
 				7D306CA929C57948005CAE61 /* JJCWebViewController.swift in Sources */,
 				7D306C9729C57948005CAE61 /* Bundle+JJCAPI.swift in Sources */,
 				7D306C9329C57948005CAE61 /* CALayer+JJCAPI.swift in Sources */,

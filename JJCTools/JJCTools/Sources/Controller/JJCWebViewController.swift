@@ -8,7 +8,7 @@
 import UIKit
 import WebKit
 
-public class JJCWebViewController: UIViewController {
+public class JJCWebViewController: JJCViewController {
     /// ObserveKey - estimatedProgress - 进度
     private let WebViewProgressObserveKey: String = "estimatedProgress"
     /// ObserveKey - URL - 链接
