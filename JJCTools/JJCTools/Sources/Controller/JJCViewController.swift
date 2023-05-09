@@ -33,7 +33,7 @@ open class JJCViewController: UIViewController {
         }
         
         if hidesBottomBarWhenPushed {
-            navigationItem.leftBarButtonItem = UIBarButtonItem.jjc_params(image: UIImage(named: "base_back")!, target: self, action: #selector(backItemAction))
+            navigationItem.leftBarButtonItem = UIBarButtonItem.jjc_paramsByCustom(image: JJC_Image("base_back", isModule: true)!, target: self, action: #selector(backItemAction))
         }
     }
     

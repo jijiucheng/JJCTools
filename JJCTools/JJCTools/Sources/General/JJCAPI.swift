@@ -37,6 +37,8 @@ public let JJC_IsIPad = (UIDevice.current.userInterfaceIdiom == .pad)
 /// JJCAPI - 是否为 CarPlay
 public let JJC_IsCarPlay = (UIDevice.current.userInterfaceIdiom == .carPlay)
 
+/// JJCAPI - 系统信息 - JJCTools main bundle
+public let JJC_mainBundleByJJCTools = Bundle(for: JJCGlobalClass.self)
 /// JJCAPI - 系统信息 - App 唯一识别号
 public let JJC_BundleIdentifier = Bundle.main.object(forInfoDictionaryKey: "CFBundleIdentifier") as? String ?? ""
 /// JJCAPI - 系统信息 - App 名称
@@ -161,7 +163,7 @@ public func JJC_CurTimeInfo(_ dateFormat: String? = nil) -> JJCTimeInfo {
 /// JJCAPI - 图片 - 获取图片资源
 public func JJC_Image(_ name: String, isModule: Bool = false) -> UIImage? {
     if isModule {
-        return UIImage(named: name, in: Bundle(for: JJCGlobalClass.self), compatibleWith: nil)
+        return UIImage(named: name, in: JJC_mainBundleByJJCTools, compatibleWith: nil)
     } else {
         return UIImage(named: name)
     }
