@@ -35,11 +35,15 @@ open class JJCViewController: UIViewController {
         if hidesBottomBarWhenPushed {
             navigationItem.leftBarButtonItem = UIBarButtonItem.jjc_paramsByCustom(image: JJC_Image("base_back", isModule: true)!, target: self, action: #selector(backItemAction))
         }
+        
+        setUI()
     }
     
     deinit {
         JJC_Log("\(self) ********** 已经释放 **********")
     }
+    
+    open func setUI() {}
 }
 
 // MARK:- 按钮点击事件

@@ -75,3 +75,16 @@ extension UIColor {
         return image
     }
 }
+
+// MARK: - 常用颜色
+extension UIColor {
+    /// 控制器背景色（#F0F0F0 - 240,240,240）
+    public static func vcBgColor() -> UIColor {
+        return UIColor(hexString: "#F0F0F0")
+    }
+    
+    /// 线条颜色（#DCDCDC - 220,220,220）
+    public static func lineColor() -> UIColor {
+        return UIColor(hexString: "#DCDCDC")
+    }
+}

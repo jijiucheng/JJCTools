@@ -171,8 +171,8 @@ public func JJC_Image(_ name: String, isModule: Bool = false) -> UIImage? {
 
 /// JJCAPI - 日志 - isLineBreak：最后一行是否添加换行，isModule 是否显示 framework 所属
 public func JJC_Log<T>(_ log: T, file: String = #file, method: String = #function, line: Int = #line, isLineBreak: Bool = false, isModule: Bool = false) {
-    print("\(isModule ? "[JJCTools] ": "")\(JJC_CurTimeInfo().time) <\((file as NSString).lastPathComponent)> [\(line)] ---- \(method)：")
-    debugPrint(log)
+    print("\(isModule ? "[JJCTools] ": "")\(JJC_CurTimeInfo().time) <\((file as NSString).lastPathComponent)> [\(line)] \(method)：")
+    print(log)
     if isLineBreak {
         print()
     }

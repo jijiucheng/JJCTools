@@ -7,45 +7,45 @@
 
 import UIKit
 
+public enum JJCSegmentType: Int {
+    case `default` = 0      // 默认配置（动态宽度）
+    case fixed              // 固定宽度
+    case compatible         // 设定了默认最大个数，当小于最大个数时等宽显示，超过则动态宽度显示
+}
+
 public class JJCSegmentView: UIView {
+    /// JJCSegmentType - 展示类型
+    public var type: JJCSegmentType = .default
+    /// 元组 - 默认状态下参数（背景色、文字颜色、文字大小）
+    public var normalParams: (bgColor: UIColor, titleColor: UIColor, titleFont: UIFont) = (.clear, .darkGray, .systemFont(ofSize: 14))
+    /// 元组 - 选中状态下参数（背景色、文字颜色、文字大小）
+    public var selectedParams: (bgColor: UIColor, titleColor: UIColor, titleFont: UIFont) = (.clear, .black, .systemFont(ofSize: 16, weight: .medium))
+    /// 元组 - 线条参数（颜色、宽度、高度、宽度是否固定）
+    public var lineVParams: (color: UIColor, width: CGFloat, height: CGFloat, isFixed: Bool) = (.orange, 40, 2, false)
+    /// Array - 文字标题数组（默认、选中）
+    public var titles = [[String]]()
     /// Int - 最大 title 个数
-    fileprivate let maxNum: Int = 5
-    /// UIColor - 选中按钮底部横条 颜色
-    fileprivate var selectedBottomViewColor = UIColor.clear
-    /// CGFloat - 选中按钮底部横条 X
-    fileprivate var selectedBottomViewX: CGFloat = 0
-    /// CGFloat - 选中按钮底部横条 宽度
-    fileprivate var selectedBottomViewW: CGFloat = 0
-    /// CGFloat - 选中按钮底部横条 高度
-    fileprivate var selectedBottomViewH: CGFloat = 0
-    /// UIColor - normal 文字颜色
-    fileprivate var titleColor: UIColor = .black
-    /// UIFont - normal 文字大小
-    fileprivate var titleFont: UIFont = UIFont.systemFont(ofSize: 16)
-    /// UIColor - selected 文字颜色
-    fileprivate var selectedTitleColor: UIColor = .black
-    /// UIFont - selected 文字大小
-    fileprivate var selectedTitleFont: UIFont = UIFont.systemFont(ofSize: 16)
-    /// Array - 文字标题数组
-    fileprivate var titles = [String]()
+    public var maxNum: Int = 5
+    /// CGFloat - 按钮宽度（仅在 type = fixed 时有效）
+    public var itemWidth: CGFloat = 50
+    /// CGFloat - 两个按钮间距
+    public var itemSpace: CGFloat = JJC_Margin * 2
     
     /// UIScrollView - 按钮底部背景 ScrollView
     fileprivate var scrollView = UIScrollView()
-    /// UIView - 选中按钮底部背景 View
-    fileprivate lazy var selectedBgView = UIView()
-    /// UIView - 选中按钮底部横条 View
-    fileprivate lazy var selectedBottomView = UIView()
+    /// UIView - 线条
+    fileprivate var lineV = UIView()
     /// UIButton - 上次选中的按钮
     fileprivate var lastSelectedBtn = UIButton(type: .custom)
     
     /// 按钮点击事件回调
-    typealias ButtonActionBlock = (Int) -> Void
-    var buttonActionBlock: ButtonActionBlock?
-
+    public var clickBlock: ((Int, String, String) -> Void)?
+    
     public override init(frame: CGRect) {
         super.init(frame: frame)
         
-        setUI()
+        addSubview(lineV)
+        addSubview(scrollView)
     }
     
     required init?(coder: NSCoder) {
@@ -53,107 +53,110 @@ public class JJCSegmentView: UIView {
     }
 }
 
-// MARK: - UI
+// MARK: - 核心方法
 extension JJCSegmentView {
-    /// UI
+    /// 核心方法
     fileprivate func setUI() {
-        // UIView - 选中按钮底部横条 View
-        selectedBottomView.frame = CGRect(x: 0, y: frame.size.height, width: 0, height: 0)
-        addSubview(selectedBottomView)
+        // 移除所有子视图
+        scrollView.subviews.forEach({ $0.removeFromSuperview() })
+        // 设置 ScrollView
+        scrollView.frame = CGRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height - lineVParams.height)
+        scrollView.showsHorizontalScrollIndicator = false
+        
+        if let firstTitles = titles.first {
+            // 调整标题数组
+            var lastTitles: [String] = []
+            if let tempTitles = titles.last {
+                for (index, title) in firstTitles.enumerated() {
+                    lastTitles.append(index < tempTitles.count ? tempTitles[index] : title)
+                }
+            } else {
+                lastTitles = firstTitles
+            }
+            titles = [firstTitles, lastTitles]
+            
+            // 添加按钮
+            var btnMaxWidth: CGFloat = 0
+            for (index, title) in firstTitles.enumerated() {
+                // 计算宽度
+                var titleW = title.jjc_getContentSize(font: normalParams.titleFont, contentMaxWH: frame.size.width * 0.5, isCalculateHeight: false).width + itemSpace * 0.5 * 2
+                titleW = titleW < 40 ? 40 : titleW
+                titleW = titleW > frame.size.width * 0.5 ? frame.size.width * 0.5 : titleW
+                // 根据类型调整宽度
+                switch type {
+                case .fixed:  titleW = firstTitles.count > maxNum ? itemWidth : frame.size.width / CGFloat(firstTitles.count)
+                case .compatible: titleW = firstTitles.count > maxNum ? titleW : frame.size.width / CGFloat(firstTitles.count)
+                default: break
+                }
+                
+                // 创建按钮
+                let btn = UIButton(type: .custom)
+                btn.frame = CGRect(x: btnMaxWidth, y: 0, width: titleW, height: scrollView.frame.size.height)
+                btn.backgroundColor = normalParams.bgColor
+                btn.jjc_params(title: title, titleColor: normalParams.titleColor, font: normalParams.titleFont, state: .normal)
+                btn.jjc_params(title: lastTitles[index], titleColor: selectedParams.titleColor, font: normalParams.titleFont, state: .selected)
+                btn.tag = index
+                btn.isSelected = false
+                btn.addTarget(self, action: #selector(btnAction(button:)), for: .touchUpInside)
+                scrollView.addSubview(btn)
+                
+                // 标记选中
+                if index == lastSelectedBtn.tag {
+                    btn.isSelected = true
+                    btn.backgroundColor = selectedParams.bgColor
+                    btn.titleLabel?.font = selectedParams.titleFont
+                    lastSelectedBtn = btn
+                    
+                    let titleW = lastTitles[lastSelectedBtn.tag].jjc_getContentSize(font: selectedParams.titleFont, contentMaxWH: frame.size.width * 0.5, isCalculateHeight: false).width + JJC_Margin
+                    let titleX = lastSelectedBtn.frame.origin.x + (lastSelectedBtn.frame.size.width - titleW) * 0.5
+                    let titleY = lastSelectedBtn.frame.origin.y + lastSelectedBtn.frame.size.height
+                    lineVParams.width = lineVParams.isFixed ? lineVParams.width : titleW
+                    
+                    lineV.frame = CGRect(x: titleX, y: titleY, width: lineVParams.width, height: lineVParams.height)
+                    lineV.backgroundColor = lineVParams.color
+                }
+                btnMaxWidth = btnMaxWidth + titleW
+            }
+        }
     }
 }
 
 // MARK: - Methods
 extension JJCSegmentView {
-    /// Action - 核心方法
-    public func setTitles(_ titles: [String], titleColor: UIColor, titleFont: UIFont, selectedTitleColor: UIColor, selectedTitleFont: UIFont) {
-        // 缓存原始数据
-        self.titles = titles
-        self.titleColor = titleColor
-        self.titleFont = titleFont
-        self.selectedTitleColor = selectedTitleColor
-        self.selectedTitleFont = selectedTitleFont
-        
-        // 移除所有子视图
-        scrollView.subviews.forEach({ $0.removeFromSuperview() })
-        setSelectedBottomViewParams(color: selectedBottomViewColor, width: selectedBottomViewW, height: selectedBottomViewH)
-        // UIScrollView - 按钮底部背景 ScrollView
-        scrollView.frame = CGRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height - selectedBottomView.frame.size.height)
-        scrollView.showsHorizontalScrollIndicator = false
-        addSubview(scrollView)
-        
-        // 添加按钮
-        var btnMaxWidth: CGFloat = 0
-        for (index, title) in titles.enumerated() {
-            var titleW = title.jjc_getContentSize(font: titleFont, contentMaxWH: titleFont.pointSize, isCalculateHeight: false).width + JJC_Margin * 2
-            if frame.size.width > titleW * CGFloat(titles.count) {
-                titleW = frame.size.width / CGFloat(titles.count)
-            }
-            
-            let btn = UIButton(type: .custom)
-            btn.frame = CGRect(x: btnMaxWidth, y: 0, width: titleW, height: scrollView.frame.size.height)
-            btn.setTitle(title, for: .normal)
-            btn.setTitleColor(titleColor, for: .normal)
-            btn.setTitleColor(selectedTitleColor, for: .selected)
-            btn.titleLabel?.font = titleFont
-            btn.tag = index
-            btn.addTarget(self, action: #selector(btnAction(button:)), for: .touchUpInside)
-            scrollView.addSubview(btn)
-            
-            if index == 0 {
-                selectedBottomViewW = title.jjc_getContentSize(font: titleFont, contentMaxWH: titleFont.pointSize, isCalculateHeight: false).width
-                selectedBottomViewX = (titleW - selectedBottomViewW) * 0.5
-                selectedBottomView.frame = CGRect(x: selectedBottomViewX, y: selectedBottomView.frame.origin.y, width: selectedBottomViewW, height: selectedBottomView.frame.size.height)
-                
-                btn.isSelected = true
-                btn.titleLabel?.font = selectedTitleFont
-                lastSelectedBtn = btn
-            }
-            btnMaxWidth = btnMaxWidth + titleW
-        }
-    }
-    
-    /// Action - 选中按钮底部横条 View
-    public func setSelectedBottomViewParams(color: UIColor, width: CGFloat, height: CGFloat) {
-        selectedBottomViewColor = color
-        selectedBottomViewW = selectedBottomViewW == 0 ? width : selectedBottomViewW
-        selectedBottomViewH = height
-        
-        scrollView.frame = CGRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height - selectedBottomViewH)
-        selectedBottomView.frame = CGRect(x: selectedBottomViewX, y: frame.size.height - selectedBottomViewH, width: selectedBottomViewW, height: selectedBottomViewH)
-        selectedBottomView.backgroundColor = color
-    }
-    
-    /// Action - 更新标题
-    public func updateTitles(_ titles: [String]) {
-        for item in scrollView.subviews {
-            if let button = item as? UIButton {
-                button.setTitle(titles[button.tag], for: .normal)
-            }
-        }
+    /// Action - 开始渲染（需要在所有参数配置完成后调用，或有参数更新后调用）
+    public func jjc_update() {
+        setUI()
     }
     
     /// Action - 按钮点击事件
     @objc fileprivate func btnAction(button: UIButton) {
         if lastSelectedBtn.tag != button.tag {
             lastSelectedBtn.isSelected = false
-            lastSelectedBtn.setTitleColor(titleColor, for: .normal)
-            lastSelectedBtn.titleLabel?.font = titleFont
+            lastSelectedBtn.backgroundColor = normalParams.bgColor
+            lastSelectedBtn.titleLabel?.font = normalParams.titleFont
             button.isSelected = true
-            button.setTitleColor(selectedTitleColor, for: .selected)
-            button.titleLabel?.font = selectedTitleFont
-            
-            selectedBottomViewW = titles[button.tag].jjc_getContentSize(font: titleFont, contentMaxWH: titleFont.pointSize, isCalculateHeight: false).width
-            selectedBottomViewX = button.frame.origin.x + (button.frame.size.width - selectedBottomViewW) * 0.5
-            
-            UIView.animate(withDuration: 0.3) {
-                self.selectedBottomView.frame = CGRect(x: self.selectedBottomViewX, y: self.selectedBottomView.frame.origin.y, width: self.selectedBottomViewW, height: self.selectedBottomView.frame.size.height)
-            }
-            
+            button.backgroundColor = selectedParams.bgColor
+            button.titleLabel?.font = selectedParams.titleFont
             lastSelectedBtn = button
+            
+            // 动画效果
+            if let lastTitles = titles.last, lastTitles.count > lastSelectedBtn.tag {
+                let title = lastTitles[lastSelectedBtn.tag]
+                let titleW = title.jjc_getContentSize(font: selectedParams.titleFont, contentMaxWH: frame.size.width * 0.5, isCalculateHeight: false).width + JJC_Margin
+                let titleX = lastSelectedBtn.frame.origin.x + (lastSelectedBtn.frame.size.width - titleW) * 0.5
+                let titleY = lastSelectedBtn.frame.origin.y + lastSelectedBtn.frame.size.height
+                lineVParams.width = lineVParams.isFixed ? lineVParams.width : titleW
+                
+                UIView.animate(withDuration: 0.3) {
+                    self.lineV.frame = CGRect(x: titleX, y: titleY, width: self.lineVParams.width, height: self.lineVParams.height)
+                }
+            }
         }
-        if let buttonActionBlock = self.buttonActionBlock {
-            buttonActionBlock(lastSelectedBtn.tag)
+        if let firstTitles = titles.first, firstTitles.count > lastSelectedBtn.tag,
+            let lastTitles = titles.last, lastTitles.count > lastSelectedBtn.tag {
+            if let clickBlock = self.clickBlock {
+                clickBlock(lastSelectedBtn.tag, firstTitles[lastSelectedBtn.tag], lastTitles[lastSelectedBtn.tag])
+            }
         }
     }
 }

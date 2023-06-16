@@ -33,26 +33,8 @@ public class JJCWebViewController: JJCViewController {
         progressV.progressTintColor = .orange
         return progressV
     }()
-
-    public override func viewDidLoad() {
-        super.viewDidLoad()
-
-        setUI()
-    }
     
-    deinit {
-        self.webView.removeObserver(self, forKeyPath: WebViewProgressObserveKey)
-        self.webView.removeObserver(self, forKeyPath: WebViewURLObserveKey)
-        self.webView.removeObserver(self, forKeyPath: WebViewTitleObserveKey)
-        self.webView.removeObserver(self, forKeyPath: WebViewGoBackObserveKey)
-    }
-}
-
-// MARK:- UI
-extension JJCWebViewController {
-    /// UI
-    private func setUI() {
-        
+    public override func setUI() {
         // WKWebView
         self.webView.navigationDelegate = self
         self.webView.uiDelegate = self
@@ -66,6 +48,13 @@ extension JJCWebViewController {
         
         // UIProgressView - 进度条
         view.insertSubview(self.progressV, aboveSubview: self.webView)
+    }
+    
+    deinit {
+        self.webView.removeObserver(self, forKeyPath: WebViewProgressObserveKey)
+        self.webView.removeObserver(self, forKeyPath: WebViewURLObserveKey)
+        self.webView.removeObserver(self, forKeyPath: WebViewTitleObserveKey)
+        self.webView.removeObserver(self, forKeyPath: WebViewGoBackObserveKey)
     }
 }
 
