@@ -13,15 +13,25 @@ public enum JJCSegmentType: Int {
     case compatible         // 设定了默认最大个数，当小于最大个数时等宽显示，超过则动态宽度显示
 }
 
+public enum JJCSegmentSelectedType: Int {
+    case line = 0           // 底部线条
+    case textBgColor        // 文字背景颜色
+    case itemBgColor        // 按钮背景颜色
+}
+
 public class JJCSegmentView: UIView {
     /// JJCSegmentType - 展示类型
     public var type: JJCSegmentType = .default
+    /// JJCSegmentSelectedType - 选中类型
+    public var selectedType: JJCSegmentSelectedType = .line
     /// 元组 - 默认状态下参数（背景色、文字颜色、文字大小）
     public var normalParams: (bgColor: UIColor, titleColor: UIColor, titleFont: UIFont) = (.clear, .darkGray, .systemFont(ofSize: 14))
     /// 元组 - 选中状态下参数（背景色、文字颜色、文字大小）
     public var selectedParams: (bgColor: UIColor, titleColor: UIColor, titleFont: UIFont) = (.clear, .black, .systemFont(ofSize: 16, weight: .medium))
     /// 元组 - 线条参数（颜色、宽度、高度、宽度是否固定）
     public var lineVParams: (color: UIColor, width: CGFloat, height: CGFloat, isFixed: Bool) = (.orange, 40, 2, false)
+    /// 元组 - 选中背景颜色参数（颜色、宽度、高度、宽度是否固定）
+    public var bgColorVParams: (color: UIColor, width: CGFloat, height: CGFloat, radius: CGFloat, isFixed: Bool) = (.orange, 40, 30, 10, false)
     /// Array - 文字标题数组（默认、选中）
     public var titles = [[String]]()
     /// Int - 最大 title 个数
@@ -35,6 +45,8 @@ public class JJCSegmentView: UIView {
     fileprivate var scrollView = UIScrollView()
     /// UIView - 线条
     fileprivate var lineV = UIView()
+    /// UIView - 选中背景颜色
+    fileprivate var bgColorV = UIView()
     /// UIButton - 上次选中的按钮
     fileprivate var lastSelectedBtn = UIButton(type: .custom)
     
@@ -45,6 +57,7 @@ public class JJCSegmentView: UIView {
         super.init(frame: frame)
         
         addSubview(lineV)
+        addSubview(bgColorV)
         addSubview(scrollView)
     }
     
@@ -57,6 +70,22 @@ public class JJCSegmentView: UIView {
 extension JJCSegmentView {
     /// 核心方法
     fileprivate func setUI() {
+        // 调整显示选中类型及参数数据的合理性
+        switch selectedType {
+        case .line:
+            lineV.isHidden = false
+            bgColorV.isHidden = true
+            lineVParams.height = lineVParams.height > frame.size.height * 0.5 ? frame.size.height * 0.5 : lineVParams.height
+            lineV.backgroundColor = lineVParams.color
+        case .textBgColor, .itemBgColor:
+            lineV.isHidden = true
+            bgColorV.isHidden = false
+            lineVParams.height = 0
+            bgColorVParams.height = selectedType == .itemBgColor ? frame.size.height : (bgColorVParams.height > (frame.size.height - JJC_Margin) ? (frame.size.height - JJC_Margin) : bgColorVParams.height)
+            bgColorVParams.radius = bgColorVParams.radius > bgColorVParams.height ? bgColorVParams.height : bgColorVParams.radius
+            bgColorV.backgroundColor = bgColorVParams.color
+        }
+        
         // 移除所有子视图
         scrollView.subviews.forEach({ $0.removeFromSuperview() })
         // 设置 ScrollView
@@ -108,12 +137,18 @@ extension JJCSegmentView {
                     lastSelectedBtn = btn
                     
                     let titleW = lastTitles[lastSelectedBtn.tag].jjc_getContentSize(font: selectedParams.titleFont, contentMaxWH: frame.size.width * 0.5, isCalculateHeight: false).width + JJC_Margin
-                    let titleX = lastSelectedBtn.frame.origin.x + (lastSelectedBtn.frame.size.width - titleW) * 0.5
-                    let titleY = lastSelectedBtn.frame.origin.y + lastSelectedBtn.frame.size.height
+        
+                    let lineVX = lastSelectedBtn.frame.origin.x + (lastSelectedBtn.frame.size.width - titleW) * 0.5
+                    let lineVY = lastSelectedBtn.frame.origin.y + lastSelectedBtn.frame.size.height
                     lineVParams.width = lineVParams.isFixed ? lineVParams.width : titleW
+                    lineV.frame = CGRect(x: lineVX, y: lineVY, width: lineVParams.width, height: lineVParams.height)
+                    lineV.jjc_radius(radius: lineVParams.height * 0.5)
                     
-                    lineV.frame = CGRect(x: titleX, y: titleY, width: lineVParams.width, height: lineVParams.height)
-                    lineV.backgroundColor = lineVParams.color
+                    let bgColorVX = lastSelectedBtn.frame.origin.x + (selectedType == .itemBgColor ? 0 : (lastSelectedBtn.frame.size.width - titleW) * 0.5)
+                    let bgColorVY = selectedType == .itemBgColor ? 0 : (frame.size.height - bgColorVParams.height) * 0.5
+                    bgColorVParams.width = bgColorVParams.isFixed ? bgColorVParams.width : (selectedType == .itemBgColor ? lastSelectedBtn.frame.size.width : titleW)
+                    bgColorV.frame = CGRect(x: bgColorVX, y: bgColorVY, width: bgColorVParams.width, height: bgColorVParams.height)
+                    bgColorV.jjc_radius(radius: (bgColorVParams.radius > bgColorVParams.height ? bgColorVParams.height : bgColorVParams.radius))
                 }
                 btnMaxWidth = btnMaxWidth + titleW
             }
@@ -143,12 +178,18 @@ extension JJCSegmentView {
             if let lastTitles = titles.last, lastTitles.count > lastSelectedBtn.tag {
                 let title = lastTitles[lastSelectedBtn.tag]
                 let titleW = title.jjc_getContentSize(font: selectedParams.titleFont, contentMaxWH: frame.size.width * 0.5, isCalculateHeight: false).width + JJC_Margin
-                let titleX = lastSelectedBtn.frame.origin.x + (lastSelectedBtn.frame.size.width - titleW) * 0.5
-                let titleY = lastSelectedBtn.frame.origin.y + lastSelectedBtn.frame.size.height
+                
+                let lineVX = lastSelectedBtn.frame.origin.x + (lastSelectedBtn.frame.size.width - titleW) * 0.5
+                let lineVY = lastSelectedBtn.frame.origin.y + lastSelectedBtn.frame.size.height
                 lineVParams.width = lineVParams.isFixed ? lineVParams.width : titleW
                 
+                let bgColorVX = lastSelectedBtn.frame.origin.x + (selectedType == .itemBgColor ? 0 : (lastSelectedBtn.frame.size.width - titleW) * 0.5)
+                let bgColorVY = selectedType == .itemBgColor ? 0 : (frame.size.height - bgColorVParams.height) * 0.5
+                bgColorVParams.width = bgColorVParams.isFixed ? bgColorVParams.width : (selectedType == .itemBgColor ? lastSelectedBtn.frame.size.width : titleW)
+                
                 UIView.animate(withDuration: 0.3) {
-                    self.lineV.frame = CGRect(x: titleX, y: titleY, width: self.lineVParams.width, height: self.lineVParams.height)
+                    self.lineV.frame = CGRect(x: lineVX, y: lineVY, width: self.lineVParams.width, height: self.lineVParams.height)
+                    self.bgColorV.frame = CGRect(x: bgColorVX, y: bgColorVY, width: self.bgColorVParams.width, height: self.bgColorVParams.height)
                 }
             }
         }
