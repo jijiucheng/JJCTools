@@ -17,3 +17,8 @@
 "Success"   = "Success";
 "Failure"   = "Failure";
 "Loading"   = "Loading...";
+
+// MARK: - 主题模式
+"Theme_light" = "Light Mode";
+"Theme_dark" = "Dark Mode";
+"Theme_system" = "System Mode";

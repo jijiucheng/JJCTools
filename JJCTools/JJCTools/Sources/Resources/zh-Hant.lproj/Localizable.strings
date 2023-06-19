@@ -17,3 +17,8 @@
 "Success"   = "成功";
 "Failure"   = "失敗";
 "Loading"   = "加載中...";
+
+// MARK: - 主题模式
+"Theme_light" = "淺色模式";
+"Theme_dark" = "深色模式";
+"Theme_system" = "跟隨系統";

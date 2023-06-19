@@ -17,3 +17,8 @@
 "Success"   = "성공";
 "Failure"   = "실패";
 "Loading"   = "로드 중...";
+
+// MARK: - 主题模式
+"Theme_light" = "밝은 색상 패턴";
+"Theme_dark" = "다크 모드";
+"Theme_system" = "시스템 따르기";
