@@ -8,6 +8,7 @@
 import UIKit
 import AppTrackingTransparency
 import AdSupport
+import MediaPlayer
 
 public class JJCDevice: NSObject {}
 
@@ -93,3 +94,23 @@ extension JJCDevice {
     }
 }
 
+// MARK: - 获取、更改设备信息
+extension JJCDevice {
+    /// JJCDevice - 获取系统音量（参考链接：https://juejin.cn/post/7049606971032338439）
+    public static func jjc_systemVolume() -> CGFloat {
+        do {
+            try AVAudioSession.sharedInstance().setActive(true)
+        } catch _ {}
+        return CGFloat(AVAudioSession.sharedInstance().outputVolume)
+    }
+    
+    /// JJCDevice - 调节系统音量（参考链接：https://juejin.cn/post/7049606971032338439）
+    public static func jjc_updateSystemVolume(_ value: CGFloat) {
+        let volumeV = MPVolumeView()
+        if let childV = volumeV.subviews.first as? UISlider {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                childV.value = Float(value)
+            }
+        }
+    }
+}
