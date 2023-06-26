@@ -112,15 +112,15 @@ extension UIBarButtonItem {
 extension UIBarButtonItem {
     /// UIBarButtonItem - 简版 - 初始化导航栏按钮（默认）
     public class func jjc_paramsByCustom(_ isRight: Bool = false, image: UIImage, target: Any?, action: Selector) -> UIBarButtonItem {
-        let frame = CGRect(x: isRight ? 10 : -10, y: 0, width: 44, height: 44)
-        let insets = UIEdgeInsets(top: 7, left: isRight ? 5 : -5, bottom: 7, right: isRight ? -5 : 5)
+        let frame = CGRect(x: 0, y: 0, width: 44, height: 44)
+        let insets = UIEdgeInsets(top: 7, left: 0, bottom: 7, right: 0)
         return jjc_params(frame: frame, image: image, contentInsets: insets, horizontalAlignment: isRight ? .right : .left, target: target, action: action)
     }
     
     /// UIBarButtonItem - 简版 - 初始化导航栏文字按钮
     public class func jjc_paramsByCustom(_ isRight: Bool = false, title: String, color: UIColor = .darkGray, selectTitle: String? = nil, selectColor: UIColor? = nil, target: Any?, action: Selector) -> UIBarButtonItem {
-        let frame = CGRect(x: isRight ? 10 : -10, y: 0, width: 45, height: 44)
-        let insets = UIEdgeInsets(top: 7, left: isRight ? -5 : 5, bottom: 7, right: isRight ? 5 : -5)
+        let frame = CGRect(x: 0, y: 0, width: 45, height: 44)
+        let insets = UIEdgeInsets(top: 7, left: 0, bottom: 7, right: 0)
         let font = (title.count > (JJCLocal.jjc_isChinese(JJC_mainBundleByJJCTools).isChinese ? 3 : 6)) ? UIFont.systemFont(ofSize: 11) : UIFont.systemFont(ofSize: 14)
         return jjc_params(frame: frame, title: title, color: color, font: font, selectTitle: selectTitle, selectColor: selectColor, contentInsets: insets, horizontalAlignment: isRight ? .right : .left, target: target, action: action)
     }
