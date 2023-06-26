@@ -70,6 +70,27 @@ extension UIColor {
     }
 }
 
+// MARK: - UIColor 扩展方法
+extension UIColor {
+    /// UIColor - 动态颜色（暗黑模式适配）
+    public static func jjc_dynamicColor(any: UIColor, light: UIColor? = nil, dark: UIColor) -> UIColor {
+        UIColor { traitCollection in
+            if traitCollection.userInterfaceStyle == .dark {
+                return dark
+            } else if traitCollection.userInterfaceStyle == .light {
+                return light ?? any
+            } else {
+                return any
+            }
+        }
+    }
+    
+    /// UIColor - 判断两个颜色是否相同
+    public static func jjc_isEqual(_ colorA: UIColor, _ colorB: UIColor) -> Bool {
+        return colorA.isEqual(colorB)
+    }
+}
+
 // MARK: - UIColor 转换方法
 extension UIColor {
     /// UIColor - 颜色转图片
