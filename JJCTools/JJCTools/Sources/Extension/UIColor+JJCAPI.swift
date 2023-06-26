@@ -59,6 +59,15 @@ extension UIColor {
          
         self.init(red: red, green: green, blue: blue, alpha: alpha ?? 1.0)
     }
+    
+    /// UIColor - 初始化 颜色名称
+    public convenience init?(name: String, bundle: Bundle? = nil) {
+        if let mainBundle = bundle {
+            self.init(named: name, in: mainBundle, compatibleWith: nil)
+        } else {
+            self.init(named: name)
+        }
+    }
 }
 
 // MARK: - UIColor 转换方法
@@ -78,13 +87,23 @@ extension UIColor {
 
 // MARK: - 常用颜色
 extension UIColor {
-    /// 控制器背景色（#F0F0F0 - 240,240,240）
-    public static func vcBgColor() -> UIColor {
-        return UIColor(hexString: "#F0F0F0")
+    /// UIColor - 状态栏导航栏背景色
+    public static func jjc_statusNaviColor() -> UIColor {
+        return UIColor(name: "base_statusNaviColor", bundle: Bundle(for: JJCGlobalClass.self)) ?? .white
     }
     
-    /// 线条颜色（#DCDCDC - 220,220,220）
-    public static func lineColor() -> UIColor {
-        return UIColor(hexString: "#DCDCDC")
+    /// UIColor - 控制器背景色
+    public static func jjc_controllerColor() -> UIColor {
+        return UIColor(name: "base_controllerColor", bundle: Bundle(for: JJCGlobalClass.self)) ?? UIColor(hexString: "#FFFFFF")
+    }
+    
+    /// UIColor - 普通 View 背景色
+    public static func jjc_viewColor() -> UIColor {
+        return UIColor(name: "base_viewColor", bundle: Bundle(for: JJCGlobalClass.self)) ?? UIColor(hexString: "#FFFFFF")
+    }
+    
+    /// UIColor - 线条颜色（#DCDCDC - 220,220,220）
+    public static func jjc_lineColor() -> UIColor {
+        return UIColor(name: "base_lineColor", bundle: Bundle(for: JJCGlobalClass.self)) ?? UIColor(hexString: "#DCDCDC")
     }
 }

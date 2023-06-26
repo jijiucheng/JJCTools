@@ -35,8 +35,6 @@ open class JJCTheme: NSObject {
     /// JJCTheme - 单例
     public static let shared = JJCTheme()
     
-    /// JJCTheme - 获取当前系统主题模式
-    public let systemTheme = UITraitCollection.current.userInterfaceStyle
     /// JJCTheme - 当前主题模型数据
     fileprivate var themes = [JJCThemeModel]()
     /// JJCTheme - 当前选中模式
@@ -88,7 +86,7 @@ open class JJCTheme: NSObject {
 extension JJCTheme {
     /// JJCTheme - 跟随系统数据
     public func jjc_systemTheme() -> JJCThemeModel {
-        var model = systemTheme == .dark ? darkTheme : lightTheme
+        var model = jjc_curThemeMode() == .dark ? darkTheme : lightTheme
         model.mode = .system
         model.modeName = JJC_Local("Theme_system", "跟随系统")
         return model
@@ -135,5 +133,75 @@ extension JJCTheme {
             curTheme = themes[index]
         }
         return curTheme
+    }
+}
+
+// MARK: - 更改系统控件颜色
+extension JJCTheme {
+    /// JJCTheme - 获取当前浅色、深色模式类型
+    public func jjc_curThemeMode() -> UIUserInterfaceStyle {
+        return UITraitCollection.current.userInterfaceStyle
+    }
+
+    /// JJCAPI - 切换浅色、深色模式
+    public func jjc_themeMode(_ style: UIUserInterfaceStyle) {
+        JJC_KeyWindow()?.overrideUserInterfaceStyle = style
+    }
+    
+    /// JJCTheme - 更改状态栏背景色
+    public func jjc_setStatusColor(_ color: UIColor) {
+        if let rect = JJC_KeyWindow()?.windowScene?.statusBarManager?.statusBarFrame {
+            let statusV = UIView(frame: rect)
+            JJC_KeyWindow()?.addSubview(statusV)
+            statusV.backgroundColor = color
+        }
+    }
+    
+    /// JJCTheme - 更改导航栏背景色
+    public func jjc_setNavigationBarColor(_ color: UIColor, controller: UIViewController) {
+        // 虽然可以更改背景色，但是有透明效果，且界面有滚动的情况，颜色会消失
+//        controller.navigationController?.navigationBar.backgroundColor = color
+        // 虽然可以更改背景色，但是有透明效果，且最开始渲染的时候没有更改颜色，只有界面滚动的情况才有更改颜色
+        controller.navigationController?.navigationBar.barTintColor = color
+        // 去除透明效果，但是会使 View 整体向下偏移 (状态栏 + 导航栏) 的高度
+        controller.navigationController?.navigationBar.isTranslucent = false
+    }
+}
+
+// MARK: - 获取图片
+extension JJCTheme {
+    public func jjc_image_back() -> UIImage {
+        return JJC_Image("base_back", isModule: true) ?? UIImage()
+    }
+    
+    public func jjc_image_search() -> UIImage {
+        return JJC_Image("base_search", isModule: true) ?? UIImage()
+    }
+    
+    public func jjc_image_setting() -> UIImage {
+        return JJC_Image("base_setting", isModule: true) ?? UIImage()
+    }
+}
+
+// MARK: - 获取颜色
+extension JJCTheme {
+    public func jjc_color_statusNavi() -> UIColor {
+        return JJC_Color("base_statusNaviColor", isModule: true) ?? .white
+    }
+    
+    public func jjc_color_naviShadow() -> UIColor {
+        return JJC_Color("base_naviShadowColor", isModule: true) ?? UIColor(hexString: "#DCDCDC")
+    }
+    
+    public func jjc_color_controller() -> UIColor {
+        return JJC_Color("base_controllerColor", isModule: true) ?? UIColor(hexString: "#FFFFFF")
+    }
+    
+    public func jjc_color_view() -> UIColor {
+        return JJC_Color("base_viewColor", isModule: true) ?? UIColor(hexString: "#FFFFFF")
+    }
+    
+    public func jjc_color_line() -> UIColor {
+        return JJC_Color("base_lineColor", isModule: true) ?? UIColor(hexString: "#DCDCDC")
     }
 }

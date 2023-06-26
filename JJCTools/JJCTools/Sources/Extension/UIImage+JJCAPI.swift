@@ -8,6 +8,18 @@
 import Foundation
 import UIKit
 
+// MARK: - UIImage 图片生成
+extension UIImage {
+    /// UIImage - 初始化 图片名称
+    public convenience init?(name: String, bundle: Bundle? = nil) {
+        if let mainBundle = bundle {
+            self.init(named: name, in: mainBundle, compatibleWith: nil)
+        } else {
+            self.init(named: name)
+        }
+    }
+}
+
 // MARK: - UIImage 转换方法
 extension UIImage {
     /// UIImage - 图片转 String

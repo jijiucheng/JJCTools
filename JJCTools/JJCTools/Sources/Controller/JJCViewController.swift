@@ -19,7 +19,9 @@ import UIKit
 open class JJCViewController: UIViewController {
     open override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        JJCTheme.shared.jjc_setStatusColor(JJCTheme.shared.jjc_color_statusNavi())
+        JJCTheme.shared.jjc_setNavigationBarColor(JJCTheme.shared.jjc_color_statusNavi(), controller: self)
+        view.backgroundColor = JJCTheme.shared.jjc_color_controller()
         
         // 修复 iOS 15 系统下，导航栏显示问题
         // 参考链接：https://baijiahao.baidu.com/s?id=1711749740139600655&wfr=spider&for=pc
@@ -27,16 +29,22 @@ open class JJCViewController: UIViewController {
         if #available(iOS 15, *) {
             let appearance = UINavigationBarAppearance()
             appearance.configureWithOpaqueBackground()
-            appearance.backgroundColor = .white
+            appearance.backgroundColor = JJCTheme.shared.jjc_color_statusNavi()
+            // 设置导航栏底部线条颜色
+            appearance.shadowColor = JJCTheme.shared.jjc_color_naviShadow()
             navigationController?.navigationBar.standardAppearance = appearance;
             navigationController?.navigationBar.scrollEdgeAppearance = navigationController?.navigationBar.standardAppearance
         }
         
         if hidesBottomBarWhenPushed {
-            navigationItem.leftBarButtonItem = UIBarButtonItem.jjc_paramsByCustom(image: JJC_Image("base_back", isModule: true)!, target: self, action: #selector(backItemAction))
+            navigationItem.leftBarButtonItem = UIBarButtonItem.jjc_paramsByCustom(image: JJCTheme.shared.jjc_image_back(), target: self, action: #selector(backItemAction))
         }
         
         setUI()
+    }
+    
+    open override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .default
     }
     
     deinit {
@@ -44,6 +52,17 @@ open class JJCViewController: UIViewController {
     }
     
     open func setUI() {}
+}
+
+extension JJCViewController {
+    /// 监听浅色、深色模式变化
+    open override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        JJC_Log("当前主题模式1 ---- \(JJC_CurThemeMode().rawValue)")
+        if UITraitCollection.current.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            JJC_Log("当前主题模式2 ---- \(JJC_CurThemeMode().rawValue)")
+        }
+    }
 }
 
 // MARK:- 按钮点击事件

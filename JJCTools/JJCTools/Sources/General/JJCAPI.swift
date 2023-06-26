@@ -150,6 +150,15 @@ public func JJC_HexColorA(_ hexString: String, _ a: CGFloat? = 1.0) -> UIColor {
     return UIColor(hexString: hexString, alpha: a ?? 1.0)
 }
 
+/// JJCAPI - 颜色 - Name（暗黑模式）
+public func JJC_Color(_ name: String, isModule: Bool = false) -> UIColor? {
+    if isModule {
+        return UIColor(named: name, in: JJC_mainBundleByJJCTools, compatibleWith: nil)
+    } else {
+        return UIColor(named: name)
+    }
+}
+
 /// JJCAPI - 时间 - 获取指定时间信息
 public func JJC_TimeInfo(_ date: Date? = nil, dateFormat: String? = nil) -> JJCTimeInfo {
     Date.jjc_timeInfo(date, dateFormat: dateFormat)
@@ -302,6 +311,16 @@ public func JJC_NotiName(_ name: String) -> Notification.Name {
 /// JJCAPI - UUID
 public func JJC_UUID() -> String {
     return Bundle.main.bundleIdentifier ?? "" + "_" + UUID().uuidString
+}
+
+/// JJCAPI - 系统信息 - 获取当前浅色、深色模式类型
+public func JJC_CurThemeMode() -> UIUserInterfaceStyle {
+    return UITraitCollection.current.userInterfaceStyle
+}
+
+/// JJCAPI - 切换浅色、深色模式
+public func JJC_ThemeMode(_ style: UIUserInterfaceStyle) {
+    JJC_KeyWindow()?.overrideUserInterfaceStyle = style
 }
 
 /// JJCAPI - 获取当前控制器视图 UIViewController
