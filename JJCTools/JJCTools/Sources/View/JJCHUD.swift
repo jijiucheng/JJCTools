@@ -69,7 +69,7 @@ public class JJCHUD: UIView {
     }()
     /// 图标
     private lazy var iconImgView: UIImageView = {
-        let imageV = UIImageView(image: JJC_Image("base_hud_success", isModule: true))
+        let imageV = UIImageView(image: JJC_Image("base_hud_success", objClass: JJCGlobalClass.self))
         imageV.contentMode = .scaleAspectFit
         imageV.isHidden = true
         return imageV
@@ -273,7 +273,7 @@ extension JJCHUD {
                                    width: iconImgVWH,
                                    height: iconImgVWH)
         iconImgView.isHidden = (type != .success && type != .failure)
-        iconImgView.image = type == .success ? JJC_Image("base_hud_success", isModule: true) : (type == .failure ? JJC_Image("base_hud_failure", isModule: true) : nil)
+        iconImgView.image = type == .success ? JJC_Image("base_hud_success", objClass: JJCGlobalClass.self) : (type == .failure ? JJC_Image("base_hud_failure", objClass: JJCGlobalClass.self) : nil)
         
         // 进度框
         progressView.frame = CGRect(x: (containerView.jjc_width - iconImgVWH) * 0.5,
@@ -367,7 +367,7 @@ extension JJCHUD {
             if let tempIcon = icon {
                 iconImgView.image = tempIcon
             } else {
-                iconImgView.image = type == .success ? JJC_Image("base_hud_success", isModule: true) : JJC_Image("base_hud_failure", isModule: true)
+                iconImgView.image = type == .success ? JJC_Image("base_hud_success", objClass: JJCGlobalClass.self) : JJC_Image("base_hud_failure", objClass: JJCGlobalClass.self)
             }
         }
         if type == .loading || type == .progress {

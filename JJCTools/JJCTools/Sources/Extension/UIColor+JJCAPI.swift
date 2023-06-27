@@ -61,11 +61,21 @@ extension UIColor {
     }
     
     /// UIColor - 初始化 颜色名称
-    public convenience init?(name: String, bundle: Bundle? = nil) {
-        if let mainBundle = bundle {
-            self.init(named: name, in: mainBundle, compatibleWith: nil)
-        } else {
+    /// - `bundle` 和 `objClass`
+    ///   - 是用于获取 `mainBundle（Bundle.main）` 的，主要是用于区分是获取主工程的资源文件，还是子工程的资源文件；
+    ///   - bundle 参数获取 mainBundle 优先级高于通过 objClass 参数获取 mainBundle；
+    public convenience init?(name: String, bundle: Bundle? = nil, objClass: AnyClass? = nil) {
+        var mainBundle = Bundle.main
+        if let tempObjClass = objClass {
+            mainBundle = Bundle(for: tempObjClass)
+        }
+        if let tempBundle = bundle {
+            mainBundle = tempBundle
+        }
+        if mainBundle.isEqual(Bundle.main) {
             self.init(named: name)
+        } else {
+            self.init(named: name, in: mainBundle, compatibleWith: nil)
         }
     }
 }

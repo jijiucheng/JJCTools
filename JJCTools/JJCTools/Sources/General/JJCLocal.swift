@@ -9,8 +9,7 @@ import UIKit
 import Foundation
 
 public class JJCLocal: NSObject {
-    
-    /// JJCLocal - 定义语言返回参数
+    /// JJCLocal - 定义返回语言参数
     /// - localCode：当前语言编码
     /// - code：指定语言编码
     /// - showName：根据当前语言编码获取指定语言编码对应的语言名称
@@ -26,26 +25,23 @@ public class JJCLocal: NSObject {
                                           showName: String?,
                                           name: String?,
                                           note: String?)
+    
+    /// JJCLocal - 定义返回系统语言参数
+    /// - availableIdentifiers：系统所有本地化标识符数组列表
+    /// - preferredLanguages：当前手机系统已添加全部语言【设置->通用->语言->首选语言顺序】，此处也可以通过 UserDefaults.standard.value(forKey: "AppleLanguages") 获取
+    /// - systemLanguage：当前手机系统语言【设置->通用->语言->首选语言顺序】，此处也可以通过 UserDefaults.standard.value(forKey: "AppleLanguages") 获取
+    public typealias JJCSystemLanguageParams = (availableIdentifiers: [String],
+                                                preferredLanguages: [String],
+                                                systemLanguage: String)
 }
 
 // MARK:- Language
 extension JJCLocal {
-    
-    /// JJCLocal - 类方法 - 获取系统所有本地化标识符数组列表
-    public static func jjc_systemAllAvailableLanguages() -> [String] {
-        return Locale.availableIdentifiers
-    }
-
-    /// JJCLocal - 类方法 - 获取当前手机系统已添加全部语言【设置->通用->语言->首选语言顺序】
-    /// - 此处也可以通过 UserDefaults.standard.value(forKey: "AppleLanguages") 获取
-    public static func jjc_systemAllLanguages() -> [String] {
-        return Locale.preferredLanguages
-    }
-    
-    /// JJCLocal - 类方法 - 获取当前手机系统语言【设置->通用->语言->首选语言顺序】
-    /// - 此处也可以通过 UserDefaults.standard.value(forKey: "AppleLanguages") 获取
-    public static func jjc_systemLanguage() -> String {
-        return Locale.preferredLanguages.first ?? "en"
+    /// JJCLocal - 类方法
+    public static func jjc_systemLanguageInfo() -> JJCSystemLanguageParams {
+        return (Locale.availableIdentifiers,
+                Locale.preferredLanguages,
+                Locale.preferredLanguages.first ?? "en")
     }
     
     /// JJCLocal - 类方法 - 根据系统所有本地化标识符获取某语言显示对应语言名称（官方命名）
@@ -101,12 +97,23 @@ extension JJCLocal {
     
     /// JJCLocal - 类方法 - 获取当前语言环境（根据 Bundle 获取 lproj 的语言文件）
     /// - 参考链接：https://www.jianshu.com/p/1199cda9c61b
-    public static func jjc_language(_ bundle: Bundle = Bundle.main) -> String {
+    /// - `bundle` 和 `objClass`
+    ///   - 是用于获取 `mainBundle（Bundle.main）` 的，主要是用于区分是获取主工程的资源文件，还是子工程的资源文件；
+    ///   - bundle 参数获取 mainBundle 优先级高于通过 objClass 参数获取 mainBundle；
+    public static func jjc_language(_ bundle: Bundle? = nil, objClass: AnyClass? = nil) -> String {
+        // 0、获取 mainBundle
+        var mainBundle = Bundle.main
+        if let tempObjClass = objClass {
+            mainBundle = Bundle(for: tempObjClass)
+        }
+        if let tempBundle = bundle {
+            mainBundle = tempBundle
+        }
         // 1、获取当前本地语言
-        let language = bundle.preferredLocalizations.first ?? "en"
+        let language = mainBundle.preferredLocalizations.first ?? "en"
         var targetLanguage: String?
         // 2、获取当前 bundle 文件中所有本地语言
-        let languages = bundle.localizations
+        let languages = mainBundle.localizations
         // 3.1、先查询是否有完全同名语言文件
         for string in languages {
             if language == string {
@@ -138,41 +145,54 @@ extension JJCLocal {
         return targetLanguage ?? "en"
     }
     
-    /// JJCLocal - 类方法 - 本地语言 - 带注释（根据 Bundle 获取 lproj 的语言文件）
-    public static func jjc_local(_ key: String, _ comment: String? = nil, bundle: Bundle = Bundle.main, lproj: String? = nil) -> String {
-        var newLproj: String = JJCLocal.jjc_language(bundle)
-        if let tempLproj: String = lproj {
-            newLproj = tempLproj
-        }
-        if let lprojPath = bundle.path(forResource: newLproj, ofType: "lproj") {
-            if Bundle(path: lprojPath) != nil {
-                if let languageBundle = Bundle(path: bundle.path(forResource: newLproj, ofType: "lproj") ?? "") {
-                    return languageBundle.localizedString(forKey: key, value: key, table: nil)
-                }
-            }
-        }
-        return NSLocalizedString(key, comment: comment ?? key)
-    }
-
-    /// JJCLocal - 类方法 - 本地语言 - 带注释（根据 Bundle 获取）
-    /// - bundle 和 objClass 两个参数需同时传递，且 objClass 必须为对应 bundle 所在 Module 任一 class 对象
-    /// - objClass 设计原因是 Bundle 的 public init(for aClass: AnyClass) 方法，根据某个类获取当前工程下的主 Bundle，如果不进行如此操作，获取的就是 Demo 工程里的 Main Bundle
+    /// JJCLocal - 类方法 - 本地语言 - 带注释
+    /// - `bundle` 和 `objClass`
+    ///   - 是用于获取 `mainBundle（Bundle.main）` 的，主要是用于区分是获取主工程的资源文件，还是子工程的资源文件；
+    ///   - bundle 参数获取 mainBundle 优先级高于通过 objClass 参数获取 mainBundle；
+    /// - `bundleName`：获取到 `mainBundle` 后，获取内部的 `xxx.bundle` 资源文件名称，主要取决于资源放的位置；
+    /// - `lproj`：语言文件
     /// - 参考链接：https://www.jianshu.com/p/b64ff9d8e7ce、https://www.jianshu.com/p/173076faa742
-    public static func jjc_local(byBundle key: String, _ comment: String? = nil, bundleName: String? = nil, objClass: AnyClass = JJCGlobalClass.self, lproj: String? = nil) -> String {
-        if let newBundleName: String = bundleName {
-            let bundlePath = Bundle(for: objClass).path(forResource: newBundleName, ofType: "bundle") ?? ""
-            if let mainBundle = Bundle(path: bundlePath) {
-                return JJCLocal.jjc_local(key, comment, bundle: mainBundle, lproj: lproj)
+    public static func jjc_local(_ key: String, _ comment: String? = nil, bundle: Bundle? = nil, objClass: AnyClass? = nil, bundleFileName: String? = nil, lproj: String? = nil) -> String {
+        var mainBundle = Bundle.main
+        if let tempObjClass = objClass {
+            mainBundle = Bundle(for: tempObjClass)
+        }
+        if let tempBundle = bundle {
+            mainBundle = tempBundle
+        }
+        
+        var mainLproj: String = JJCLocal.jjc_language(mainBundle)
+        if let tempLproj: String = lproj {
+            mainLproj = tempLproj
+        }
+        
+        var result = key
+        if let tempBundleFileName = bundleFileName,
+            let bundleFilePath = mainBundle.path(forResource: tempBundleFileName, ofType: "bundle"),
+            let bundleFile = Bundle(path: bundleFilePath) {
+            // 获取 xxx.bundle 文件中的资源文件，暂时无法获取二级目录下的文件，image 用 contentsOfFile 获取
+            if let lprojFilePath = bundleFile.path(forResource: mainLproj, ofType: "lproj"),
+                let lprojFile = Bundle(path: lprojFilePath) {
+                    result = lprojFile.localizedString(forKey: key, value: key, table: nil)
+            }
+        } else {
+            if let lprojFile = Bundle(path: mainBundle.path(forResource: mainLproj, ofType: "lproj") ?? "") {
+                result = lprojFile.localizedString(forKey: key, value: key, table: nil)
+            } else {
+                result = NSLocalizedString(key, bundle: mainBundle, comment: comment ?? key)
             }
         }
-        return NSLocalizedString(key, comment: comment ?? key)
+        return result
     }
     
     /// JJCLocal - 类方法 - 当前语言环境是否是中文
+    /// - `bundle` 和 `objClass`
+    ///   - 是用于获取 `mainBundle（Bundle.main）` 的，主要是用于区分是获取主工程的资源文件，还是子工程的资源文件；
+    ///   - bundle 参数获取 mainBundle 优先级高于通过 objClass 参数获取 mainBundle；
     /// - 返回参数一：是否是中文；
     /// - 返回参数二：当前语言环境
-    public static func jjc_isChinese(_ bundle: Bundle = Bundle.main) -> (isChinese: Bool, language: String) {
-        let preferredLang = JJCLocal.jjc_language(bundle)
+    public static func jjc_isChinese(_ bundle: Bundle? = nil, objClass: AnyClass? = nil) -> (isChinese: Bool, language: String) {
+        let preferredLang = JJCLocal.jjc_language(bundle, objClass: objClass)
         switch String(describing: preferredLang) {
         case "en-US", "en-CN":
             return (false, preferredLang)

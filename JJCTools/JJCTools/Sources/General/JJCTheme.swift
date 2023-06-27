@@ -14,24 +14,24 @@ open class JJCTheme: NSObject {
     
     /// 主题模式类型
     public let modes: [(mode: UIUserInterfaceStyle, name: String)] = {
-        return [(.unspecified, JJC_Local("Theme_system", "跟随系统")),
-                (.light, JJC_Local("Theme_light", "浅色模式")),
-                (.dark, JJC_Local("Theme_system", "跟随系统"))]
+        return [(.unspecified, JJC_Local("Theme_system", "跟随系统", objClass: JJCGlobalClass.self)),
+                (.light, JJC_Local("Theme_light", "浅色模式", objClass: JJCGlobalClass.self)),
+                (.dark, JJC_Local("Theme_system", "跟随系统", objClass: JJCGlobalClass.self))]
     }()
 }
 
 // MARK: - 获取图片
 extension JJCTheme {
     public func jjc_image_back() -> UIImage {
-        return JJC_Image("base_back", isModule: true) ?? UIImage()
+        return JJC_Image("base_back", objClass: JJCGlobalClass.self) ?? UIImage()
     }
     
     public func jjc_image_search() -> UIImage {
-        return JJC_Image("base_search", isModule: true) ?? UIImage()
+        return JJC_Image("base_search", objClass: JJCGlobalClass.self) ?? UIImage()
     }
     
     public func jjc_image_setting() -> UIImage {
-        return JJC_Image("base_setting", isModule: true) ?? UIImage()
+        return JJC_Image("base_setting", objClass: JJCGlobalClass.self) ?? UIImage()
     }
 }
 
@@ -51,47 +51,47 @@ extension JJCTheme {
     }
     
     public func jjc_color_statusNavi() -> UIColor {
-        return JJC_Color("base_statusNaviColor", isModule: true) ?? .white
+        return JJC_Color("base_statusNaviColor", objClass: JJCGlobalClass.self) ?? .white
     }
     
     public func jjc_color_naviShadow() -> UIColor {
-        return JJC_Color("base_naviShadowColor", isModule: true) ?? UIColor(hexString: "#DCDCDC")
+        return JJC_Color("base_naviShadowColor", objClass: JJCGlobalClass.self) ?? UIColor(hexString: "#DCDCDC")
     }
     
     public func jjc_color_controller() -> UIColor {
-        return JJC_Color("base_controllerColor", isModule: true) ?? UIColor(hexString: "#FFFFFF")
+        return JJC_Color("base_controllerColor", objClass: JJCGlobalClass.self) ?? UIColor(hexString: "#FFFFFF")
     }
     
     public func jjc_color_view() -> UIColor {
-        return JJC_Color("base_viewColor", isModule: true) ?? UIColor(hexString: "#FFFFFF")
+        return JJC_Color("base_viewColor", objClass: JJCGlobalClass.self) ?? UIColor(hexString: "#FFFFFF")
     }
     
     public func jjc_color_line() -> UIColor {
-        return JJC_Color("base_lineColor", isModule: true) ?? UIColor(hexString: "#DCDCDC")
+        return JJC_Color("base_lineColor", objClass: JJCGlobalClass.self) ?? UIColor(hexString: "#DCDCDC")
     }
     
     public func jjc_color_mainTitle() -> UIColor {
-        return JJC_Color("base_mainTitleColor", isModule: true) ?? UIColor(hexString: "#000000")
+        return JJC_Color("base_mainTitleColor", objClass: JJCGlobalClass.self) ?? UIColor(hexString: "#000000")
     }
     
     public func jjc_color_subTitle() -> UIColor {
-        return JJC_Color("base_subTitleColor", isModule: true) ?? UIColor(hexString: "#353535")
+        return JJC_Color("base_subTitleColor", objClass: JJCGlobalClass.self) ?? UIColor(hexString: "#353535")
     }
     
     public func jjc_color_otherTitle() -> UIColor {
-        return JJC_Color("base_otherTitleColor", isModule: true) ?? UIColor(hexString: "#898989")
+        return JJC_Color("base_otherTitleColor", objClass: JJCGlobalClass.self) ?? UIColor(hexString: "#898989")
     }
     
     public func jjc_color_maskTitle() -> UIColor {
-        return JJC_Color("base_maskTitleColor", isModule: true) ?? UIColor(hexString: "#FFFFFF")
+        return JJC_Color("base_maskTitleColor", objClass: JJCGlobalClass.self) ?? UIColor(hexString: "#FFFFFF")
     }
     
     public func jjc_color_source() -> UIColor {
-        return JJC_Color("base_sourceColor", isModule: true) ?? UIColor(hexString: "#FF0000")
+        return JJC_Color("base_sourceColor", objClass: JJCGlobalClass.self) ?? UIColor(hexString: "#FF0000")
     }
     
     public func jjc_color_lastChapter() -> UIColor {
-        return JJC_Color("base_lastChapterColor", isModule: true) ?? UIColor(hexString: "#FFA500")
+        return JJC_Color("base_lastChapterColor", objClass: JJCGlobalClass.self) ?? UIColor(hexString: "#FFA500")
     }
 }
 

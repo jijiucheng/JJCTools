@@ -151,11 +151,40 @@ public func JJC_HexColorA(_ hexString: String, _ a: CGFloat? = 1.0) -> UIColor {
 }
 
 /// JJCAPI - 颜色 - Name（暗黑模式）
-public func JJC_Color(_ name: String, isModule: Bool = false) -> UIColor? {
-    if isModule {
-        return UIColor(named: name, in: JJC_mainBundleByJJCTools, compatibleWith: nil)
-    } else {
+/// - `bundle` 和 `objClass`
+///   - 是用于获取 `mainBundle（Bundle.main）` 的，主要是用于区分是获取主工程的资源文件，还是子工程的资源文件；
+///   - bundle 参数获取 mainBundle 优先级高于通过 objClass 参数获取 mainBundle；
+public func JJC_Color(_ name: String, bundle: Bundle? = nil, objClass: AnyClass? = nil) -> UIColor? {
+    var mainBundle = Bundle.main
+    if let tempObjClass = objClass {
+        mainBundle = Bundle(for: tempObjClass)
+    }
+    if let tempBundle = bundle {
+        mainBundle = tempBundle
+    }
+    if mainBundle.isEqual(Bundle.main) {
         return UIColor(named: name)
+    } else {
+        return UIColor(named: name, in: JJC_mainBundleByJJCTools, compatibleWith: nil)
+    }
+}
+
+/// JJCAPI - 图片 - 获取图片资源
+/// - `bundle` 和 `objClass`
+///   - 是用于获取 `mainBundle（Bundle.main）` 的，主要是用于区分是获取主工程的资源文件，还是子工程的资源文件；
+///   - bundle 参数获取 mainBundle 优先级高于通过 objClass 参数获取 mainBundle；
+public func JJC_Image(_ name: String, bundle: Bundle? = nil, objClass: AnyClass? = nil) -> UIImage? {
+    var mainBundle = Bundle.main
+    if let tempObjClass = objClass {
+        mainBundle = Bundle(for: tempObjClass)
+    }
+    if let tempBundle = bundle {
+        mainBundle = tempBundle
+    }
+    if mainBundle.isEqual(Bundle.main) {
+        return UIImage(named: name)
+    } else {
+        return UIImage(named: name, in: JJC_mainBundleByJJCTools, compatibleWith: nil)
     }
 }
 
@@ -167,15 +196,6 @@ public func JJC_TimeInfo(_ date: Date? = nil, dateFormat: String? = nil) -> JJCT
 /// JJCAPI - 时间 - 获取当前时间信息
 public func JJC_CurTimeInfo(_ dateFormat: String? = nil) -> JJCTimeInfo {
     return JJC_TimeInfo(Date(), dateFormat: dateFormat)
-}
-
-/// JJCAPI - 图片 - 获取图片资源
-public func JJC_Image(_ name: String, isModule: Bool = false) -> UIImage? {
-    if isModule {
-        return UIImage(named: name, in: JJC_mainBundleByJJCTools, compatibleWith: nil)
-    } else {
-        return UIImage(named: name)
-    }
 }
 
 /// JJCAPI - 日志 - isLineBreak：最后一行是否添加换行，isModule 是否显示 framework 所属
@@ -191,22 +211,26 @@ public func JJC_Log<T>(_ log: T, file: String = #file, method: String = #functio
 /// JJJCAPI - 本地语言 - 获取当前手机系统语言【设置->通用->语言->首选语言顺序】
 /// - 此处也可以通过 UserDefaults.standard.value(forKey: "AppleLanguages") 获取
 public func JJC_systemLanguage() -> String {
-    return JJCLocal.jjc_systemLanguage()
+    return JJCLocal.jjc_systemLanguageInfo().systemLanguage
 }
 
 /// JJCAPI - 本地语言 - 获取当前语言环境（根据 Bundle 获取 lproj 的语言文件）
-public func JJC_Language(_ bundle: Bundle = Bundle.main) -> String {
-    return JJCLocal.jjc_language(bundle)
+/// - `bundle` 和 `objClass`
+///   - 是用于获取 `mainBundle（Bundle.main）` 的，主要是用于区分是获取主工程的资源文件，还是子工程的资源文件；
+///   - bundle 参数获取 mainBundle 优先级高于通过 objClass 参数获取 mainBundle；
+public func JJC_Language(_ bundle: Bundle? = nil, objClass: AnyClass? = nil) -> String {
+    return JJCLocal.jjc_language(bundle, objClass: objClass)
 }
 
-/// JJCAPI - 本地语言 - 带注释（根据 Bundle 获取 lproj 的语言文件）
-public func JJC_Local(byBundle key: String, _ comment: String? = nil, bundle: Bundle = Bundle.main, lproj: String? = nil) -> String {
-    return JJCLocal.jjc_local(key, comment, bundle: bundle, lproj: lproj)
-}
-
-/// JJCLocal - 本地语言 - 获取 JJCTools 指定语言
-public func JJC_Local(_ key: String, _ comment: String? = nil, lproj: String? = nil) -> String {
-    return JJCLocal.jjc_local(byBundle: key, comment, bundleName: "JJCTools")
+/// JJCAPI - 本地语言 - 带注释
+/// - `bundle` 和 `objClass`
+///   - 是用于获取 `mainBundle（Bundle.main）` 的，主要是用于区分是获取主工程的资源文件，还是子工程的资源文件；
+///   - bundle 参数获取 mainBundle 优先级高于通过 objClass 参数获取 mainBundle；
+/// - `bundleName`：获取到 `mainBundle` 后，获取内部的 `xxx.bundle` 资源文件名称，主要取决于资源放的位置；
+/// - `lproj`：语言文件
+/// - 参考链接：https://www.jianshu.com/p/b64ff9d8e7ce、https://www.jianshu.com/p/173076faa742
+public func JJC_Local(_ key: String, _ comment: String? = nil, bundle: Bundle? = nil, objClass: AnyClass? = nil, bundleFileName: String? = nil, lproj: String? = nil) -> String {
+    return JJCLocal.jjc_local(key, comment, bundle: bundle, objClass: objClass, bundleFileName: bundleFileName, lproj: lproj)
 }
 
 // MARK: - 弹框提醒
