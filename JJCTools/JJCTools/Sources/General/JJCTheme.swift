@@ -46,7 +46,7 @@ open class JJCTheme: NSObject {
         colors.append((.theme, "主题色", "#60D0C4", "#60D0C4", "#60D0C4"))
         colors.append((.status, "状态栏背景色", "#FFFFFF", "#FFFFFF", "#111111"))
         colors.append((.navigationBar, "导航栏背景色", "#FFFFFF", "#FFFFFF", "#111111"))
-        colors.append((.navigationShadow, "导航栏底部线条颜色", "#DCDCDC", "#DCDCDC", "#111111_0.30"))
+        colors.append((.navigationShadow, "导航栏底部线条颜色", "#DCDCDC", "#DCDCDC", "#DCDCDC_0.30"))
         colors.append((.controller, "控制器背景色", "#FFFFFF", "#FFFFFF", "#111111"))
         colors.append((.view, "组件背景色", "#FFFFFF", "#FFFFFF", "#111111"))
         colors.append((.line, "线条颜色", "#DCDCDC", "#DCDCDC", "#DCDCDC"))
