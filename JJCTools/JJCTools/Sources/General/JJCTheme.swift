@@ -19,6 +19,7 @@ public enum JJCThemeColor: String {
     case mainTitle = "MainTitleColor"                   // 主标题颜色
     case subTitle = "SubTitleColor"                     // 副标题颜色
     case otherTitle = "OtherTitleColor"                 // 其它标题颜色
+    case carved = "CarvedColor"                         // 蒙层背景色
     case maskTitle = "MaskTitleColor"                   // 蒙层标题颜色
     case sourceTitle = "SourceTitleColor"               // 源标题颜色
     case lastChapter = "LastChapterColor"               // 最新章节颜色
@@ -53,6 +54,7 @@ open class JJCTheme: NSObject {
         colors.append((.mainTitle, "主标题颜色", "#000000", "#000000", "#FFFFFF"))
         colors.append((.subTitle, "副标题颜色", "#353535", "#353535", "#EEEEEE"))
         colors.append((.otherTitle, "其它标题颜色", "#898989", "#898989", "#999999"))
+        colors.append((.carved, "蒙层背景色", "#333333_0.80", "#333333_0.80", "#CCCCCC_0.5"))
         colors.append((.maskTitle, "蒙层标题颜色", "#FFFFFF", "#FFFFFF", "#FFFFFF"))
         colors.append((.sourceTitle, "源标题颜色", "#FF0000", "#FF0000", "#FF0000"))
         colors.append((.lastChapter, "最新章节颜色", "#FFA500", "#FFA500", "#FFA500"))
