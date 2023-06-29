@@ -26,7 +26,7 @@ public enum JJCThemeColor: String {
 
 public typealias JJCThemeColorParams = (key: JJCThemeColor, name: String, unspecified: String, light: String, dark: String)
 public func JJC_ThemeColor(_ key: JJCThemeColor, update: JJCThemeColorParams? = nil) -> UIColor {
-    return JJCTheme.shared.jjc_color(key, update: update)
+    return JJCTheme.shared.jjc_color(key, update: update).dynamic
 }
 
 
@@ -97,19 +97,8 @@ extension JJCTheme {
         }
     }
     
-    /// JJCTheme - 根据颜色值字符串获取色值和透明度
-    fileprivate func jjc_getColorValueAndAlpha(_ value: String) -> (color: String, alpha: CGFloat) {
-        guard value.jjc_isNotEmptyOrValid() else { return ("#000000", 1) }
-        let array = value.components(separatedBy: "_")
-        if array.count > 1 {
-            return (array[0], CGFloat(Double(array[1]) ?? 1))
-        } else {
-            return (array[0], 1)
-        }
-    }
-    
     /// JJCTheme - 校验新设置的色值合法性
-    fileprivate func jjc_checkColor(_ value: String) -> (isUpdate: Bool, value: String) {
+    public func jjc_checkColor(_ value: String) -> (isValid: Bool, value: String) {
         let tempValue = value.uppercased()
         if tempValue.count == 7, let first = tempValue.jjc_getRegexStrings("#[A-F0-9]{6}").first {
             return (true, first)
@@ -120,8 +109,20 @@ extension JJCTheme {
         }
     }
     
-    /// JJCTheme - 根据 key 获取或更新所需的颜色
-    public func jjc_color(_ key: JJCThemeColor, update: JJCThemeColorParams? = nil) -> UIColor {
+    /// JJCTheme - 根据颜色值字符串获取颜色、色值和透明度
+    public func jjc_getColorInfo(_ value: String) -> (color: UIColor, value: String, alpha: CGFloat) {
+        guard value.jjc_isNotEmptyOrValid() else { return (UIColor(hexString: "#000000"), "#000000", 1) }
+        let array = value.components(separatedBy: "_")
+        if array.count > 1 {
+            let alpha = CGFloat(Double(array[1]) ?? 1)
+            return (UIColor(hexString: array[0], alpha: alpha), array[0], alpha)
+        } else {
+            return (UIColor(hexString: array[0]), array[0], 1)
+        }
+    }
+    
+    /// JJCTheme - 根据 key 获取、更新所需的颜色
+    public func jjc_color(_ key: JJCThemeColor, update: JJCThemeColorParams? = nil) -> (`dynamic`: UIColor, unspecified: UIColor, light: UIColor, dark: UIColor) {
         var keyIndex = 0
         var keyItem: JJCThemeColorParams = (key, "", "", "", "")
         for (index, item) in customColors.enumerated() where item.key == key {
@@ -130,16 +131,16 @@ extension JJCTheme {
             break
         }
         if let tempUpdate = update {
-            keyItem.unspecified = jjc_checkColor(tempUpdate.unspecified).isUpdate ? tempUpdate.unspecified : keyItem.unspecified
-            keyItem.light = jjc_checkColor(tempUpdate.light).isUpdate ? tempUpdate.light : keyItem.light
-            keyItem.dark = jjc_checkColor(tempUpdate.dark).isUpdate ? tempUpdate.dark : keyItem.dark
+            keyItem.unspecified = jjc_checkColor(tempUpdate.unspecified).isValid ? tempUpdate.unspecified : keyItem.unspecified
+            keyItem.light = jjc_checkColor(tempUpdate.light).isValid ? tempUpdate.light : keyItem.light
+            keyItem.dark = jjc_checkColor(tempUpdate.dark).isValid ? tempUpdate.dark : keyItem.dark
             customColors[keyIndex] = keyItem
         }
         
-        let unspecified: UIColor = UIColor(hexString: jjc_getColorValueAndAlpha(keyItem.unspecified).color, alpha: jjc_getColorValueAndAlpha(keyItem.unspecified).alpha)
-        let light: UIColor = UIColor(hexString: jjc_getColorValueAndAlpha(keyItem.light).color, alpha: jjc_getColorValueAndAlpha(keyItem.light).alpha)
-        let dark: UIColor = UIColor(hexString: jjc_getColorValueAndAlpha(keyItem.dark).color, alpha: jjc_getColorValueAndAlpha(keyItem.dark).alpha)
-        return jjc_getDynamicColor(unspecified, light, dark)
+        let unspecified = jjc_getColorInfo(keyItem.unspecified).color
+        let light = jjc_getColorInfo(keyItem.light).color
+        let dark = jjc_getColorInfo(keyItem.dark).color
+        return (jjc_getDynamicColor(unspecified, light, dark), unspecified, light, dark)
     }
 }
 
