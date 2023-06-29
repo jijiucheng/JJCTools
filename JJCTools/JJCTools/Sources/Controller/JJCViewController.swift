@@ -19,8 +19,8 @@ import UIKit
 open class JJCViewController: UIViewController {
     open override func viewDidLoad() {
         super.viewDidLoad()
-        JJCTheme.shared.jjc_setStatusColor(JJCTheme.shared.jjc_color_statusNavi())
-        JJCTheme.shared.jjc_setNavigationBarColor(JJCTheme.shared.jjc_color_statusNavi(), controller: self)
+        JJCTheme.shared.jjc_setStatusColor(JJCTheme.shared.jjc_color_status())
+        JJCTheme.shared.jjc_setNavigationBarColor(JJCTheme.shared.jjc_color_navigationBar(), controller: self)
         view.backgroundColor = JJCTheme.shared.jjc_color_controller()
         
         // 修复 iOS 15 系统下，导航栏显示问题
@@ -29,7 +29,7 @@ open class JJCViewController: UIViewController {
         if #available(iOS 15, *) {
             let appearance = UINavigationBarAppearance()
             appearance.configureWithOpaqueBackground()
-            appearance.backgroundColor = JJCTheme.shared.jjc_color_statusNavi()
+            appearance.backgroundColor = JJCTheme.shared.jjc_color_navigationBar()
             // 设置导航栏底部线条颜色
             appearance.shadowColor = JJCTheme.shared.jjc_color_naviShadow()
             navigationController?.navigationBar.standardAppearance = appearance;

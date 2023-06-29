@@ -150,6 +150,19 @@ public func JJC_HexColorA(_ hexString: String, _ a: CGFloat? = 1.0) -> UIColor {
     return UIColor(hexString: hexString, alpha: a ?? 1.0)
 }
 
+/// JJCAPI - 颜色 - 获取动态颜色
+public func JJC_DynamicColor(_ any: UIColor, _ light: UIColor? = nil, _ dark: UIColor) -> UIColor {
+    UIColor { traitCollection in
+        if traitCollection.userInterfaceStyle == .dark {
+            return dark
+        } else if traitCollection.userInterfaceStyle == .light {
+            return light ?? any
+        } else {
+            return any
+        }
+    }
+}
+
 /// JJCAPI - 颜色 - Name（暗黑模式）
 /// - `bundle` 和 `objClass`
 ///   - 是用于获取 `mainBundle（Bundle.main）` 的，主要是用于区分是获取主工程的资源文件，还是子工程的资源文件；
