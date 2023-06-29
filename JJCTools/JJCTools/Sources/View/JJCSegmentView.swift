@@ -25,9 +25,9 @@ public class JJCSegmentView: UIView {
     /// JJCSegmentSelectedType - 选中类型
     public var selectedType: JJCSegmentSelectedType = .line
     /// 元组 - 默认状态下参数（背景色、文字颜色、文字大小）
-    public var normalParams: (bgColor: UIColor, titleColor: UIColor, titleFont: UIFont) = (.clear, JJCTheme.shared.jjc_color_subTitle(), .systemFont(ofSize: 14))
+    public var normalParams: (bgColor: UIColor, titleColor: UIColor, titleFont: UIFont) = (.clear, JJC_ThemeColor(.subTitle), .systemFont(ofSize: 14))
     /// 元组 - 选中状态下参数（背景色、文字颜色、文字大小）
-    public var selectedParams: (bgColor: UIColor, titleColor: UIColor, titleFont: UIFont) = (.clear, JJCTheme.shared.jjc_color_mainTitle(), .systemFont(ofSize: 16, weight: .medium))
+    public var selectedParams: (bgColor: UIColor, titleColor: UIColor, titleFont: UIFont) = (.clear, JJC_ThemeColor(.mainTitle), .systemFont(ofSize: 16, weight: .medium))
     /// 元组 - 线条参数（颜色、宽度、高度、宽度是否固定）
     public var lineVParams: (color: UIColor, width: CGFloat, height: CGFloat, isFixed: Bool) = (.orange, 40, 2, false)
     /// 元组 - 选中背景颜色参数（颜色、宽度、高度、宽度是否固定）

@@ -8,19 +8,27 @@
 import UIKit
 import Foundation
 
-fileprivate let ThemeColor = "ThemeColor"
-fileprivate let StatusColor = "StatusColor"
-fileprivate let NavigationBarColor = "NavigationBarColor"
-fileprivate let NavigationShadowColor = "NavigationShadowColor"
-fileprivate let ControllerColor = "ControllerColor"
-fileprivate let ViewColor = "ViewColor"
-fileprivate let LineColor = "LineColor"
-fileprivate let MainTitleColor = "MainTitleColor"
-fileprivate let SubTitleColor = "SubTitleColor"
-fileprivate let OtherTitleColor = "OtherTitleColor"
-fileprivate let MaskTitleColor = "MaskTitleColor"
-fileprivate let SourceColor = "SourceColor"
-fileprivate let LastChapterColor = "LastChapterColor"
+public enum JJCThemeColor: String {
+    case theme = "ThemeColor"                           // 主题色
+    case status = "StatusColor"                         // 状态栏背景色
+    case navigationBar = "NavigationBarColor"           // 导航栏背景色
+    case navigationShadow = "NavigationShadowColor"     // 导航栏底部线条颜色
+    case controller = "ControllerColor"                 // 控制器背景色
+    case view = "ViewColor"                             // 组件背景色
+    case line = "LineColor"                             // 线条颜色
+    case mainTitle = "MainTitleColor"                   // 主标题颜色
+    case subTitle = "SubTitleColor"                     // 副标题颜色
+    case otherTitle = "OtherTitleColor"                 // 其它标题颜色
+    case maskTitle = "MaskTitleColor"                   // 蒙层标题颜色
+    case sourceTitle = "SourceTitleColor"               // 源标题颜色
+    case lastChapter = "LastChapterColor"               // 最新章节颜色
+}
+
+public typealias JJCThemeColorParams = (key: JJCThemeColor, name: String, unspecified: String, light: String, dark: String)
+public func JJC_ThemeColor(_ key: JJCThemeColor, update: JJCThemeColorParams? = nil) -> UIColor {
+    return JJCTheme.shared.jjc_color(key, update: update)
+}
+
 
 open class JJCTheme: NSObject {
     /// JJCTheme - 单例
@@ -32,43 +40,31 @@ open class JJCTheme: NSObject {
                 (.light, JJC_Local("Theme_light", "浅色模式", objClass: JJCGlobalClass.self)),
                 (.dark, JJC_Local("Theme_system", "跟随系统", objClass: JJCGlobalClass.self))]
     }()
-    public typealias JJCThemeColorParams = (key: String, name: String, unspecified: String, light: String, dark: String)
     /// 默认颜色数组
     public let defaultColors: [JJCThemeColorParams] = {
         var colors = [JJCThemeColorParams]()
-        colors.append((ThemeColor, "主题色", "#60D0C4", "#60D0C4", "#60D0C4"))
-        colors.append((StatusColor, "状态栏背景色", "#FFFFFF", "#FFFFFF", "#111111"))
-        colors.append((NavigationBarColor, "导航栏背景色", "#FFFFFF", "#FFFFFF", "#111111"))
-        colors.append((NavigationShadowColor, "导航栏底部线条颜色", "#DCDCDC", "#DCDCDC", "#111111_0.3"))
-        colors.append((ControllerColor, "控制器背景色", "#FFFFFF", "#FFFFFF", "#111111"))
-        colors.append((ViewColor, "组件背景色", "#FFFFFF", "#FFFFFF", "#111111"))
-        colors.append((LineColor, "线条颜色", "#DCDCDC", "#DCDCDC", "#DCDCDC"))
-        colors.append((MainTitleColor, "主标题颜色", "#000000", "#000000", "#FFFFFF"))
-        colors.append((SubTitleColor, "副标题颜色", "#353535", "#353535", "#EEEEEE"))
-        colors.append((OtherTitleColor, "其它标题颜色", "#898989", "#898989", "#999999"))
-        colors.append((MaskTitleColor, "蒙层标题颜色", "#FFFFFF", "#FFFFFF", "#FFFFFF"))
-        colors.append((SourceColor, "源标题颜色", "#FF0000", "#FF0000", "#FF0000"))
-        colors.append((LastChapterColor, "最新章节颜色", "#FFA500", "#FFA500", "#FFA500"))
+        colors.append((.theme, "主题色", "#60D0C4", "#60D0C4", "#60D0C4"))
+        colors.append((.status, "状态栏背景色", "#FFFFFF", "#FFFFFF", "#111111"))
+        colors.append((.navigationBar, "导航栏背景色", "#FFFFFF", "#FFFFFF", "#111111"))
+        colors.append((.navigationShadow, "导航栏底部线条颜色", "#DCDCDC", "#DCDCDC", "#111111_0.30"))
+        colors.append((.controller, "控制器背景色", "#FFFFFF", "#FFFFFF", "#111111"))
+        colors.append((.view, "组件背景色", "#FFFFFF", "#FFFFFF", "#111111"))
+        colors.append((.line, "线条颜色", "#DCDCDC", "#DCDCDC", "#DCDCDC"))
+        colors.append((.mainTitle, "主标题颜色", "#000000", "#000000", "#FFFFFF"))
+        colors.append((.subTitle, "副标题颜色", "#353535", "#353535", "#EEEEEE"))
+        colors.append((.otherTitle, "其它标题颜色", "#898989", "#898989", "#999999"))
+        colors.append((.maskTitle, "蒙层标题颜色", "#FFFFFF", "#FFFFFF", "#FFFFFF"))
+        colors.append((.sourceTitle, "源标题颜色", "#FF0000", "#FF0000", "#FF0000"))
+        colors.append((.lastChapter, "最新章节颜色", "#FFA500", "#FFA500", "#FFA500"))
         return colors
     }()
     /// 自定义颜色数组
-    public var customColors: [JJCThemeColorParams] = {
-        var colors = [JJCThemeColorParams]()
-        colors.append((ThemeColor, "主题色", "#60D0C4", "#60D0C4", "#60D0C4"))
-        colors.append((StatusColor, "状态栏背景色", "#FFFFFF", "#FFFFFF", "#111111"))
-        colors.append((NavigationBarColor, "导航栏背景色", "#FFFFFF", "#FFFFFF", "#111111"))
-        colors.append((NavigationShadowColor, "导航栏底部线条颜色", "#DCDCDC", "#DCDCDC", "#111111_0.3"))
-        colors.append((ControllerColor, "控制器背景色", "#FFFFFF", "#FFFFFF", "#111111"))
-        colors.append((ViewColor, "组件背景色", "#FFFFFF", "#FFFFFF", "#111111"))
-        colors.append((LineColor, "线条颜色", "#DCDCDC", "#DCDCDC", "#DCDCDC"))
-        colors.append((MainTitleColor, "主标题颜色", "#000000", "#000000", "#FFFFFF"))
-        colors.append((SubTitleColor, "副标题颜色", "#353535", "#353535", "#EEEEEE"))
-        colors.append((OtherTitleColor, "其它标题颜色", "#898989", "#898989", "#999999"))
-        colors.append((MaskTitleColor, "蒙层标题颜色", "#FFFFFF", "#FFFFFF", "#FFFFFF"))
-        colors.append((SourceColor, "源标题颜色", "#FF0000", "#FF0000", "#FF0000"))
-        colors.append((LastChapterColor, "最新章节颜色", "#FFA500", "#FFA500", "#FFA500"))
-        return colors
-    }()
+    public var customColors = [JJCThemeColorParams]()
+    
+    override init() {
+        super.init()
+        customColors = defaultColors
+    }
 }
 
 // MARK: - 获取图片
@@ -112,82 +108,38 @@ extension JJCTheme {
         }
     }
     
-    /// JJCTheme - 根据 key 获取所需的颜色
-    public func jjc_getColor(_ key: String) -> UIColor {
-        var params: JJCThemeColorParams = (key, "", "", "", "")
-        for item in customColors where item.key == key {
-            params = item
+    /// JJCTheme - 校验新设置的色值合法性
+    fileprivate func jjc_checkColor(_ value: String) -> (isUpdate: Bool, value: String) {
+        let tempValue = value.uppercased()
+        if tempValue.count == 7, let first = tempValue.jjc_getRegexStrings("#[A-F0-9]{6}").first {
+            return (true, first)
+        } else if tempValue.count == 12, let first = tempValue.jjc_getRegexStrings("#[A-F0-9]{6}_([0][.][0-9]{2})").first {
+            return (true, first)
+        } else {
+            return (false, tempValue)
+        }
+    }
+    
+    /// JJCTheme - 根据 key 获取或更新所需的颜色
+    public func jjc_color(_ key: JJCThemeColor, update: JJCThemeColorParams? = nil) -> UIColor {
+        var keyIndex = 0
+        var keyItem: JJCThemeColorParams = (key, "", "", "", "")
+        for (index, item) in customColors.enumerated() where item.key == key {
+            keyIndex = index
+            keyItem = item
             break
         }
-        let unspecified: UIColor = UIColor(hexString: jjc_getColorValueAndAlpha(params.unspecified).color, alpha: jjc_getColorValueAndAlpha(params.unspecified).alpha)
-        var light: UIColor = UIColor(hexString: jjc_getColorValueAndAlpha(params.light).color, alpha: jjc_getColorValueAndAlpha(params.light).alpha)
-        var dark: UIColor = UIColor(hexString: jjc_getColorValueAndAlpha(params.dark).color, alpha: jjc_getColorValueAndAlpha(params.dark).alpha)
+        if let tempUpdate = update {
+            keyItem.unspecified = jjc_checkColor(tempUpdate.unspecified).isUpdate ? tempUpdate.unspecified : keyItem.unspecified
+            keyItem.light = jjc_checkColor(tempUpdate.light).isUpdate ? tempUpdate.light : keyItem.light
+            keyItem.dark = jjc_checkColor(tempUpdate.dark).isUpdate ? tempUpdate.dark : keyItem.dark
+            customColors[keyIndex] = keyItem
+        }
+        
+        let unspecified: UIColor = UIColor(hexString: jjc_getColorValueAndAlpha(keyItem.unspecified).color, alpha: jjc_getColorValueAndAlpha(keyItem.unspecified).alpha)
+        let light: UIColor = UIColor(hexString: jjc_getColorValueAndAlpha(keyItem.light).color, alpha: jjc_getColorValueAndAlpha(keyItem.light).alpha)
+        let dark: UIColor = UIColor(hexString: jjc_getColorValueAndAlpha(keyItem.dark).color, alpha: jjc_getColorValueAndAlpha(keyItem.dark).alpha)
         return jjc_getDynamicColor(unspecified, light, dark)
-    }
-    
-    /// JJCTheme - 主题色
-    public func jjc_color_theme() -> UIColor {
-        return jjc_getColor(ThemeColor)
-    }
-    
-    /// JJCTheme - 状态栏背景色
-    public func jjc_color_status() -> UIColor {
-        return jjc_getColor(StatusColor)
-    }
-    
-    /// JJCTheme - 导航栏背景色
-    public func jjc_color_navigationBar() -> UIColor {
-        return jjc_getColor(NavigationBarColor)
-    }
-    
-    /// JJCTheme - 导航栏底部线条颜色
-    public func jjc_color_naviShadow() -> UIColor {
-        return jjc_getColor(NavigationShadowColor)
-    }
-    
-    /// JJCTheme - 控制器背景色
-    public func jjc_color_controller() -> UIColor {
-        return jjc_getColor(ControllerColor)
-    }
-    
-    /// JJCTheme - 组件背景色
-    public func jjc_color_view() -> UIColor {
-        return jjc_getColor(ViewColor)
-    }
-    
-    /// JJCTheme - 线条颜色
-    public func jjc_color_line() -> UIColor {
-        return jjc_getColor(LineColor)
-    }
-    
-    /// JJCTheme - 主标题颜色
-    public func jjc_color_mainTitle() -> UIColor {
-        return jjc_getColor(MainTitleColor)
-    }
-    
-    /// JJCTheme - 副标题颜色
-    public func jjc_color_subTitle() -> UIColor {
-        return jjc_getColor(SubTitleColor)
-    }
-    
-    /// JJCTheme - 其它标题颜色
-    public func jjc_color_otherTitle() -> UIColor {
-        return jjc_getColor(OtherTitleColor)
-    }
-    
-    /// JJCTheme -  状态栏背景色
-    public func jjc_color_maskTitle() -> UIColor {
-        return jjc_getColor(MaskTitleColor)
-    }
-    
-    /// JJCTheme - 源标题颜色
-    public func jjc_color_sourceTitle() -> UIColor {
-        return jjc_getColor(SourceColor)
-    }
-    
-    /// JJCTheme - 最新章节颜色
-    public func jjc_color_lastChapter() -> UIColor {
-        return jjc_getColor(LastChapterColor)
     }
 }
 
