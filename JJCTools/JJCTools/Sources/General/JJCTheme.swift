@@ -39,7 +39,7 @@ open class JJCTheme: NSObject {
     public let modes: [(mode: UIUserInterfaceStyle, name: String)] = {
         return [(.unspecified, JJC_Local("Theme_system", "跟随系统", objClass: JJCGlobalClass.self)),
                 (.light, JJC_Local("Theme_light", "浅色模式", objClass: JJCGlobalClass.self)),
-                (.dark, JJC_Local("Theme_system", "跟随系统", objClass: JJCGlobalClass.self))]
+                (.dark, JJC_Local("Theme_dark", "深色模式", objClass: JJCGlobalClass.self))]
     }()
     /// 默认颜色数组
     public let defaultColors: [JJCThemeColorParams] = {
