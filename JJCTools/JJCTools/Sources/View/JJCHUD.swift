@@ -53,14 +53,14 @@ public class JJCHUD: UIView {
     fileprivate var content: String?
     
     /// 蒙层背景
-    private lazy var maskBgView: UIView = {
+    fileprivate lazy var maskBgView: UIView = {
         let view = UIView()
         view.backgroundColor = .clear
         view.alpha = 1
         return view
     }()
     /// 背景
-    private lazy var containerView: UIView = {
+    fileprivate lazy var containerView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(white: 0, alpha: 0.7)
         view.layer.cornerRadius = 16
@@ -68,21 +68,21 @@ public class JJCHUD: UIView {
         return view
     }()
     /// 图标
-    private lazy var iconImgView: UIImageView = {
+    fileprivate lazy var iconImgView: UIImageView = {
         let imageV = UIImageView(image: JJC_Image("base_hud_success", objClass: JJCGlobalClass.self))
         imageV.contentMode = .scaleAspectFit
         imageV.isHidden = true
         return imageV
     }()
     /// 进度
-    private lazy var progressView: JJCHUDProgressView = {
+    fileprivate lazy var progressView: JJCHUDProgressView = {
         let view = JJCHUDProgressView()
         view.backgroundColor = .clear
         view.isHidden = true
         return view
     }()
     /// 文本内容
-    private lazy var contentLabel: UILabel = {
+    fileprivate lazy var contentLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
         label.font = .systemFont(ofSize: 15)
@@ -214,7 +214,7 @@ extension JJCHUD {
     }
     
     /// 根据类型设置默认隐藏时间
-    func hideByDefault(_ completion: (() -> Void)? = nil) {
+    public func hideByDefault(_ completion: (() -> Void)? = nil) {
         switch type {
         case .message: hide(delay: 1.5, completion: completion)
         case .success: hide(delay: 1, completion: completion)

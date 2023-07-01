@@ -280,8 +280,8 @@ public func JJC_Alert(title: String? = nil,
 }
 
 /// JJCAPI - HUD - 纯文本类型弹框
-public func JJC_HUD_Message(_ view: UIView? = nil,
-                            content: String,
+public func JJC_HUD_Message(_ content: String,
+                            view: UIView? = nil,
                             completion: (() -> Void)? = nil) {
     let hud = JJCHUD.show(view ?? JJC_CurViewController().view)
     hud.setConfig(.message, content: content)
@@ -289,10 +289,10 @@ public func JJC_HUD_Message(_ view: UIView? = nil,
 }
 
 /// JJCAPI - HUD - 成功失败弹框
-public func JJC_HUD_SuccessOrFailure(_ view: UIView? = nil,
+public func JJC_HUD_SuccessOrFailure(_ content: String? = nil,
                                      isSuccess: Bool = true,
-                                     content: String? = nil,
                                      lproj: String? = nil,
+                                     view: UIView? = nil,
                                      completion: (() -> Void)? = nil) {
     let hud = JJCHUD.show(view ?? JJC_CurViewController().view)
     hud.setConfig(isSuccess ? .success : .failure,
@@ -301,10 +301,10 @@ public func JJC_HUD_SuccessOrFailure(_ view: UIView? = nil,
 }
 
 /// JJCAPI - HUD - 加载中、加载进度弹框
-public func JJC_HUD_LoadingOrProgress(_ view: UIView? = nil,
+public func JJC_HUD_LoadingOrProgress(_ content: String? = nil,
                                       isLoading: Bool = true,
-                                      content: String? = nil,
-                                      lproj: String? = nil) -> JJCHUD {
+                                      lproj: String? = nil,
+                                      view: UIView? = nil) -> JJCHUD {
     let hud = JJCHUD.show(view ?? JJC_CurViewController().view)
     hud.setConfig(isLoading ? .loading : .progress,
                   content: content ?? "加载中...")
@@ -361,61 +361,40 @@ public func JJC_ThemeMode(_ style: UIUserInterfaceStyle) {
 }
 
 /// JJCAPI - 获取当前控制器视图 UIViewController
+/// 参考链接：https://blog.51cto.com/928343994/5209078
 public func JJC_CurViewController() -> UIViewController {
-    // 定义一个变量存放当前屏幕显示的 viewController
-    var currentVC = UIViewController()
-    // 得到当前应用程序的主窗口（需要在 viewDidLoad 加载完成才会有值）
-    if var keyWindow = JJC_KeyWindow() {
-        // windowLevel 是在 Z轴方向上的窗口位置，默认值是 UIWindowLevel
-        if keyWindow.windowLevel != UIWindow.Level.normal {
-            // 获取应用程序的所有窗口并进行遍历，并找到程序的默认窗口（正在显示的窗口）
-            for window in JJC_Windows() where window.windowLevel == UIWindow.Level.normal {
-                // 将关键窗口赋值为默认窗口
-                keyWindow = window
-                break
-            }
-        }
-        
-        // 根据获取到的主窗口获取当前根控制器，并判断是否存在
-        if let rootVC = keyWindow.rootViewController {
-            // 获取窗口的当前显示图，并判断是否存在
-            if let frontView = keyWindow.subviews.first {
-                // 获取视图的下一个响应者，UIView 视图调用这个方法的返回值为 UIViewController 或它的父视图
-                var nextResponder = frontView.next
-                // 判断显示视图的下一个响应者是否为一个 UITabBarController 的类对象
-                if rootVC.isKind(of: UITabBarController.self) {
-                    nextResponder = rootVC
-                }
-                // 判断显示视图的下一个响应者是否为一个 UIViewController 的类对象
-                if var presetedVC = rootVC.presentedViewController {
-                    while presetedVC.presentedViewController != nil {
-                        presetedVC = presetedVC.presentedViewController!
-                    }
-                    nextResponder = presetedVC
-                }
-                
-                if (nextResponder?.isKind(of: UITabBarController.self)) ?? false {
-                    if let tabBarVC = nextResponder as? UITabBarController, let viewControllers = tabBarVC.viewControllers {
-                        let naviVC = viewControllers[tabBarVC.selectedIndex]
-                        if let lastVC = naviVC.children.last {
-                            currentVC = lastVC
-                        }
-                    }
-                } else if (nextResponder?.isKind(of: UINavigationController.self)) ?? false {
-                    if let naviVC = nextResponder as? UINavigationController, let lastVC = naviVC.children.last {
-                        currentVC = lastVC
-                    }
-                } else {
-                    if (nextResponder?.isKind(of: UIView.self)) ?? false {
-                        
-                    } else {
-                        if let tempCurrentVC = nextResponder as? UIViewController {
-                            currentVC = tempCurrentVC
-                        }
-                    }
-                }
-            }
+    var currentVC: UIViewController? = nil
+    var keyWindow = JJC_KeyWindow()
+    
+    // 获取 KeyWindow（windowLevel 是在 Z轴方向上的窗口位置，默认值是 UIWindowLevel）
+    if let tempWindow = keyWindow, tempWindow.windowLevel != .normal {
+        // 获取应用程序的所有窗口并进行遍历，并找到程序的默认窗口（正在显示的窗口）
+        for window in JJC_Windows() where window.windowLevel == UIWindow.Level.normal {
+            keyWindow = window
+            break
         }
     }
-    return currentVC
+    
+    // 根据获取到的 KeyWindow 获取当前根控制器，并判断是否存在
+    if var rootVC = keyWindow?.rootViewController {
+        // 如果是通过 present 的方式跳转（A.presentedViewController A控制器跳转到B控制器；B.presentingViewController 就是返回到A控制器）
+        while let presentedVC = rootVC.presentedViewController {
+            rootVC = presentedVC
+        }
+        // 匹配对应类型的控制器
+        if rootVC.isKind(of: UITabBarController.self) {
+            if let tabBarVC = rootVC as? UITabBarController,
+               let lastVC = tabBarVC.viewControllers?[tabBarVC.selectedIndex].children.last {
+                currentVC = lastVC
+            }
+        } else if rootVC.isKind(of: UINavigationController.self) {
+            if let naviVC = rootVC as? UINavigationController,
+                let lastVC = naviVC.children.last {
+                currentVC = lastVC
+            }
+        } else if rootVC.isKind(of: UIViewController.self) {
+            currentVC = rootVC
+        }
+    }
+    return currentVC ?? UIViewController()
 }
