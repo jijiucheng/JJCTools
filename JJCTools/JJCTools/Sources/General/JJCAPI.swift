@@ -401,6 +401,8 @@ public func JJC_CurViewController() -> UIViewController {
 
 /// JJCAPI - 获取当前控制器对应的控制器链路层
 /// 参考链接：https://blog.51cto.com/928343994/5209078
+/// root：根控制器；present：跳转方式 present；push：跳转方式 push
+/// tabBarVC：当前控制器是 UITabBarController；naviVC：当前控制器是 UINavigationController；vc：普通的 UIViewController
 public func JJC_CurViewControllerLinkLayer() -> [[(vc: UIViewController, type: [String])]] {
     var curVC: UIViewController? = JJC_CurViewController()
     var allVCList = [[(vc: UIViewController, type: [String])]]()
