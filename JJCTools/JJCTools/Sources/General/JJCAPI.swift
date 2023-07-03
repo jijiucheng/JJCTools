@@ -400,8 +400,28 @@ public func JJC_CurViewController() -> UIViewController {
 }
 
 /// JJCAPI - 获取当前控制器对应的控制器链路层
-public func JJC_CurControllerLinkLayer() -> [[(vc: UIViewController, type: String)]] {
-    let curVC = JJC_CurViewController()
-    
-    return []
+/// 参考链接：https://blog.51cto.com/928343994/5209078
+public func JJC_CurViewControllerLinkLayer() -> [[(vc: UIViewController, type: [String])]] {
+    var curVC: UIViewController? = JJC_CurViewController()
+    var allVCList = [[(vc: UIViewController, type: [String])]]()
+    while curVC != nil, let tempCurVC = curVC {
+        var vcList = [(vc: UIViewController, type: [String])]()
+        if tempCurVC.isKind(of: UITabBarController.self) {
+            vcList.append((tempCurVC, ["root", "tabbarVC"]))
+        } else if tempCurVC.isKind(of: UINavigationController.self) {
+            for (index, item) in tempCurVC.children.enumerated() {
+                if index == 0 {
+                    vcList.append((item, item.presentingViewController != nil ? ["present", "naviVC"]: ["root", "naviVC"]))
+                } else {
+                    vcList.append((item, ["push", "vc"]))
+                }
+            }
+        } else {
+            vcList.append((tempCurVC, tempCurVC.presentingViewController != nil ? ["present", "vc"] : ["root", "vc"]))
+        }
+        allVCList.insert(vcList, at: 0)
+        curVC = tempCurVC.presentingViewController
+        JJC_Log("打印 --- \(String(describing: vcList.description))")
+    }
+    return allVCList
 }
