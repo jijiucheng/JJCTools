@@ -398,3 +398,10 @@ public func JJC_CurViewController() -> UIViewController {
     }
     return currentVC ?? UIViewController()
 }
+
+/// JJCAPI - 获取当前控制器对应的控制器链路层
+public func JJC_CurControllerLinkLayer() -> [[(vc: UIViewController, type: String)]] {
+    let curVC = JJC_CurViewController()
+    
+    return []
+}
