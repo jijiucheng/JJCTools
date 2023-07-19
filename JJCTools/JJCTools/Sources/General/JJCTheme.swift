@@ -23,6 +23,9 @@ public enum JJCThemeColor: String {
     case maskTitle = "MaskTitleColor"                   // 蒙层标题颜色
     case sourceTitle = "SourceTitleColor"               // 源标题颜色
     case lastChapter = "LastChapterColor"               // 最新章节颜色
+    case hudContainer = "HUDContainerColor"             // HUD背景色
+    case hudTitle = "HUDTitleColor"                     // HUD标题颜色
+    case hudContent = "HUDContentColor"                 // HUD内容颜色
 }
 
 public typealias JJCThemeColorParams = (key: JJCThemeColor, name: String, unspecified: String, light: String, dark: String)
@@ -58,6 +61,9 @@ open class JJCTheme: NSObject {
         colors.append((.maskTitle, "蒙层标题颜色", "#FFFFFF", "#FFFFFF", "#FFFFFF"))
         colors.append((.sourceTitle, "源标题颜色", "#FF0000", "#FF0000", "#FF0000"))
         colors.append((.lastChapter, "最新章节颜色", "#FFA500", "#FFA500", "#FFA500"))
+        colors.append((.hudContainer, "HUD背景色", "#222222", "#222222", "#666666"))
+        colors.append((.hudTitle, "HUD标题颜色", "#FFFFFF", "#FFFFFF", "#FFFFFF"))
+        colors.append((.hudContent, "HUD内容颜色", "#DDDDDD", "#DDDDDD", "#555555"))
         return colors
     }()
     /// 自定义颜色数组

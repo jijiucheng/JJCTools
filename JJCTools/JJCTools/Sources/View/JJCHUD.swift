@@ -62,8 +62,8 @@ public class JJCHUD: UIView {
     /// 背景
     fileprivate lazy var containerView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(white: 0, alpha: 0.7)
-        view.layer.cornerRadius = 16
+        view.backgroundColor = JJC_ThemeColor(.hudContainer)
+        view.layer.cornerRadius = 10
         view.layer.masksToBounds = true
         return view
     }()
@@ -84,7 +84,7 @@ public class JJCHUD: UIView {
     /// 文本内容
     fileprivate lazy var contentLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .white
+        label.textColor = JJC_ThemeColor(.hudTitle)
         label.font = .systemFont(ofSize: 15)
         label.textAlignment = .center
         label.numberOfLines = 0
@@ -378,7 +378,7 @@ extension JJCHUD {
             }
         }
         maskBgView.backgroundColor = maskBgViewColor ?? .clear
-        containerView.backgroundColor = containerViewColor ?? UIColor(white: 0, alpha: 0.7)
+        containerView.backgroundColor = containerViewColor ?? JJC_ThemeColor(.hudContainer)
     }
     
     /// 更新进度圆环信息

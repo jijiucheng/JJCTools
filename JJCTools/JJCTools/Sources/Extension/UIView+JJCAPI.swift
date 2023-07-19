@@ -142,3 +142,17 @@ extension UIView {
                                shadowRadius: nil)
     }
 }
+
+// MARK: - 检测
+extension UIView {
+    /// UIView - 检测第一响应者控件
+    public func jjc_findFirstResponder() -> UIView? {
+        guard !isFirstResponder else { return self }
+        for subView in subviews {
+            if let firstResponder = subView.jjc_findFirstResponder() {
+                return firstResponder
+            }
+        }
+        return nil
+    }
+}

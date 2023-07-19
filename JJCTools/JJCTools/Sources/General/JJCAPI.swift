@@ -281,10 +281,11 @@ public func JJC_Alert(title: String? = nil,
 
 /// JJCAPI - HUD - 纯文本类型弹框
 public func JJC_HUD_Message(_ content: String,
+                            offset: CGPoint = .zero,
                             view: UIView? = nil,
                             completion: (() -> Void)? = nil) {
     let hud = JJCHUD.show(view ?? JJC_CurViewController().view)
-    hud.setConfig(.message, content: content)
+    hud.setConfig(.message, content: content, offset: offset)
     hud.hideByDefault(completion)
 }
 
@@ -292,11 +293,13 @@ public func JJC_HUD_Message(_ content: String,
 public func JJC_HUD_SuccessOrFailure(_ content: String? = nil,
                                      isSuccess: Bool = true,
                                      lproj: String? = nil,
+                                     offset: CGPoint = .zero,
                                      view: UIView? = nil,
                                      completion: (() -> Void)? = nil) {
     let hud = JJCHUD.show(view ?? JJC_CurViewController().view)
     hud.setConfig(isSuccess ? .success : .failure,
-                  content: content ?? (isSuccess ? JJC_Local("Success", "成功", lproj: lproj) : JJC_Local("Failure", "失败", lproj: lproj)))
+                  content: content ?? (isSuccess ? JJC_Local("Success", "成功", lproj: lproj) : JJC_Local("Failure", "失败", lproj: lproj)),
+                  offset: offset)
     hud.hideByDefault(completion)
 }
 
@@ -304,10 +307,12 @@ public func JJC_HUD_SuccessOrFailure(_ content: String? = nil,
 public func JJC_HUD_LoadingOrProgress(_ content: String? = nil,
                                       isLoading: Bool = true,
                                       lproj: String? = nil,
+                                      offset: CGPoint = .zero,
                                       view: UIView? = nil) -> JJCHUD {
     let hud = JJCHUD.show(view ?? JJC_CurViewController().view)
     hud.setConfig(isLoading ? .loading : .progress,
-                  content: content ?? "加载中...")
+                  content: content ?? "加载中...",
+                  offset: offset)
     return hud
 }
 
