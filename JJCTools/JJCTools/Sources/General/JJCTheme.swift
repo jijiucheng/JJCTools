@@ -16,6 +16,7 @@ public enum JJCThemeColor: String {
     case controller = "ControllerColor"                 // 控制器背景色
     case view = "ViewColor"                             // 组件背景色
     case line = "LineColor"                             // 线条颜色
+    case title = "TitleColor"                           // 标题颜色
     case mainTitle = "MainTitleColor"                   // 主标题颜色
     case subTitle = "SubTitleColor"                     // 副标题颜色
     case otherTitle = "OtherTitleColor"                 // 其它标题颜色
@@ -37,6 +38,10 @@ public func JJC_ThemeColor(_ key: JJCThemeColor, update: JJCThemeColorParams? = 
 open class JJCTheme: NSObject {
     /// JJCTheme - 单例
     public static let shared = JJCTheme()
+    /// JJCTheme - 主题存入沙盒
+    fileprivate let key_sandBox_theme = "jjc_key_sandBox_theme"
+    /// JJCTheme - 更新颜色
+    public let key_noti_theme_color = "jjc_key_noti_theme_color"
     
     /// 主题模式类型
     public let modes: [(mode: UIUserInterfaceStyle, name: String)] = {
@@ -53,7 +58,8 @@ open class JJCTheme: NSObject {
         colors.append((.navigationShadow, "导航栏底部线条颜色", "#DCDCDC", "#DCDCDC", "#DCDCDC_0.30"))
         colors.append((.controller, "控制器背景色", "#FFFFFF", "#FFFFFF", "#111111"))
         colors.append((.view, "组件背景色", "#FFFFFF", "#FFFFFF", "#111111"))
-        colors.append((.line, "线条颜色", "#DCDCDC", "#DCDCDC", "#DCDCDC"))
+        colors.append((.line, "线条颜色", "#DCDCDC", "#DCDCDC", "#DCDCDC_0.30"))
+        colors.append((.title, "标题颜色", "#000000", "#000000", "#FFFFFF"))
         colors.append((.mainTitle, "主标题颜色", "#000000", "#000000", "#FFFFFF"))
         colors.append((.subTitle, "副标题颜色", "#353535", "#353535", "#EEEEEE"))
         colors.append((.otherTitle, "其它标题颜色", "#898989", "#898989", "#999999"))
@@ -67,7 +73,7 @@ open class JJCTheme: NSObject {
         return colors
     }()
     /// 自定义颜色数组
-    public var customColors = [JJCThemeColorParams]()
+    fileprivate var customColors = [JJCThemeColorParams]()
     
     override init() {
         super.init()
@@ -152,16 +158,36 @@ extension JJCTheme {
     }
 }
 
+// MARK: - 自定义颜色
+extension JJCTheme {
+    /// JJCTheme - 获取自定义颜色
+    public func getCustomColors() -> [JJCThemeColorParams] {
+        return customColors
+    }
+    
+    /// JJCTheme - 设置自定义颜色
+    public func setCustomColors(_ colors: [JJCThemeColorParams]) {
+        guard colors.count == customColors.count else { return }
+        customColors = colors
+        JJC_Noti_Post(key_noti_theme_color)
+    }
+}
+
 // MARK: - 更改系统控件颜色
 extension JJCTheme {
     /// JJCTheme - 获取当前浅色、深色模式类型
     public func jjc_curTheme() -> UIUserInterfaceStyle {
-        return UITraitCollection.current.userInterfaceStyle
+        var style = UITraitCollection.current.userInterfaceStyle
+        if let tempStyle = UserDefaults.standard.value(forKey: key_sandBox_theme) as? Int {
+            style = UIUserInterfaceStyle(rawValue: tempStyle) ?? UITraitCollection.current.userInterfaceStyle
+        }
+        return style
     }
 
     /// JJCAPI - 切换浅色、深色模式
     public func jjc_switchTheme(_ style: UIUserInterfaceStyle) {
         JJC_KeyWindow()?.overrideUserInterfaceStyle = style
+        UserDefaults.standard.set(style.rawValue, forKey: key_sandBox_theme)
     }
     
     /// JJCTheme - 更改状态栏背景色
@@ -181,5 +207,10 @@ extension JJCTheme {
         controller.navigationController?.navigationBar.barTintColor = color
         // 去除透明效果，但是会使 View 整体向下偏移 (状态栏 + 导航栏) 的高度
         controller.navigationController?.navigationBar.isTranslucent = false
+    }
+    
+    /// JJCTheme - 更改导航栏标题文字颜色
+    public func jjc_setNavigationBarTitleColor(_ color: UIColor, controller: UIViewController) {
+//        controller.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: color]
     }
 }

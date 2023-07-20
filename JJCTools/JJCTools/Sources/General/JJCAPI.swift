@@ -346,8 +346,18 @@ public func JJC_RadiusBorder<T: CALayer>(_ layer: T, radius: CGFloat?, borderWid
 }
 
 /// JJCAPI - 通知 Name
-public func JJC_NotiName(_ name: String) -> Notification.Name {
+public func JJC_Noti_Name(_ name: String) -> Notification.Name {
     return Notification.Name(rawValue: name)
+}
+
+/// JJCAPI - 发送通知
+public func JJC_Noti_Post(_ name: String, object: Any? = nil, userInfo: [AnyHashable : Any]? = nil) {
+    NotificationCenter.default.post(name: JJC_Noti_Name(name), object: object, userInfo: userInfo)
+}
+
+/// JJCAPI - 接收通知
+public func JJC_Noti_AddObserver(_ name: String, observer: Any, selector: Selector, object: Any? = nil) {
+    NotificationCenter.default.addObserver(observer, selector: selector, name: JJC_Noti_Name(name), object: object)
 }
 
 /// JJCAPI - UUID
@@ -356,13 +366,21 @@ public func JJC_UUID() -> String {
 }
 
 /// JJCAPI - 系统信息 - 获取当前浅色、深色模式类型
-public func JJC_CurThemeMode() -> UIUserInterfaceStyle {
-    return UITraitCollection.current.userInterfaceStyle
+public func JJC_CurThemeMode(isTheme: Bool = false) -> UIUserInterfaceStyle {
+    if isTheme {
+        return JJCTheme.shared.jjc_curTheme()
+    } else {
+        return UITraitCollection.current.userInterfaceStyle
+    }
 }
 
 /// JJCAPI - 切换浅色、深色模式
-public func JJC_ThemeMode(_ style: UIUserInterfaceStyle) {
-    JJC_KeyWindow()?.overrideUserInterfaceStyle = style
+public func JJC_ThemeMode(_ style: UIUserInterfaceStyle, isTheme: Bool = false) {
+    if isTheme {
+        JJCTheme.shared.jjc_switchTheme(style)
+    } else {
+        JJC_KeyWindow()?.overrideUserInterfaceStyle = style
+    }
 }
 
 /// JJCAPI - 获取当前控制器视图 UIViewController

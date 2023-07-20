@@ -19,22 +19,7 @@ import UIKit
 open class JJCViewController: UIViewController {
     open override func viewDidLoad() {
         super.viewDidLoad()
-        JJCTheme.shared.jjc_setStatusColor(JJC_ThemeColor(.status))
-        JJCTheme.shared.jjc_setNavigationBarColor(JJC_ThemeColor(.navigationBar), controller: self)
-        view.backgroundColor = JJC_ThemeColor(.controller)
-        
-        // 修复 iOS 15 系统下，导航栏显示问题
-        // 参考链接：https://baijiahao.baidu.com/s?id=1711749740139600655&wfr=spider&for=pc
-        // 参考链接：https://www.jianshu.com/p/9e362ffba244
-        if #available(iOS 15, *) {
-            let appearance = UINavigationBarAppearance()
-            appearance.configureWithOpaqueBackground()
-            appearance.backgroundColor = JJC_ThemeColor(.navigationBar)
-            // 设置导航栏底部线条颜色
-            appearance.shadowColor = JJC_ThemeColor(.navigationShadow)
-            navigationController?.navigationBar.standardAppearance = appearance;
-            navigationController?.navigationBar.scrollEdgeAppearance = navigationController?.navigationBar.standardAppearance
-        }
+        JJC_Noti_AddObserver(JJCTheme.shared.key_noti_theme_color, observer: self, selector: #selector(refreshThemeUI))
         
         if hidesBottomBarWhenPushed {
             navigationItem.leftBarButtonItem = UIBarButtonItem.jjc_paramsByCustom(image: JJCTheme.shared.jjc_image_back(), target: self, action: #selector(backItemAction))
@@ -51,7 +36,35 @@ open class JJCViewController: UIViewController {
         JJC_Log("\(self) ********** 已经释放 **********")
     }
     
+    open override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        refreshThemeUI()
+    }
+    
     open func setUI() {}
+    
+    @objc open func refreshThemeUI() {
+        DispatchQueue.main.async {
+            JJCTheme.shared.jjc_setStatusColor(JJC_ThemeColor(.status))
+            JJCTheme.shared.jjc_setNavigationBarColor(JJC_ThemeColor(.navigationBar), controller: self)
+            JJCTheme.shared.jjc_setNavigationBarTitleColor(JJC_ThemeColor(.title), controller: self)
+            self.view.backgroundColor = JJC_ThemeColor(.controller)
+            
+            // 修复 iOS 15 系统下，导航栏显示问题
+            // 参考链接：https://baijiahao.baidu.com/s?id=1711749740139600655&wfr=spider&for=pc
+            // 参考链接：https://www.jianshu.com/p/9e362ffba244
+            if #available(iOS 15, *) {
+                let appearance = UINavigationBarAppearance()
+                appearance.configureWithOpaqueBackground()
+                appearance.backgroundColor = JJC_ThemeColor(.navigationBar)
+                appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: JJC_ThemeColor(.title)]
+                // 设置导航栏底部线条颜色
+                appearance.shadowColor = JJC_ThemeColor(.navigationShadow)
+                self.navigationController?.navigationBar.standardAppearance = appearance;
+                self.navigationController?.navigationBar.scrollEdgeAppearance = self.navigationController?.navigationBar.standardAppearance
+            }
+        }
+    }
 }
 
 extension JJCViewController {
