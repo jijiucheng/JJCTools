@@ -40,7 +40,9 @@ open class JJCTheme: NSObject {
     public static let shared = JJCTheme()
     /// JJCTheme - 主题存入沙盒
     fileprivate let key_sandBox_theme = "jjc_key_sandBox_theme"
-    /// JJCTheme - 更新颜色
+    /// JJCTheme - 自定义颜色存入沙盒
+    fileprivate let key_sandBox_customColors = "jjc_key_sandBox_customColors"
+    /// JJCTheme - 更新颜色通知
     public let key_noti_theme_color = "jjc_key_noti_theme_color"
     
     /// 主题模式类型
@@ -78,6 +80,13 @@ open class JJCTheme: NSObject {
     override init() {
         super.init()
         customColors = defaultColors
+        if let jsonString = UserDefaults.standard.value(forKey: key_sandBox_customColors) as? String {
+            let jsonArray = JJCDataModelTool.jjc_toArrayFromJSONString(jsonString)
+            var array = [JJCThemeColorParams]()
+            for item in jsonArray {
+                
+            }
+        }
     }
 }
 
@@ -170,6 +179,10 @@ extension JJCTheme {
         guard colors.count == customColors.count else { return }
         customColors = colors
         JJC_Noti_Post(key_noti_theme_color)
+        
+        // 存入沙盒
+        let jsonString = JJCDataModelTool.jjc_toJSONStringFromObject(customColors)
+        UserDefaults.standard.set(jsonString, forKey: key_sandBox_customColors)
     }
 }
 

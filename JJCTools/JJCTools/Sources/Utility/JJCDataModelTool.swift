@@ -91,6 +91,13 @@ extension JJCDataModelTool {
         return dictionary
     }
     
+    /// JJCDataModelTool - 类方法 - jsonString -> Array
+    public static func jjc_toArrayFromJSONString(_ jsonString: String) -> [Any] {
+        guard let jsonData: Data = jjc_encodeToData(with: jsonString) else { return [Any]() }
+        guard let array = try? JSONSerialization.jsonObject(with: jsonData, options: .mutableLeaves) as? [Any] else { return [Any]() }
+        return array
+    }
+    
     /// JJCDataModelTool - 类方法 - Any -> jsonString
     public static func jjc_toJSONStringFromObject(_ object: Any, encoding: String.Encoding) -> String {
         guard let jsonData: Data = try? JSONSerialization.data(withJSONObject: object, options: []) else { return "" }

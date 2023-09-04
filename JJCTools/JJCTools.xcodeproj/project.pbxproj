@@ -39,6 +39,10 @@
 		7DD4A5DD2A40359100464AFC /* JJCApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DD4A5DC2A40359100464AFC /* JJCApp.swift */; };
 		7DD4A5E02A403F6C00464AFC /* JJCTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DD4A5DF2A403F6C00464AFC /* JJCTheme.swift */; };
 		7DEC96322A69650300F73DF0 /* UITableView+JJCAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEC96312A69650300F73DF0 /* UITableView+JJCAPI.swift */; };
+		7DEC96342A6B810700F73DF0 /* JJCJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEC96332A6B810700F73DF0 /* JJCJSON.swift */; };
+		7DEC96362A6EABD100F73DF0 /* JJCAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEC96352A6EABD000F73DF0 /* JJCAPITests.swift */; };
+		7DEC96382A6EAC9E00F73DF0 /* JJCJSONTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEC96372A6EAC9E00F73DF0 /* JJCJSONTests.swift */; };
+		7DEC963B2A6F632C00F73DF0 /* JJCToolsTestsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEC963A2A6F632C00F73DF0 /* JJCToolsTestsModel.swift */; };
 		7DEE5EE42A00977F00E7110E /* UITableViewCell+JJCAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEE5EE32A00977F00E7110E /* UITableViewCell+JJCAPI.swift */; };
 		7DF2C87B2A09D88100E30A40 /* JJCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DF2C87A2A09D88100E30A40 /* JJCViewController.swift */; };
 		7DF2C87D2A09D89E00E30A40 /* JJCNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DF2C87C2A09D89E00E30A40 /* JJCNavigationController.swift */; };
@@ -93,6 +97,10 @@
 		7DD4A5DC2A40359100464AFC /* JJCApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JJCApp.swift; sourceTree = "<group>"; };
 		7DD4A5DF2A403F6C00464AFC /* JJCTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JJCTheme.swift; sourceTree = "<group>"; };
 		7DEC96312A69650300F73DF0 /* UITableView+JJCAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+JJCAPI.swift"; sourceTree = "<group>"; };
+		7DEC96332A6B810700F73DF0 /* JJCJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JJCJSON.swift; sourceTree = "<group>"; };
+		7DEC96352A6EABD000F73DF0 /* JJCAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JJCAPITests.swift; sourceTree = "<group>"; };
+		7DEC96372A6EAC9E00F73DF0 /* JJCJSONTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JJCJSONTests.swift; sourceTree = "<group>"; };
+		7DEC963A2A6F632C00F73DF0 /* JJCToolsTestsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JJCToolsTestsModel.swift; sourceTree = "<group>"; };
 		7DEE5EE32A00977F00E7110E /* UITableViewCell+JJCAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+JJCAPI.swift"; sourceTree = "<group>"; };
 		7DF2C87A2A09D88100E30A40 /* JJCViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JJCViewController.swift; sourceTree = "<group>"; };
 		7DF2C87C2A09D89E00E30A40 /* JJCNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JJCNavigationController.swift; sourceTree = "<group>"; };
@@ -157,7 +165,10 @@
 		7D306C6829C5775D005CAE61 /* JJCToolsTests */ = {
 			isa = PBXGroup;
 			children = (
+				7DEC96392A6F630700F73DF0 /* Model */,
 				7D306C6929C5775D005CAE61 /* JJCToolsTests.swift */,
+				7DEC96352A6EABD000F73DF0 /* JJCAPITests.swift */,
+				7DEC96372A6EAC9E00F73DF0 /* JJCJSONTests.swift */,
 			);
 			path = JJCToolsTests;
 			sourceTree = "<group>";
@@ -235,8 +246,17 @@
 			children = (
 				7D306C9129C57948005CAE61 /* JJCImageTitleModel.swift */,
 				7D306C9229C57948005CAE61 /* JJCDataModelTool.swift */,
+				7DEC96332A6B810700F73DF0 /* JJCJSON.swift */,
 			);
 			path = Utility;
+			sourceTree = "<group>";
+		};
+		7DEC96392A6F630700F73DF0 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				7DEC963A2A6F632C00F73DF0 /* JJCToolsTestsModel.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		7DF2C8792A09D85D00E30A40 /* Controller */ = {
@@ -389,6 +409,7 @@
 				7D306D0129CAFEC7005CAE61 /* Array+JJCAPI.swift in Sources */,
 				7D306C9D29C57948005CAE61 /* UIBarButtonItem+JJCAPI.swift in Sources */,
 				7D306CAA29C57948005CAE61 /* JJCImageTitleModel.swift in Sources */,
+				7DEC96342A6B810700F73DF0 /* JJCJSON.swift in Sources */,
 				7D306C9A29C57948005CAE61 /* String+JJCAPI.swift in Sources */,
 				7D306C5F29C5775D005CAE61 /* JJCTools.docc in Sources */,
 				7D306C9E29C57948005CAE61 /* UILabel+JJCAPI.swift in Sources */,
@@ -402,7 +423,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7DEC96362A6EABD100F73DF0 /* JJCAPITests.swift in Sources */,
+				7DEC96382A6EAC9E00F73DF0 /* JJCJSONTests.swift in Sources */,
 				7D306C6A29C5775D005CAE61 /* JJCToolsTests.swift in Sources */,
+				7DEC963B2A6F632C00F73DF0 /* JJCToolsTestsModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
