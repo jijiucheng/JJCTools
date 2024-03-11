@@ -8,7 +8,7 @@
 import UIKit
 import WebKit
 
-public class JJCWebViewController: JJCViewController {
+open class JJCWebViewController: JJCViewController {
     /// ObserveKey - estimatedProgress - 进度
     private let WebViewProgressObserveKey: String = "estimatedProgress"
     /// ObserveKey - URL - 链接
@@ -19,14 +19,14 @@ public class JJCWebViewController: JJCViewController {
     private let WebViewGoBackObserveKey: String = "canGoBack"
     
     /// WKWebView
-    public var webView: WKWebView = {
+    open var webView: WKWebView = {
         let webV = WKWebView()
         webV.frame = CGRect(x: 0, y: JJC_StatusNaviH(), width: JJC_ScreenW, height: JJC_ScreenH - JJC_StatusNaviH())
         webV.allowsBackForwardNavigationGestures = true
         return webV
     }()
     /// UIProgressView - 进度条
-    public var progressV: UIProgressView = {
+    open var progressV: UIProgressView = {
         let progressV = UIProgressView()
         progressV.frame = CGRect(x: 0, y: JJC_StatusNaviH(), width: JJC_ScreenW, height: 2)
         progressV.trackTintColor = .clear
@@ -34,7 +34,7 @@ public class JJCWebViewController: JJCViewController {
         return progressV
     }()
     
-    public override func setUI() {
+    open override func setUI() {
         // WKWebView
         self.webView.navigationDelegate = self
         self.webView.uiDelegate = self
@@ -61,19 +61,19 @@ public class JJCWebViewController: JJCViewController {
 // MARK:- Methods
 extension JJCWebViewController {
     /// Action - 设置导航栏
-    public func setNavigationParameters(bgColor: UIColor, title: String) {
+    @objc open func setNavigationParameters(bgColor: UIColor, title: String) {
         self.navigationController?.navigationBar.backgroundColor = bgColor
     }
     
     /// Action - 加载 url
-    public func loadRequestUrl(_ urlString: String) {
+    @objc open func loadRequestUrl(_ urlString: String) {
         if let url = URL(string: urlString) {
             self.webView.load(URLRequest(url: url))
         }
     }
     
     /// Action - 观察者
-    public override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+    open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         
         switch keyPath {
         case WebViewProgressObserveKey:
@@ -101,18 +101,18 @@ extension JJCWebViewController {
 // MARK:- WKNavigationDelegate、WKUIDelegate
 extension JJCWebViewController: WKNavigationDelegate, WKUIDelegate {
     /// Delegate - 加载完成
-    public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+    open func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         print("Delegate - 加载完成")
     }
     
     /// Delegate - 页面加载失败
-    public func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+    open func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
         print("Delegate - 页面加载失败")
         self.progressV.setProgress(0, animated: false)
     }
     
     /// Delegate - 提交发生错误
-    public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+    open func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         print("Delegate - 提交发生错误")
         self.progressV.setProgress(0, animated: false)
     }
