@@ -19,6 +19,7 @@ import UIKit
 open class JJCViewController: UIViewController {
     open override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
         JJC_Noti_AddObserver(JJCTheme.shared.key_noti_theme_color, observer: self, selector: #selector(refreshThemeUI))
         
         if hidesBottomBarWhenPushed {
