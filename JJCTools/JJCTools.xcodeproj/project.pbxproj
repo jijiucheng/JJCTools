@@ -36,6 +36,7 @@
 		7D306CB329C9DCA0005CAE61 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7D306CB229C9DCA0005CAE61 /* Assets.xcassets */; };
 		7D306CF729CAAA6C005CAE61 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7D306CF929CAAA6C005CAE61 /* Localizable.strings */; };
 		7D306D0129CAFEC7005CAE61 /* Array+JJCAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D306D0029CAFEC7005CAE61 /* Array+JJCAPI.swift */; };
+		7DBBCE742BB318E100B32A47 /* JJCTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBBCE732BB318E100B32A47 /* JJCTabBarController.swift */; };
 		7DD4A5DD2A40359100464AFC /* JJCApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DD4A5DC2A40359100464AFC /* JJCApp.swift */; };
 		7DD4A5E02A403F6C00464AFC /* JJCTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DD4A5DF2A403F6C00464AFC /* JJCTheme.swift */; };
 		7DEC96322A69650300F73DF0 /* UITableView+JJCAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEC96312A69650300F73DF0 /* UITableView+JJCAPI.swift */; };
@@ -94,6 +95,7 @@
 		7D306CFC29CAAA70005CAE61 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7D306CFD29CAAA71005CAE61 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7D306D0029CAFEC7005CAE61 /* Array+JJCAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+JJCAPI.swift"; sourceTree = "<group>"; };
+		7DBBCE732BB318E100B32A47 /* JJCTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JJCTabBarController.swift; sourceTree = "<group>"; };
 		7DD4A5DC2A40359100464AFC /* JJCApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JJCApp.swift; sourceTree = "<group>"; };
 		7DD4A5DF2A403F6C00464AFC /* JJCTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JJCTheme.swift; sourceTree = "<group>"; };
 		7DEC96312A69650300F73DF0 /* UITableView+JJCAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+JJCAPI.swift"; sourceTree = "<group>"; };
@@ -265,6 +267,7 @@
 				7DF2C87A2A09D88100E30A40 /* JJCViewController.swift */,
 				7DF2C87C2A09D89E00E30A40 /* JJCNavigationController.swift */,
 				7D306C8F29C57948005CAE61 /* JJCWebViewController.swift */,
+				7DBBCE732BB318E100B32A47 /* JJCTabBarController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -412,6 +415,7 @@
 				7DEC96342A6B810700F73DF0 /* JJCJSON.swift in Sources */,
 				7D306C9A29C57948005CAE61 /* String+JJCAPI.swift in Sources */,
 				7D306C5F29C5775D005CAE61 /* JJCTools.docc in Sources */,
+				7DBBCE742BB318E100B32A47 /* JJCTabBarController.swift in Sources */,
 				7D306C9E29C57948005CAE61 /* UILabel+JJCAPI.swift in Sources */,
 				7D306C9F29C57948005CAE61 /* JJCDevice.swift in Sources */,
 				7D306CB129C9DADF005CAE61 /* JJCHUD.swift in Sources */,
