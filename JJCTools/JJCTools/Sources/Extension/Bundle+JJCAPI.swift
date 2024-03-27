@@ -25,9 +25,13 @@ extension Bundle {
     
     /// Bundle - 根据 Bundle 名称获取对应的 Bundle 文件
     public static func jjc_bundle(bundle: String? = nil, isModule: Bool = false, objcClass: AnyClass? = nil) -> Bundle? {
-        if let mainBundle = Bundle.jjc_mainBundle(isModule, objcClass: objcClass),
-            let path = mainBundle.path(forResource: bundle, ofType: "bundle") {
-            return Bundle(path: path)
+        if let mainBundle = Bundle.jjc_mainBundle(isModule, objcClass: objcClass) {
+            if let tempBundle = bundle,
+                let path = mainBundle.path(forResource: tempBundle, ofType: "bundle") {
+                return Bundle(path: path)
+            } else {
+                return mainBundle
+            }
         }
         return nil
     }
