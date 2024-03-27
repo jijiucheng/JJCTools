@@ -50,6 +50,11 @@ extension JJCDevice {
     public static func jjc_interfaceOrientation() -> UIDeviceOrientation {
         return UIDevice.current.orientation
     }
+    
+    /// JJCDevice - 判断当前设备是否横屏
+    public static func jjc_isLandScape() -> Bool {
+        return UIDevice.current.orientation == .landscapeLeft || UIDevice.current.orientation == .landscapeRight
+    }
 }
 
 // MARK: - 获取设备类型

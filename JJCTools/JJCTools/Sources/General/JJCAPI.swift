@@ -36,6 +36,8 @@ public let JJC_IsIPhone = (UIDevice.current.userInterfaceIdiom == .phone)
 public let JJC_IsIPad = (UIDevice.current.userInterfaceIdiom == .pad)
 /// JJCAPI - 是否为 CarPlay
 public let JJC_IsCarPlay = (UIDevice.current.userInterfaceIdiom == .carPlay)
+/// JJCAPI - 判断当前设备是否横屏
+public let JJC_IsLandScape = (UIDevice.current.orientation == .landscapeLeft || UIDevice.current.orientation == .landscapeRight)
 
 /// JJCAPI - 系统信息 - JJCTools main bundle
 public let JJC_mainBundleByJJCTools = Bundle(for: JJCGlobalClass.self)

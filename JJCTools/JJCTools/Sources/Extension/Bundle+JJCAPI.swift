@@ -44,6 +44,21 @@ extension Bundle {
         return nil
     }
     
+    /// Bundle - 根据 Bundle 名称获取内容资源文件 Data
+    public static func jjc_bundle_fileData(file: String, ofType type: String, bundle: String? = nil, isModule: Bool = false, objcClass: AnyClass? = nil) -> Data? {
+        if let fileBundle = Bundle.jjc_bundle(bundle: bundle, isModule: isModule, objcClass: objcClass), 
+            let fileUrl = fileBundle.url(forResource: file, withExtension: type) {
+            do {
+                let data = try Data(contentsOf: fileUrl)
+                return data
+            } catch let error {
+                print("[JJCTools] Bundle - 根据 Bundle 名称获取内容资源文件 Data 失败\n", error)
+                return nil
+            }
+        }
+        return nil
+    }
+    
     /// Bundle - 根据 Bundle 名称获取内部图片文件
     public static func jjc_bundle(image imageName: String, ofType type: String, bundle: String? = nil, isModule: Bool = false, objcClass: AnyClass? = nil) -> UIImage? {
         if let path = Bundle.jjc_bundle(file: imageName, ofType: type, bundle: bundle, isModule: isModule, objcClass: objcClass) {
