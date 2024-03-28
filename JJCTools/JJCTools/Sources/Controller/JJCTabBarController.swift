@@ -6,7 +6,16 @@
 //
 
 /*
- 1、iOS10 之后，修改 UITabBar 的文字颜色，通过 unselectedItemTintColor、tintColor，通过 tabBarItem.setTitleTextAttributes 的方式修改，最开始是有效的，但是当从子界面返回到根界面的时候，文字颜色又会被重置为系统颜色，尤其是选中状态下会变成系统蓝色
+ 1、修改 UITabBar 文字颜色：
+ - iOS10 之后，修改 UITabBar 的文字颜色，通过 unselectedItemTintColor、tintColor；
+ - 通过 tabBarItem.setTitleTextAttributes 的方式修改，最开始是有效的，但是当从子界面返回到根界面的时候，文字颜色又会被重置为系统颜色，尤其是选中状态下会变成系统蓝色；
+ - 或者可以通过 viewWillAppear 监听根控制器界面显示，重新设置为所需颜色，此种方式适合 UITabBar 文字颜色不统一的情况：
+     if let tabBarController = self.tabBarController {
+         for item in tabBarController.tabBar.items ?? [] {
+             item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: normalColor], for: .normal)
+             item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: selectedColor], for: .selected)
+         }
+     }
  */
 
 import UIKit
