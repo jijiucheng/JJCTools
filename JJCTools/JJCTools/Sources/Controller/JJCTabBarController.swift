@@ -5,12 +5,20 @@
 //  Created by mxgx on 2024/3/26.
 //
 
+/*
+ 1、iOS10 之后，修改 UITabBar 的文字颜色，通过 unselectedItemTintColor、tintColor，通过 tabBarItem.setTitleTextAttributes 的方式修改，最开始是有效的，但是当从子界面返回到根界面的时候，文字颜色又会被重置为系统颜色，尤其是选中状态下会变成系统蓝色
+ */
+
 import UIKit
 
 open class JJCTabBarController: UITabBarController {
 
     open override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // 设置默认选中文字颜色
+        UITabBar.appearance().tintColor = JJC_HexColorA("#282828")
+        UITabBar.appearance().unselectedItemTintColor = .red
         
         selectedIndex = 0
         jjc_setTopLineColor(JJC_RGBA_255(230, 230, 230))
@@ -26,6 +34,13 @@ extension JJCTabBarController {
             let view = UIView(frame: CGRect(x: 0, y: -0.5, width: tabBar.bounds.width, height: 0.5))
             view.backgroundColor = tempColor
             UITabBar.appearance().insertSubview(view, at: 0)
+            
+            // 去除毛玻璃色
+            tabBar.backgroundColor = .white
+//            let customBgView = UIView(frame: tabBar.bounds)
+//            customBgView.backgroundColor = .white
+//            UITabBar.appearance().insertSubview(customBgView, at: 0)
+            
             
 //            UITabBar.appearance().shadowImage = UIImage()
 //            UITabBar.appearance().backgroundImage = UIImage()
@@ -47,8 +62,7 @@ extension JJCTabBarController {
     @objc open func jjc_addAllChildController() {}
     
     /// 添加子视图
-    @objc open func jjc_addChildController(_ childVC: UIViewController, normalImage: UIImage?, selectedImage: UIImage?, title: String?, titleColor: UIColor?, titleFont: UIFont?, selectTitle: String?, selectTitleColor: UIColor?, selectTitleFont: UIFont?) {
-        let nav = JJCNavigationController(rootViewController: childVC)
+    @objc open func jjc_addChildController(_ nav: UINavigationController, normalImage: UIImage?, selectedImage: UIImage?, title: String?, titleColor: UIColor?, titleFont: UIFont?, selectTitle: String?, selectTitleColor: UIColor?, selectTitleFont: UIFont?) {
         nav.tabBarItem.image = normalImage
         nav.tabBarItem.selectedImage = selectedImage
         nav.tabBarItem.title = title
