@@ -27,7 +27,7 @@ open class JJCTabBarController: UITabBarController {
         
         // 设置默认选中文字颜色
         UITabBar.appearance().tintColor = JJC_HexColorA("#282828")
-        UITabBar.appearance().unselectedItemTintColor = .red
+        UITabBar.appearance().unselectedItemTintColor = JJC_HexColorA("#282828")
         
         selectedIndex = 0
         jjc_setTopLineColor(JJC_RGBA_255(230, 230, 230))
