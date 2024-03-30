@@ -156,3 +156,11 @@ extension UIView {
         return nil
     }
 }
+
+// MARK: - 子元素操作
+extension UIView {
+    /// UIView - 移除所有子元素
+    public func jjc_removeAllSubviews() {
+        subviews.forEach({ $0.removeFromSuperview() })
+    }
+}
