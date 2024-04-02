@@ -44,12 +44,20 @@ extension Bundle {
         return nil
     }
     
+    /// Bundle - 根据 Bundle 名称获取内容资源文件 url
+    public static func jjc_bundle_fileURL(file: String, ofType type: String, bundle: String? = nil, isModule: Bool = false, objcClass: AnyClass? = nil) -> URL? {
+        if let fileBundle = Bundle.jjc_bundle(bundle: bundle, isModule: isModule, objcClass: objcClass),
+            let fileUrl = fileBundle.url(forResource: file, withExtension: type) {
+            return fileUrl
+        }
+        return nil
+    }
+    
     /// Bundle - 根据 Bundle 名称获取内容资源文件 Data
     public static func jjc_bundle_fileData(file: String, ofType type: String, bundle: String? = nil, isModule: Bool = false, objcClass: AnyClass? = nil) -> Data? {
-        if let fileBundle = Bundle.jjc_bundle(bundle: bundle, isModule: isModule, objcClass: objcClass), 
-            let fileUrl = fileBundle.url(forResource: file, withExtension: type) {
+        if let url = Bundle.jjc_bundle_fileURL(file: file, ofType: type, bundle: bundle, isModule: isModule, objcClass: objcClass) {
             do {
-                let data = try Data(contentsOf: fileUrl)
+                let data = try Data(contentsOf: url)
                 return data
             } catch let error {
                 print("[JJCTools] Bundle - 根据 Bundle 名称获取内容资源文件 Data 失败\n", error)

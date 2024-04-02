@@ -19,16 +19,25 @@ open class JJCWebViewController: JJCViewController {
     private let WebViewGoBackObserveKey: String = "canGoBack"
     
     /// WKWebView
-    open var webView: WKWebView = {
+    open lazy var webView: WKWebView = {
         let webV = WKWebView()
-        webV.frame = CGRect(x: 0, y: JJC_StatusNaviH(), width: JJC_ScreenW, height: JJC_ScreenH - JJC_StatusNaviH())
+        webV.frame = CGRect(x: 0, y: 0, width: JJC_ScreenW, height: JJC_ScreenH - JJC_StatusNaviH())
         webV.allowsBackForwardNavigationGestures = true
+        webV.navigationDelegate = self
+        webV.uiDelegate = self
+        
+        // 添加观察者
+        webV.addObserver(self, forKeyPath: WebViewProgressObserveKey, options: .new, context: nil)
+        webV.addObserver(self, forKeyPath: WebViewURLObserveKey, options: .new, context: nil)
+        webV.addObserver(self, forKeyPath: WebViewTitleObserveKey, options: .new, context: nil)
+        webV.addObserver(self, forKeyPath: WebViewGoBackObserveKey, options: .new, context: nil)
+        
         return webV
     }()
     /// UIProgressView - 进度条
-    open var progressV: UIProgressView = {
+    open lazy var progressV: UIProgressView = {
         let progressV = UIProgressView()
-        progressV.frame = CGRect(x: 0, y: JJC_StatusNaviH(), width: JJC_ScreenW, height: 2)
+        progressV.frame = CGRect(x: 0, y: 0, width: JJC_ScreenW, height: 2)
         progressV.trackTintColor = .clear
         progressV.progressTintColor = .orange
         return progressV
@@ -36,25 +45,16 @@ open class JJCWebViewController: JJCViewController {
     
     open override func setUI() {
         // WKWebView
-        self.webView.navigationDelegate = self
-        self.webView.uiDelegate = self
-        view.addSubview(self.webView)
-        
-        // 添加观察者
-        self.webView.addObserver(self, forKeyPath: WebViewProgressObserveKey, options: .new, context: nil)
-        self.webView.addObserver(self, forKeyPath: WebViewURLObserveKey, options: .new, context: nil)
-        self.webView.addObserver(self, forKeyPath: WebViewTitleObserveKey, options: .new, context: nil)
-        self.webView.addObserver(self, forKeyPath: WebViewGoBackObserveKey, options: .new, context: nil)
-        
+        view.addSubview(webView)
         // UIProgressView - 进度条
-        view.insertSubview(self.progressV, aboveSubview: self.webView)
+        view.insertSubview(progressV, aboveSubview: webView)
     }
     
     deinit {
-        self.webView.removeObserver(self, forKeyPath: WebViewProgressObserveKey)
-        self.webView.removeObserver(self, forKeyPath: WebViewURLObserveKey)
-        self.webView.removeObserver(self, forKeyPath: WebViewTitleObserveKey)
-        self.webView.removeObserver(self, forKeyPath: WebViewGoBackObserveKey)
+        webView.removeObserver(self, forKeyPath: WebViewProgressObserveKey)
+        webView.removeObserver(self, forKeyPath: WebViewURLObserveKey)
+        webView.removeObserver(self, forKeyPath: WebViewTitleObserveKey)
+        webView.removeObserver(self, forKeyPath: WebViewGoBackObserveKey)
     }
 }
 
@@ -62,13 +62,17 @@ open class JJCWebViewController: JJCViewController {
 extension JJCWebViewController {
     /// Action - 设置导航栏
     @objc open func setNavigationParameters(bgColor: UIColor, title: String) {
-        self.navigationController?.navigationBar.backgroundColor = bgColor
+        navigationController?.navigationBar.backgroundColor = bgColor
     }
     
     /// Action - 加载 url
-    @objc open func loadRequestUrl(_ urlString: String) {
+    @objc open func loadRequestUrl(_ urlString: String, isLocal: Bool = false) {
         if let url = URL(string: urlString) {
-            self.webView.load(URLRequest(url: url))
+            if isLocal {
+                webView.loadFileURL(url, allowingReadAccessTo: url)
+            } else {
+                webView.load(URLRequest(url: url))
+            }
         }
     }
     
@@ -78,10 +82,10 @@ extension JJCWebViewController {
         switch keyPath {
         case WebViewProgressObserveKey:
             // 进度条
-            self.progressV.progress = Float(self.webView.estimatedProgress)
-            if self.webView.estimatedProgress >= 1.0 {
-                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
-                    self.progressV.progress = 0
+            progressV.progress = Float(webView.estimatedProgress)
+            if webView.estimatedProgress >= 1.0 {
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) { [weak self] in
+                    self?.progressV.progress = 0
                 }
             }
         case WebViewURLObserveKey:
@@ -108,12 +112,12 @@ extension JJCWebViewController: WKNavigationDelegate, WKUIDelegate {
     /// Delegate - 页面加载失败
     open func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
         print("Delegate - 页面加载失败")
-        self.progressV.setProgress(0, animated: false)
+        progressV.setProgress(0, animated: false)
     }
     
     /// Delegate - 提交发生错误
     open func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         print("Delegate - 提交发生错误")
-        self.progressV.setProgress(0, animated: false)
+        progressV.setProgress(0, animated: false)
     }
 }
