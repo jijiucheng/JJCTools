@@ -214,7 +214,7 @@ public func JJC_CurTimeInfo(_ dateFormat: String? = nil) -> JJCTimeInfo {
 }
 
 /// JJCAPI - 日志 - isLineBreak：最后一行是否添加换行，isModule 是否显示 framework 所属
-public func JJC_Log<T>(_ log: T, file: String = #file, method: String = #function, line: Int = #line, isLineBreak: Bool = false, isModule: Bool = false) {
+public func JJC_Log<T>(_ log: T, file: String = #file, method: String = #function, line: Int = #line, isLineBreak: Bool = true, isModule: Bool = false) {
     print("\(isModule ? "[JJCTools] ": "")\(JJC_CurTimeInfo().time) <\((file as NSString).lastPathComponent)> [\(line)] \(method)：")
     print(log)
     if isLineBreak {

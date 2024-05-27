@@ -68,6 +68,22 @@ extension String {
     }
 }
 
+// MARK: - String 字符串的生成
+extension String {
+    /// String - 字符串生成 - 随机生成固定长度的字符串
+    public static func jjc_randomString(byCharacters characters: String?, length: Int) -> String {
+        var letters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+        if let tempCharacters = characters, tempCharacters.jjc_isNotEmptyOrValid() {
+            letters = tempCharacters
+        }
+        return String((0..<length).compactMap { _ in letters.randomElement() })
+    }
+    
+    public static func jjc_randomString(byLength length: Int) -> String {
+        return jjc_randomString(byCharacters: nil, length: length)
+    }
+}
+
 // MARK: - Emoji
 extension String {
     /// String - 字符串判断 - 判断字符串中是否包含 Emoji 字符
@@ -100,7 +116,7 @@ extension String {
     }
 }
 
-// MARK: - String 字符串截取、替换、移除
+// MARK: - String 字符串截取、替换、移除、插入、分割
 extension String {
     /// String - 字符串截取 - start、end
     public func jjc_subRange(byStart start: Int, _ end: Int) -> String {
@@ -111,7 +127,7 @@ extension String {
     
     /// String - 字符串截取 - location、length
     public func jjc_subRange(byLocation location: Int, _ length: Int) -> String {
-        return jjc_subRange(byStart: location, (location + length))
+        return jjc_subRange(byStart: location, (location + length - 1))
     }
     
     /// String - 字符串截取 - Range
@@ -142,7 +158,7 @@ extension String {
     
     /// String - 字符串替换 - location、length、replaceString
     public func jjc_replace(byLocation location: Int, _ length: Int, with replace: String) -> String {
-        return jjc_replace(byStart: location, (location + length), with: replace)
+        return jjc_replace(byStart: location, (location + length - 1), with: replace)
     }
     
     /// String - 字符串替换 - NSRange、replaceString
@@ -184,6 +200,50 @@ extension String {
     public func jjc_removeByEscapeCharacter() -> String {
         let escapeArray = ["\\a", "\\b", "\\f", "\\n", "\\r", "\\t", "\\v", "\\", "\"", "\'", "\0"]
         return jjc_remove(byCharacters: escapeArray)
+    }
+    
+    /// String - 字符串移除 - 移除控制符（转义后会变成转义符，JSON 字符串转模型时不能包含控制符，如 \n、\t、\0）
+    public func jjc_removeByControlCharacter() -> String {
+        let mStr = NSMutableString(string: self)
+        let set = CharacterSet.controlCharacters
+        var range = mStr.rangeOfCharacter(from: set)
+        while range.location != NSNotFound {
+            mStr.deleteCharacters(in: range)
+            range = mStr.rangeOfCharacter(from: set)
+        }
+        return mStr as String
+    }
+    
+    /// String - 字符串查询 - 查询某个字符在字符串中的位置
+    public func jjc_findIndex(byCharacter character: String) -> Int {
+        if let firstIndex = self.firstIndex(of: character[character.startIndex]) {
+            return self.distance(from: self.startIndex, to: firstIndex)
+        } else {
+            return -1
+        }
+    }
+    
+    /// String - 字符串插入 - 在字符串某个位置插入一串字符串
+    public func jjc_insert(byLocation location: Int, insert: String) -> String {
+        if location > self.count {
+            // 超出原始字符串范围，直接在尾部拼接
+            return self + insert
+        } else {
+            let index = self.index(self.startIndex, offsetBy: location)
+            return self.replacingCharacters(in: index..<index, with: insert)
+        }
+    }
+    
+    /// String - 字符串分割 - 将字符串按固定长度分割成数组
+    public func jjc_split(byLength length: Int) -> [String] {
+        var list = [String]()
+        var index: Int = 0
+        while index * length < self.count {
+            let space = self.count - index * length
+            list.append(self.jjc_subRange(byLocation: index * length, space > length ? length : space))
+            index += 1
+        }
+        return list
     }
 }
 
