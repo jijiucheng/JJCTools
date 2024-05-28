@@ -24,6 +24,8 @@ public class JJCSegmentView: UIView {
     public var type: JJCSegmentType = .default
     /// JJCSegmentSelectedType - 选中类型
     public var selectedType: JJCSegmentSelectedType = .line
+    /// Int - 当前选中
+    public var selectIndex: Int = 0
     /// 元组 - 默认状态下参数（背景色、文字颜色、文字大小）
     public var normalParams: (bgColor: UIColor, titleColor: UIColor, titleFont: UIFont) = (.clear, JJC_ThemeColor(.subTitle), .systemFont(ofSize: 14))
     /// 元组 - 选中状态下参数（背景色、文字颜色、文字大小）
@@ -128,6 +130,10 @@ extension JJCSegmentView {
                 btn.isSelected = false
                 btn.addTarget(self, action: #selector(btnAction(button:)), for: .touchUpInside)
                 scrollView.addSubview(btn)
+                
+                if index == selectIndex {
+                    lastSelectedBtn = btn
+                }
                 
                 // 标记选中
                 if index == lastSelectedBtn.tag {
