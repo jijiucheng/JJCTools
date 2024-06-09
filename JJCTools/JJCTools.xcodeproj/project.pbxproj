@@ -39,6 +39,8 @@
 		7DBBCE742BB318E100B32A47 /* JJCTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBBCE732BB318E100B32A47 /* JJCTabBarController.swift */; };
 		7DD4A5DD2A40359100464AFC /* JJCApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DD4A5DC2A40359100464AFC /* JJCApp.swift */; };
 		7DD4A5E02A403F6C00464AFC /* JJCTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DD4A5DF2A403F6C00464AFC /* JJCTheme.swift */; };
+		7DDE96332C15AF940048166F /* JJCAuthorityTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DDE96322C15AF940048166F /* JJCAuthorityTool.swift */; };
+		7DDE96352C15B0900048166F /* JJCICloudTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DDE96342C15B0900048166F /* JJCICloudTool.swift */; };
 		7DEC96322A69650300F73DF0 /* UITableView+JJCAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEC96312A69650300F73DF0 /* UITableView+JJCAPI.swift */; };
 		7DEC96342A6B810700F73DF0 /* JJCJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEC96332A6B810700F73DF0 /* JJCJSON.swift */; };
 		7DEC96362A6EABD100F73DF0 /* JJCAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEC96352A6EABD000F73DF0 /* JJCAPITests.swift */; };
@@ -98,6 +100,8 @@
 		7DBBCE732BB318E100B32A47 /* JJCTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JJCTabBarController.swift; sourceTree = "<group>"; };
 		7DD4A5DC2A40359100464AFC /* JJCApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JJCApp.swift; sourceTree = "<group>"; };
 		7DD4A5DF2A403F6C00464AFC /* JJCTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JJCTheme.swift; sourceTree = "<group>"; };
+		7DDE96322C15AF940048166F /* JJCAuthorityTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JJCAuthorityTool.swift; sourceTree = "<group>"; };
+		7DDE96342C15B0900048166F /* JJCICloudTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JJCICloudTool.swift; sourceTree = "<group>"; };
 		7DEC96312A69650300F73DF0 /* UITableView+JJCAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+JJCAPI.swift"; sourceTree = "<group>"; };
 		7DEC96332A6B810700F73DF0 /* JJCJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JJCJSON.swift; sourceTree = "<group>"; };
 		7DEC96352A6EABD000F73DF0 /* JJCAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JJCAPITests.swift; sourceTree = "<group>"; };
@@ -219,6 +223,8 @@
 				7D306C8529C57948005CAE61 /* JJCAPI.swift */,
 				7DD4A5DC2A40359100464AFC /* JJCApp.swift */,
 				7DD4A5DF2A403F6C00464AFC /* JJCTheme.swift */,
+				7DDE96322C15AF940048166F /* JJCAuthorityTool.swift */,
+				7DDE96342C15B0900048166F /* JJCICloudTool.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -400,6 +406,7 @@
 				7DF825B72A4E84BD006A3D05 /* UITextField+JJCAPI.swift in Sources */,
 				7D306CA729C57948005CAE61 /* JJCButton.swift in Sources */,
 				7D306CAB29C57948005CAE61 /* JJCDataModelTool.swift in Sources */,
+				7DDE96332C15AF940048166F /* JJCAuthorityTool.swift in Sources */,
 				7D306C9B29C57948005CAE61 /* UIColor+JJCAPI.swift in Sources */,
 				7DF2C87B2A09D88100E30A40 /* JJCViewController.swift in Sources */,
 				7D306CA929C57948005CAE61 /* JJCWebViewController.swift in Sources */,
@@ -410,6 +417,7 @@
 				7D306C9429C57948005CAE61 /* UIImage+JJCAPI.swift in Sources */,
 				7D306C9C29C57948005CAE61 /* UIView+JJCAPI.swift in Sources */,
 				7D306D0129CAFEC7005CAE61 /* Array+JJCAPI.swift in Sources */,
+				7DDE96352C15B0900048166F /* JJCICloudTool.swift in Sources */,
 				7D306C9D29C57948005CAE61 /* UIBarButtonItem+JJCAPI.swift in Sources */,
 				7D306CAA29C57948005CAE61 /* JJCImageTitleModel.swift in Sources */,
 				7DEC96342A6B810700F73DF0 /* JJCJSON.swift in Sources */,
