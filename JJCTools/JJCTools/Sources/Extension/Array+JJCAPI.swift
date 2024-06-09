@@ -19,6 +19,22 @@ extension Array {
         }
         return result
     }
+    
+    /// Array - 字符串拼接
+    public func jjc_join(byCharacter character: String? = nil) -> String {
+        if let array: [String] = self as? [String] {
+            if let tempCharacter = character {
+                return String(array.joined(separator: tempCharacter))
+            } else {
+                return String(array.joined())
+            }
+        } else {
+            if let newArray = self.map({ "\($0)" }) as? [String] {
+                return newArray.jjc_join(byCharacter: character)
+            }
+            return ""
+        }
+    }
 }
 
 extension Array {

@@ -245,6 +245,11 @@ extension String {
         }
         return list
     }
+    
+    /// String - 字符串分割 - 根据某个字符分割成字符串数组
+    public func jjc_split(byCharacter character: String) -> [String] {
+        return self.components(separatedBy: character)
+    }
 }
 
 // MARK: - String 字符串转换
