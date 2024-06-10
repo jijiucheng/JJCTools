@@ -347,6 +347,22 @@ extension String {
         }
         return targetString
     }
+    
+    /// String - URL - 获取一个 url 的所有参数
+    public func jjc_getURLAllParams() -> [String: String] {
+        var targetString = self
+        var params = [String: String]()
+        if let paramsString = targetString.jjc_split(byCharacter: "?").last {
+            let list = paramsString.jjc_split(byCharacter: "&")
+            for item in list {
+                let param = item.jjc_split(byCharacter: "=")
+                if param.count == 2 {
+                    params[param[0]] = param[1]
+                }
+            }
+        }
+        return params
+    }
 }
 
 // MARK: - String 字符串编码解码
