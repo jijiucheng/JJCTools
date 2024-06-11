@@ -9,23 +9,23 @@ import Foundation
 
 // MARK: - 月份转换格式信息
 public struct JJCMonthInfo {
-    var num: String = ""        // 数字样式
-    var enAll: String = ""      // 英文全称
-    var en: String = ""         // 英文简称
-    var cn: String = ""         // 中文样式
+    public var num: String = ""        // 数字样式
+    public var enAll: String = ""      // 英文全称
+    public var en: String = ""         // 英文简称
+    public var cn: String = ""         // 中文样式
 }
 
 // MARK: - 时间信息
 public struct JJCTimeInfo {
-    var origin: String = ""         // 原始样式时间，未处理时区
-    var timestamp: Double = 0       // 时间戳（秒级）
-    var time: String = ""           // 格式化时间样式时间
-    var year: String = ""           // 年
-    var month = JJCMonthInfo()      // 月
-    var day: String = ""            // 日
-    var hour: String = ""           // 时
-    var minute: String = ""         // 分
-    var second: String = ""         // 秒
+    public var origin: String = ""         // 原始样式时间，未处理时区
+    public var timestamp: Double = 0       // 时间戳（秒级）
+    public var time: String = ""           // 格式化时间样式时间
+    public var year: String = ""           // 年
+    public var month = JJCMonthInfo()      // 月
+    public var day: String = ""            // 日
+    public var hour: String = ""           // 时
+    public var minute: String = ""         // 分
+    public var second: String = ""         // 秒
 }
 
 
