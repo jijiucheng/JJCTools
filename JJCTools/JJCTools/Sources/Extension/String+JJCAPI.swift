@@ -349,9 +349,13 @@ extension String {
     }
     
     /// String - URL - 获取一个 url 的所有参数
-    public func jjc_getURLAllParams() -> [String: String] {
-        var targetString = self
+    public func jjc_getURLAllParams() -> (url: String, params: [String: String]) {
+        let targetString = self
+        var url = self
         var params = [String: String]()
+        if let urlString = targetString.jjc_split(byCharacter: "?").first {
+            url = urlString
+        }
         if let paramsString = targetString.jjc_split(byCharacter: "?").last {
             let list = paramsString.jjc_split(byCharacter: "&")
             for item in list {
@@ -361,7 +365,7 @@ extension String {
                 }
             }
         }
-        return params
+        return (url, params)
     }
 }
 
