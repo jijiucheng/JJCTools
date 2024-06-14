@@ -11,7 +11,7 @@
  */
 
 "Tips"      = "溫馨提示";
-"Ensure"    = "確定";
+"Confirm"   = "確定";
 "Cancel"    = "取消";
 
 "Success"   = "成功";

@@ -273,7 +273,7 @@ public func JJC_Alert(title: String? = nil,
     }
     if var newRightTitle = rightTitle {
         if newRightTitle.jjc_isEmptyOrInvalid() {
-            newRightTitle = JJC_Local("Ensure", "确定", lproj: lproj)
+            newRightTitle = JJC_Local("Confirm", "确定", lproj: lproj)
         }
         let rightAction = UIAlertAction(title: newRightTitle, style: rightStyle ?? .default) { _ in rightAction?() }
         alertVC.addAction(rightAction)
