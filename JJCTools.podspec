@@ -12,5 +12,6 @@ Pod::Spec.new do |s|
     s.source        = { :git => 'https://github.com/jijiucheng/JJCTools.git', :tag => s.version }
     s.platform      = :ios, '13.0'
     s.source_files  = 'JJCTools/JJCTools/Sources/**/*.swift'
+    s.framework     = 'UIKit', 'Foundation'
 
 end
