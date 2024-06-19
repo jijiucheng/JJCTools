@@ -11,7 +11,6 @@ Pod::Spec.new do |s|
     s.authors       = { '苜蓿鬼仙' => '302926124@qq.com' }
     s.source        = { :git => 'https://github.com/jijiucheng/JJCTools.git', :tag => s.version }
     s.platform      = :ios, '13.0'
-    s.swift-version = '5.10'
     s.source_files  = 'JJCTools/JJCTools/Sources/**/*.swift'
     s.framework     = 'UIKit', 'Foundation'
 
