@@ -452,3 +452,16 @@ public func JJC_CurViewControllerLinkLayer() -> [[(vc: UIViewController, type: [
     }
     return allVCList
 }
+
+/// JJCAPI - 延迟执行方法（通过 DispatchQueue）
+public func JJC_AsyncAfter(_ delay: Double = 0, isToMain: Bool = true, completion: @escaping () -> Void) {
+    DispatchQueue.global().asyncAfter(deadline: .now() + delay) {
+        if isToMain {
+            DispatchQueue.main.async {
+                completion()
+            }
+        } else {
+            completion()
+        }
+    }
+}
