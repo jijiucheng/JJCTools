@@ -25,10 +25,7 @@ open class JJCViewController: UIViewController {
         themeUI()
 //        JJC_Noti_AddObserver(JJCTheme.shared.key_noti_theme_color, observer: self, selector: #selector(refreshThemeUI))
         
-        if hidesBottomBarWhenPushed {
-            navigationItem.leftBarButtonItem = UIBarButtonItem.jjc_paramsByCustom(image: JJCTheme.shared.jjc_image_back(), target: self, action: #selector(backItemAction))
-        }
-        
+        setBackBarButtonItem(JJCTheme.shared.jjc_image_back())
         setUI()
     }
     
@@ -44,6 +41,12 @@ open class JJCViewController: UIViewController {
 //        super.viewWillAppear(animated)
 //        refreshThemeUI()
 //    }
+    
+    open func setBackBarButtonItem(_ image: UIImage) {
+        if hidesBottomBarWhenPushed {
+            navigationItem.leftBarButtonItem = UIBarButtonItem.jjc_paramsByCustom(image: image, target: self, action: #selector(backItemAction))
+        }
+    }
     
     open func setUI() {}
     
