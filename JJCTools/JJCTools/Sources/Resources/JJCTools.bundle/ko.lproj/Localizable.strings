@@ -1,0 +1,24 @@
+/* 
+  Localizable.strings
+  
+
+  Created by mxgx on 2021/7/29.
+  
+*/
+
+/**
+ * 韩语
+ */
+
+"Tips"      = "팁";
+"Confirm"   = "확신하는";
+"Cancel"    = "취소";
+
+"Success"   = "성공";
+"Failure"   = "실패";
+"Loading"   = "로드 중...";
+
+// MARK: - 主题模式
+"Theme_system" = "시스템 따르기";
+"Theme_light" = "밝은 색상 패턴";
+"Theme_dark" = "다크 모드";
