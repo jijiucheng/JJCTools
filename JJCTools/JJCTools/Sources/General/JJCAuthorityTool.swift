@@ -54,17 +54,15 @@ extension JJCAuthorityTool {
         
         // 申请 IDFA 权限
         var advertisingId = ASIdentifierManager.shared().advertisingIdentifier.uuidString
-        if #available(iOS 14, *), !isAuthority {
-            DispatchQueue.global().asyncAfter(deadline: .now() + 5) {
-                ATTrackingManager.requestTrackingAuthorization { status in
-                    JJC_Log("[日志] 隐私追踪权限 - 请求隐私追踪权限结果 - \(status.rawValue)")
-                    if status == .authorized {
-                        isAuthority = true
-                        advertisingId = ASIdentifierManager.shared().advertisingIdentifier.uuidString
-                    }
-                    JJC_Log("[日志] 获取用户 IDFA 结果 - AdvertisingId - \(advertisingId)")
-                    completion?(isRequest, isAuthority, advertisingId)
+        if #available(iOS 14, *), !isAuthority && isRequest {
+            ATTrackingManager.requestTrackingAuthorization { status in
+                JJC_Log("[日志] 隐私追踪权限 - 请求隐私追踪权限结果 - \(status.rawValue)")
+                if status == .authorized {
+                    isAuthority = true
+                    advertisingId = ASIdentifierManager.shared().advertisingIdentifier.uuidString
                 }
+                JJC_Log("[日志] 获取用户 IDFA 结果 - AdvertisingId - \(advertisingId)")
+                completion?(isRequest, isAuthority, advertisingId)
             }
         } else {
             JJC_Log("[日志] 获取用户 IDFA 结果 - AdvertisingId - \(advertisingId)")
