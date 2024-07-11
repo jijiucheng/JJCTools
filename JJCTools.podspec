@@ -7,7 +7,7 @@ Pod::Spec.new do |s|
 
     s.name            = 'JJCTools'
     s.module_name     = 'JJCTools'
-    s.version         = '1.0.2'
+    s.version         = '1.0.1'
     s.summary         = 'A Library for iOS to  get result fasterly with some methods.'
     s.homepage        = 'https://github.com/jijiucheng/JJCTools'
     s.license         = { :type => 'MIT', :file => 'LICENSE' }
