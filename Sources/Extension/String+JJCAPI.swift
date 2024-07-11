@@ -223,6 +223,34 @@ extension String {
         }
     }
     
+    /// String - 字符串查找、删除 - 通过正则表达式匹配查找
+    public func jjc_findString(byRegex regex: String, isRemove: Bool = false) -> (list: [String], result: String) {
+        do {
+            // 创建正则表达式对象
+            let regex = try NSRegularExpression(pattern: regex)
+            // 查找所有匹配项
+            // NSRange 的 location 和 length 参数是基于 String 的 UTF-16 表示的，因此你需要使用 originalString.utf16.count 来获取正确的长度
+            let matches = regex.matches(in: self, options: [], range: NSRange(location: 0, length: self.utf16.count))
+            // 存储匹配的字符串
+            var list = [String]()
+            // 遍历匹配项并提取字符串
+            for match in matches {
+                if let range = Range(match.range, in: self) {
+                    list.append(String(self[range]))
+                }
+            }
+            // 移除所有匹配的字符串
+            var result = self
+            if isRemove {
+                result = regex.stringByReplacingMatches(in: self, range: NSRange(location: 0, length: self.utf16.count), withTemplate: "")
+            }
+            return (list, result)
+        } catch let error {
+            print("Invalid regex: \(error.localizedDescription)")
+            return ([], self)
+        }
+    }
+    
     /// String - 字符串插入 - 在字符串某个位置插入一串字符串
     public func jjc_insert(byLocation location: Int, insert: String) -> String {
         if location > self.count {
