@@ -5,19 +5,20 @@
 
 Pod::Spec.new do |s|
 
-    s.name           = 'JJCTools'
-    s.version        = '1.0.1'
-    s.summary        = 'A Library for iOS to  get result fasterly with some methods.'
-    s.homepage       = 'https://github.com/jijiucheng/JJCTools'
-    s.license        = { :type => 'MIT', :file => 'LICENSE' }
-    s.authors        = { '苜蓿鬼仙' => '302926124@qq.com' }
-    s.source         = { :git => 'https://github.com/jijiucheng/JJCTools.git', :tag => s.version }
-    s.platform       = :ios, '13.0'
-    s.swift_versions = '5.10'
-    s.source_files   = 'JJCTools/JJCTools/Sources/**/*.swift'
-    s.resource       = 'JJCTools/JJCTools/Sources/Resources/JJCTools.bundle'
+    s.name            = 'JJCTools'
+    s.module_name     = 'JJCTools'
+    s.version         = '1.0.2'
+    s.summary         = 'A Library for iOS to  get result fasterly with some methods.'
+    s.homepage        = 'https://github.com/jijiucheng/JJCTools'
+    s.license         = { :type => 'MIT', :file => 'LICENSE' }
+    s.authors         = { '苜蓿鬼仙' => '302926124@qq.com' }
+    s.platform        = :ios, '13.0'
+    s.swift_versions  = '5.10'
+    s.source          = { :git => 'https://github.com/jijiucheng/JJCTools.git', :tag => s.version }
+    s.source_files    = 'Sources/**/*.{h,swift}'
+    s.resource_bundle = { 'JJCTools' => 'Sources/**/*.{xcassets,lproj}' }
     # 依赖系统库，建议添加上，不然得话会报一些错误
-    s.framework      = 'UIKit', 'Foundation'
+    s.framework       = 'UIKit', 'Foundation'
     
     # 依赖三方库，根据需求进行添加
     # s.dependency 'PKHUD'
