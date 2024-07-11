@@ -37,7 +37,7 @@ open class JJCWebViewController: JJCViewController {
     /// UIProgressView - 进度条
     open lazy var progressV: UIProgressView = {
         let progressV = UIProgressView()
-        progressV.frame = CGRect(x: 0, y: 0, width: JJC_ScreenW, height: 2)
+        progressV.frame = CGRect(x: 0, y: 0, width: JJC_ScreenW, height: 1)
         progressV.trackTintColor = .clear
         progressV.progressTintColor = .orange
         return progressV
