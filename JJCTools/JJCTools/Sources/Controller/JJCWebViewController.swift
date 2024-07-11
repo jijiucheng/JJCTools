@@ -37,9 +37,11 @@ open class JJCWebViewController: JJCViewController {
     /// UIProgressView - 进度条
     open lazy var progressV: UIProgressView = {
         let progressV = UIProgressView()
-        progressV.frame = CGRect(x: 0, y: 0, width: JJC_ScreenW, height: 1)
+        progressV.frame = CGRect(x: 0, y: 0, width: JJC_ScreenW, height: 4)
         progressV.trackTintColor = .clear
         progressV.progressTintColor = .orange
+        // 由于 UIProgressView 无法设置高度，默认 1x 2.0；2x 4.0；3x 6.0，可以通过缩放达到效果
+        progressV.setScaleHeight(0.5)
         return progressV
     }()
     
@@ -63,6 +65,12 @@ extension JJCWebViewController {
     /// Action - 设置导航栏
     @objc open func setNavigationParameters(bgColor: UIColor, title: String) {
         navigationController?.navigationBar.backgroundColor = bgColor
+    }
+    
+    /// Action - 设置进度条高度，默认 1x 2.0；2x 4.0；3x 6.0
+    @objc open func setProgressViewScaleHeight(_ scale: CGFloat) {
+        // 由于 UIProgressView 无法设置高度，可以通过缩放达到效果
+        progressV.setScaleHeight(scale)
     }
     
     /// Action - 加载 url
