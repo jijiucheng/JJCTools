@@ -319,8 +319,15 @@ extension String {
 extension String {
     /// String - URL - 拼接路径
     public func jjc_appendURLPath(_ path: String) -> String {
-        let targetString = self
-        return targetString + (targetString.hasSuffix("/") ? "" : "/") + path
+        var targetString = self
+        if targetString.hasSuffix("/") && path.hasPrefix("/") {
+            targetString += path.jjc_replace(byStart: 0, 1, with: "")
+        } else if !targetString.hasSuffix("/") && !path.hasPrefix("/") {
+            targetString = targetString + "/" + path
+        } else {
+            targetString += path
+        }
+        return targetString
     }
     
     /// String - URL - 获取 url 路径下最后一个参数（如：https://m.baidu.com/chapter/12345/tag/index.html 获取的就是 index.html）
