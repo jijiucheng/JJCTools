@@ -13,7 +13,7 @@ import UIKit
 
 class JJCToolsAssets: NSObject {
     /// JJCToolsAssets - 获取 framework 中的图片资源文件
-    static func jjc_bundleImage(_ name: String) -> UIImage {
+    static func jjc_bundleImage(_ name: String) -> UIImage? {
         let bundle = Bundle(for: JJCToolsAssets.self)
         if let image = UIImage(named: name, in: bundle, compatibleWith: nil) {
             return image
@@ -21,11 +21,11 @@ class JJCToolsAssets: NSObject {
                   let image = UIImage(named: name, in: Bundle(url: url), compatibleWith: nil) {
             return image
         }
-        return UIImage()
+        return nil
     }
     
     /// JJCToolsAssets - 获取 framework 中的图片资源文件
-    static func jjc_bundleColor(_ name: String) -> UIColor {
+    static func jjc_bundleColor(_ name: String) -> UIColor? {
         let bundle = Bundle(for: JJCToolsAssets.self)
         if let color = UIColor(named: name, in: bundle, compatibleWith: nil) {
             return color
@@ -33,6 +33,6 @@ class JJCToolsAssets: NSObject {
                   let color = UIColor(named: name, in: Bundle(url: url), compatibleWith: nil) {
             return color
         }
-        return UIColor.clear
+        return nil
     }
 }
