@@ -25,7 +25,7 @@ open class JJCViewController: UIViewController {
         themeUI()
 //        JJC_Noti_AddObserver(JJCTheme.shared.key_noti_theme_color, observer: self, selector: #selector(refreshThemeUI))
         
-        setBackBarButtonItem(JJCToolsAssets.jjc_bundleImage("base_back"))
+        setBackBarButtonItem(JJCToolsAssets.jjc_bundleImage("base_back") ?? UIImage())
         setUI()
     }
     

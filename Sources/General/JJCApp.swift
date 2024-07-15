@@ -50,6 +50,42 @@ extension JJCApp {
     }
 }
 
+// MARK: - 常见 App 信息校验
+extension JJCApp {
+    /// JJCApp - 校验两个版本号大小
+    public static func jjc_checkIsUpdateVersion(oldRelease: String, oldDebug: String? = nil, newRelease: String, newDebug: String? = nil) -> Bool {
+        let oldReleaseList = oldRelease.jjc_split(byCharacter: ".")
+        let newReleaseList = newRelease.jjc_split(byCharacter: ".")
+        if oldReleaseList.count > 0 && newReleaseList.count > 0 && oldReleaseList.count == newReleaseList.count {
+            for index in 0..<newReleaseList.count {
+                let old = Int(oldReleaseList[index]) ?? 0
+                let new = Int(newReleaseList[index]) ?? 0
+                if new > old {
+                    return true
+                } else if new < old {
+                    return false
+                }
+            }
+        }
+        
+        let oldDebugList = oldDebug?.jjc_split(byCharacter: ".") ?? []
+        let newDebugList = newDebug?.jjc_split(byCharacter: ".") ?? []
+        if oldDebugList.count > 0 && newDebugList.count > 0 {
+            for index in 0..<newDebugList.count {
+                let old = Int(oldDebugList[index]) ?? 0
+                let new = Int(newDebugList[index]) ?? 0
+                if new > old {
+                    return true
+                } else if new < old {
+                    return false
+                }
+            }
+        }
+        
+        return false
+    }
+}
+
 // MARK: - 常见权限检测
 extension JJCApp {
     /// JJCApp - 检查是否开启通知权限

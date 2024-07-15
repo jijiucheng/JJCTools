@@ -14,10 +14,10 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        let imageV = UIImageView(frame: CGRectMake(100, 100, 200, 200))
-        imageV.backgroundColor = JJCToolsAssets.jjc_bundleColor("base_lastChapterColor")
-        imageV.image = JJCToolsAssets.jjc_bundleImage("base_back")
-        view.addSubview(imageV)
+//        let imageV = UIImageView(frame: CGRectMake(100, 100, 200, 200))
+//        imageV.backgroundColor = JJCToolsAssets.jjc_bundleColor("base_lastChapterColor")
+//        imageV.image = JJCToolsAssets.jjc_bundleImage("base_back")
+//        view.addSubview(imageV)
     }
 }
 

@@ -7,6 +7,7 @@
 
 import XCTest
 @testable import JJCToolsDemo
+import JJCTools
 
 final class JJCToolsDemoTests: XCTestCase {
 
@@ -24,6 +25,11 @@ final class JJCToolsDemoTests: XCTestCase {
         // Any test you write for XCTest can be annotated as throws and async.
         // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
         // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+        
+        /// JJCApp
+        let isUpdate = JJCApp.jjc_checkIsUpdateVersion(oldRelease: "1.2.0", oldDebug: "001", newRelease: "1.2.0", newDebug: "002")
+        print("xxx")
+        XCTAssert(true, "[单元测试] JJCApp - jjc_checkIsUpdateVersion - \(isUpdate)")
     }
 
     func testPerformanceExample() throws {
