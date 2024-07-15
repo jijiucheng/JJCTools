@@ -30,6 +30,11 @@ final class JJCToolsDemoTests: XCTestCase {
         let isUpdate = JJCApp.jjc_checkIsUpdateVersion(oldRelease: "1.2.0", oldDebug: "001", newRelease: "1.2.0", newDebug: "002")
         print("xxx")
         XCTAssert(true, "[单元测试] JJCApp - jjc_checkIsUpdateVersion - \(isUpdate)")
+        
+        
+        // JJCLocal
+        let local = JJC_Local("Tips", "温馨提示", bundle: Bundle(for: JJCToolsDemoTests.self), lproj: nil)
+        print("xxx")
     }
 
     func testPerformanceExample() throws {

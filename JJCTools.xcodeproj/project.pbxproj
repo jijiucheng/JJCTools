@@ -36,7 +36,7 @@
 		7DC601892C3FD2BA001B62F1 /* JJCICloudTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC601552C3FD2BA001B62F1 /* JJCICloudTool.swift */; };
 		7DC6018A2C3FD2BA001B62F1 /* JJCLocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC601562C3FD2BA001B62F1 /* JJCLocal.swift */; };
 		7DC6018B2C3FD2BA001B62F1 /* JJCTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC601572C3FD2BA001B62F1 /* JJCTheme.swift */; };
-		7DC6018C2C3FD2BA001B62F1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7DC601592C3FD2BA001B62F1 /* Assets.xcassets */; };
+		7DC6018C2C3FD2BA001B62F1 /* JJCToolsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7DC601592C3FD2BA001B62F1 /* JJCToolsAssets.xcassets */; };
 		7DC6018D2C3FD2BA001B62F1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7DC6015B2C3FD2BA001B62F1 /* Localizable.strings */; };
 		7DC6018E2C3FD2BA001B62F1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7DC6015D2C3FD2BA001B62F1 /* Localizable.strings */; };
 		7DC6018F2C3FD2BA001B62F1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7DC6015F2C3FD2BA001B62F1 /* Localizable.strings */; };
@@ -94,7 +94,7 @@
 		7DC601552C3FD2BA001B62F1 /* JJCICloudTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JJCICloudTool.swift; sourceTree = "<group>"; };
 		7DC601562C3FD2BA001B62F1 /* JJCLocal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JJCLocal.swift; sourceTree = "<group>"; };
 		7DC601572C3FD2BA001B62F1 /* JJCTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JJCTheme.swift; sourceTree = "<group>"; };
-		7DC601592C3FD2BA001B62F1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		7DC601592C3FD2BA001B62F1 /* JJCToolsAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = JJCToolsAssets.xcassets; sourceTree = "<group>"; };
 		7DC6015A2C3FD2BA001B62F1 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		7DC6015C2C3FD2BA001B62F1 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7DC6015E2C3FD2BA001B62F1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -185,7 +185,7 @@
 		7DC601642C3FD2BA001B62F1 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				7DC601592C3FD2BA001B62F1 /* Assets.xcassets */,
+				7DC601592C3FD2BA001B62F1 /* JJCToolsAssets.xcassets */,
 				7DC6015B2C3FD2BA001B62F1 /* Localizable.strings */,
 				7DC6015D2C3FD2BA001B62F1 /* Localizable.strings */,
 				7DC6015F2C3FD2BA001B62F1 /* Localizable.strings */,
@@ -346,7 +346,7 @@
 			files = (
 				7DC601902C3FD2BA001B62F1 /* Localizable.strings in Resources */,
 				7DC601912C3FD2BA001B62F1 /* Localizable.strings in Resources */,
-				7DC6018C2C3FD2BA001B62F1 /* Assets.xcassets in Resources */,
+				7DC6018C2C3FD2BA001B62F1 /* JJCToolsAssets.xcassets in Resources */,
 				7DC6019D2C3FD41E001B62F1 /* JJCTools.podspec in Resources */,
 				7DC6018F2C3FD2BA001B62F1 /* Localizable.strings in Resources */,
 				7DC6018E2C3FD2BA001B62F1 /* Localizable.strings in Resources */,

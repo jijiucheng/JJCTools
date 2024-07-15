@@ -259,7 +259,7 @@ public func JJC_Alert(title: String? = nil,
                       leftAction: (() -> Void)? = nil,
                       rightAction: (() -> Void)? = nil,
                       lproj: String? = nil) -> UIAlertController {
-    var newTitle: String? = nil
+    var newTitle: String? = title
     if title == nil || (title ?? "").jjc_isEmptyOrInvalid() {
         newTitle = JJC_Local("Tips", "温馨提示", lproj: lproj)
     }
