@@ -13,6 +13,8 @@ public typealias JJCSegmentItemParams = (bgColor: UIColor, titleColor: UIColor, 
 public typealias JJCSegmentLineParams = (color: UIColor, width: CGFloat, height: CGFloat, isFixed: Bool)
 /// 核心选中 Item 参数（颜色、宽度、高度、圆角、宽度是否固定）
 public typealias JJCSegmentSelectedBgParams = (color: UIColor, width: CGFloat, height: CGFloat, radius: CGFloat, isFixed: Bool)
+/// 按钮信息
+fileprivate typealias JJCSegmentTitleInfo = (title: String, selectedTitle: String, maxWidth: CGFloat)
 
 /// 展示类型
 public enum JJCSegmentType: Int {
@@ -123,8 +125,8 @@ extension JJCSegmentView {
         scrollView.frame = self.bounds
         scrollView.addSubview(lineV)
         scrollView.addSubview(selectedBgV)
-        // 添加按钮
-        var btnMaxWidth: CGFloat = 0
+        // 计算每个按钮的信息参数
+        var btnInfoList = [JJCSegmentTitleInfo]()
         for (index, title) in titles.enumerated() {
             // 计算默认状态和选中状态文本
             var selectedTitle = ""
@@ -134,10 +136,17 @@ extension JJCSegmentView {
             if selectedTitle.jjc_isEmptyOrInvalid() {
                 selectedTitle = title
             }
-            // 动态计算宽度
-            var titleW = title.jjc_getContentSize(font: normalParams.titleFont, contentMaxWH: frame.size.width * 0.5, isCalculateHeight: false).width + itemSpace * 0.5 * 2
+            var titleW: CGFloat = title.jjc_getContentSize(font: normalParams.titleFont, contentMaxWH: frame.size.width * 0.5, isCalculateHeight: false).width + itemSpace * 0.5 * 2
             let selectedTitleW = selectedTitle.jjc_getContentSize(font: selectedParams.titleFont, contentMaxWH: frame.size.width * 0.5, isCalculateHeight: false).width + itemSpace * 0.5 * 2
             titleW = max(titleW, selectedTitleW)
+            btnInfoList.append((title: title, selectedTitle: selectedTitle, maxWidth: titleW))
+        }
+        // 添加按钮
+        var btnStartX: CGFloat = 0
+        var btnMaxWidth: CGFloat = 0
+        for (index, title) in titles.enumerated() {
+            // 动态计算宽度
+            var titleW = btnInfoList[index].maxWidth
             titleW = max(titleW, minItemWidth)
             titleW = min(titleW, frame.size.width * 0.5)
             // 根据类型调整宽度
@@ -146,13 +155,15 @@ extension JJCSegmentView {
             case .equal: titleW = frame.size.width / CGFloat(min(titles.count, displayMaxNum))
             default: break
             }
+            // 调整起始位置
+            
             
             // 创建按钮
             let btn = UIButton(type: .custom)
             btn.frame = CGRect(x: btnMaxWidth, y: 0, width: titleW, height: scrollView.frame.size.height - lineVParams.height)
             btn.backgroundColor = normalParams.bgColor
-            btn.jjc_params(title: title, titleColor: normalParams.titleColor, font: normalParams.titleFont, state: .normal)
-            btn.jjc_params(title: selectedTitle, titleColor: selectedParams.titleColor, font: normalParams.titleFont, state: .selected)
+            btn.jjc_params(title: btnInfoList[index].title, titleColor: normalParams.titleColor, font: normalParams.titleFont, state: .normal)
+            btn.jjc_params(title: btnInfoList[index].selectedTitle, titleColor: selectedParams.titleColor, font: normalParams.titleFont, state: .selected)
             btn.tag = index
             btn.isSelected = false
             btn.addTarget(self, action: #selector(btnAction(button:)), for: .touchUpInside)
