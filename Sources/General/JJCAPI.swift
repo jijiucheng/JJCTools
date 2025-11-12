@@ -10,7 +10,7 @@ import UIKit
 
 public class JJCGlobalClass: NSObject {}
 
-// MARK: - 全局常量
+// MARK: - 全局常量（基础设备信息）
 
 /// @MainActor
 /// - 是 Swift 5.5+ 引入的全局演员（global actor），用来把所有代码都强制放到主线程执行，编译期就保证线程安全，不需要手动写 DispatchQueue.main.async {}
