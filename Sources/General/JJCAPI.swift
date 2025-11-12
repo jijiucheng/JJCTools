@@ -11,11 +11,30 @@ import UIKit
 public class JJCGlobalClass: NSObject {}
 
 // MARK: - 全局常量
-/// JJCAPI - 屏幕尺寸
-@MainActor public let JJC_ScreenSize = UIScreen.main.responds(to: #selector(getter: UIScreen.nativeBounds)) ? CGSize(width: UIScreen.main.nativeBounds.size.width / UIScreen.main.nativeScale, height: UIScreen.main.nativeBounds.size.height / UIScreen.main.nativeScale) : UIScreen.main.bounds.size
-/// JJCAPI - 屏幕宽度
+
+/// @MainActor
+/// - 是 Swift 5.5+ 引入的全局演员（global actor），用来把所有代码都强制放到主线程执行，编译期就保证线程安全，不需要手动写 DispatchQueue.main.async {}
+
+/// 逻辑像素（pt）、物理像素（px）
+/// - 物理像素 = 逻辑像素 × UIScreen.main.nativeScale
+/// - UIScreen.main.nativeScale：永远反映硬件物理像素密度，不受系统“放大显示”影响，硬件真实倍率，做像素级计算用它
+/// - UIScreen.main.nativeBounds.size：物理像素的宽高
+/// - UIScreen.main.scale：逻辑像素密度，会被“放大显示”等辅助功能篡改，只做布局即可
+/// - UIScreen.main.bounds.size：逻辑像素宽高
+/// - 示例（iPhone 14 Pro）
+///   - 逻辑尺寸（pt）：393 * 852
+///   - 物理像素密度（nativeScale）：3.0
+///   - 物理分辨率（px）：1179 * 2556
+
+/// JJCAPI - 物理像素密度（nativeScale）
+@MainActor public let JJC_ScreenNativeScale = UIScreen.main.nativeScale
+/// JJCAPI - 物理像素、物理分辨率（px）
+@MainActor public let JJC_ScreenNativeSize = UIScreen.main.nativeBounds.size
+/// JJCAPI - 屏幕尺寸、逻辑尺寸（pt）
+@MainActor public let JJC_ScreenSize = UIScreen.main.responds(to: #selector(getter: UIScreen.nativeBounds)) ? CGSize(width: JJC_ScreenNativeSize.width / JJC_ScreenNativeScale, height: JJC_ScreenNativeSize.height / JJC_ScreenNativeScale) : UIScreen.main.bounds.size
+/// JJCAPI - 屏幕宽度、逻辑尺寸宽度（pt）
 @MainActor public let JJC_ScreenW = JJC_ScreenSize.width
-/// JJCAPI - 屏幕高度
+/// JJCAPI - 屏幕高度、逻辑尺寸高度（pt）
 @MainActor public let JJC_ScreenH = JJC_ScreenSize.height
 /// JJCAPI - 导航栏高度
 public let JJC_NaviH: CGFloat = 44.0
