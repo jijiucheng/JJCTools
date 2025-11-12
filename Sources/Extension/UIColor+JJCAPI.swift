@@ -83,6 +83,7 @@ extension UIColor {
 // MARK: - UIColor 扩展方法
 extension UIColor {
     /// UIColor - 动态颜色（暗黑模式适配）
+    @available(iOS 13.0, *)
     public static func jjc_dynamicColor(_ any: UIColor, _ light: UIColor? = nil, _ dark: UIColor) -> UIColor {
         UIColor { traitCollection in
             if traitCollection.userInterfaceStyle == .dark {

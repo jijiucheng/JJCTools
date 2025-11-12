@@ -35,6 +35,7 @@ public enum JJCICloudResultType: Int {
     case recoveryFailure        // 恢复失败
 }
 
+@MainActor
 public class JJCICloudTool: UIDocument {
     /// JJCICloudTool - 查询实例
     fileprivate lazy var metadataQuery: NSMetadataQuery = {

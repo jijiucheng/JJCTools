@@ -8,6 +8,7 @@
 import UIKit
 import Foundation
 
+@MainActor
 public class JJCLocal: NSObject {
     /// JJCLocal - 定义返回语言参数
     /// - localCode：当前语言编码

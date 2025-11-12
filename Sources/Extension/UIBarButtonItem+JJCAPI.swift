@@ -12,8 +12,8 @@ import UIKit
 extension UIBarButtonItem {
     /// UIBarButtonItem -
     private struct AssociatedKey {
-        static var itemWidth: CGFloat = 30.0
-        static var itemHeight: CGFloat = 30.0
+        @MainActor static var itemWidth: CGFloat = 30.0
+        @MainActor static var itemHeight: CGFloat = 30.0
     }
     
     /// UIBarButtonItem - 导航栏按钮宽度

@@ -7,6 +7,7 @@
 
 import UIKit
 
+@MainActor
 public class JJCAlertController: UIViewController {
     /// JJCAlertController - 白色底部背景
     public lazy var containerView = {

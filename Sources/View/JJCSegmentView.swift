@@ -41,6 +41,7 @@ public enum JJCSegmentSelectedType: Int {
     case itemBgColor        // 按钮背景颜色
 }
 
+@available(iOS 13.0, *)
 public class JJCSegmentView: UIView {
     /// 展示类型
     public var type: JJCSegmentType = .dynamic
@@ -99,6 +100,7 @@ public class JJCSegmentView: UIView {
 }
 
 // MARK: - 核心方法
+@available(iOS 13.0, *)
 extension JJCSegmentView {
     /// 核心方法
     fileprivate func setUI() {
@@ -197,6 +199,7 @@ extension JJCSegmentView {
 }
 
 // MARK: - Methods
+@available(iOS 13.0, *)
 extension JJCSegmentView {
     /// Action - 开始渲染（需要在所有参数配置完成后调用，或有参数更新后调用）
     public func jjc_update() {

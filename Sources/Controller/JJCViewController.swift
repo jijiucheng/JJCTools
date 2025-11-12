@@ -22,11 +22,31 @@ open class JJCViewController: UIViewController {
     open override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        themeUI()
+        if #available(iOS 13.0, *) {
+            themeUI()
+        } else {
+            // Fallback on earlier versions
+        }
 //        JJC_Noti_AddObserver(JJCTheme.shared.key_noti_theme_color, observer: self, selector: #selector(refreshThemeUI))
         
         setBackBarButtonItem(JJCToolsAssets.jjc_bundleImage("base_back") ?? UIImage())
         setUI()
+        
+        if #available(iOS 17.0, *) {
+            registerForTraitChanges([UITraitUserInterfaceStyle.self], handler: { (self: Self, previousTraitCollection: UITraitCollection) in
+//                if self.traitCollection.userInterfaceStyle == .light {
+//                    // Code to execute in light mode
+//                    print("App switched to light mode")
+//                } else {
+//                    // Code to execute in dark mode
+//                    print("App switched to dark mode")
+//                }
+                JJC_Log("当前主题模式1 ---- \(JJC_CurThemeMode().rawValue)")
+                if UITraitCollection.current.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+                    JJC_Log("当前主题模式2 ---- \(JJC_CurThemeMode().rawValue)")
+                }
+            })
+        }
     }
     
     open override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -56,6 +76,7 @@ open class JJCViewController: UIViewController {
 //        }
 //    }
     
+    @available(iOS 13.0, *)
     fileprivate func themeUI() {
         JJCTheme.shared.jjc_setStatusColor(JJC_ThemeColor(.status))
         JJCTheme.shared.jjc_setNavigationBarColor(JJC_ThemeColor(.navigationBar), controller: self)
@@ -78,16 +99,17 @@ open class JJCViewController: UIViewController {
     }
 }
 
-extension JJCViewController {
-    /// 监听浅色、深色模式变化
-    open override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        JJC_Log("当前主题模式1 ---- \(JJC_CurThemeMode().rawValue)")
-        if UITraitCollection.current.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            JJC_Log("当前主题模式2 ---- \(JJC_CurThemeMode().rawValue)")
-        }
-    }
-}
+//extension JJCViewController {
+//    /// 监听浅色、深色模式变化
+//    @available(iOS 13.0, *)
+//    open override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+//        super.traitCollectionDidChange(previousTraitCollection)
+//        JJC_Log("当前主题模式1 ---- \(JJC_CurThemeMode().rawValue)")
+//        if UITraitCollection.current.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+//            JJC_Log("当前主题模式2 ---- \(JJC_CurThemeMode().rawValue)")
+//        }
+//    }
+//}
 
 // MARK:- 按钮点击事件
 extension JJCViewController {

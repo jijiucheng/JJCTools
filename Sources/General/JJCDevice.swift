@@ -94,7 +94,7 @@ extension JJCDevice {
     }
     
     /// 是否是刘海屏
-    public static func jjc_isIPhoneX() -> Bool {
+    @MainActor public static func jjc_isIPhoneX() -> Bool {
         return JJC_IsIPhoneX()
     }
 }

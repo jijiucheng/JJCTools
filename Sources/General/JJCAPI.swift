@@ -12,11 +12,11 @@ public class JJCGlobalClass: NSObject {}
 
 // MARK: - 全局常量
 /// JJCAPI - 屏幕尺寸
-public let JJC_ScreenSize = UIScreen.main.responds(to: #selector(getter: UIScreen.nativeBounds)) ? CGSize(width: UIScreen.main.nativeBounds.size.width / UIScreen.main.nativeScale, height: UIScreen.main.nativeBounds.size.height / UIScreen.main.nativeScale) : UIScreen.main.bounds.size
+@MainActor public let JJC_ScreenSize = UIScreen.main.responds(to: #selector(getter: UIScreen.nativeBounds)) ? CGSize(width: UIScreen.main.nativeBounds.size.width / UIScreen.main.nativeScale, height: UIScreen.main.nativeBounds.size.height / UIScreen.main.nativeScale) : UIScreen.main.bounds.size
 /// JJCAPI - 屏幕宽度
-public let JJC_ScreenW = JJC_ScreenSize.width
+@MainActor public let JJC_ScreenW = JJC_ScreenSize.width
 /// JJCAPI - 屏幕高度
-public let JJC_ScreenH = JJC_ScreenSize.height
+@MainActor public let JJC_ScreenH = JJC_ScreenSize.height
 /// JJCAPI - 导航栏高度
 public let JJC_NaviH: CGFloat = 44.0
 
@@ -31,13 +31,13 @@ public let JJC_CachePath = NSSearchPathForDirectoriesInDomains(.cachesDirectory,
 public let JJC_TempPath = NSTemporaryDirectory()
 
 /// JJCAPI - 是否为 iPhone
-public let JJC_IsIPhone = (UIDevice.current.userInterfaceIdiom == .phone)
+@MainActor public let JJC_IsIPhone = (UIDevice.current.userInterfaceIdiom == .phone)
 /// JJCAPI - 是否为 iPad
-public let JJC_IsIPad = (UIDevice.current.userInterfaceIdiom == .pad)
+@MainActor public let JJC_IsIPad = (UIDevice.current.userInterfaceIdiom == .pad)
 /// JJCAPI - 是否为 CarPlay
-public let JJC_IsCarPlay = (UIDevice.current.userInterfaceIdiom == .carPlay)
+@MainActor public let JJC_IsCarPlay = (UIDevice.current.userInterfaceIdiom == .carPlay)
 /// JJCAPI - 判断当前设备是否横屏
-public let JJC_IsLandScape = (UIDevice.current.orientation == .landscapeLeft || UIDevice.current.orientation == .landscapeRight)
+@MainActor public let JJC_IsLandScape = (UIDevice.current.orientation == .landscapeLeft || UIDevice.current.orientation == .landscapeRight)
 
 /// JJCAPI - 系统信息 - JJCTools main bundle
 public let JJC_mainBundleByJJCTools = Bundle(for: JJCGlobalClass.self)
@@ -63,7 +63,7 @@ public func JJC_Version() -> (release: String, debug: String, full: String) {
 /// - 参考资料：
 ///   - https://blog.csdn.net/u014651417/article/details/123423893
 ///   - http://events.jianshu.io/p/a74f593191d1
-public func JJC_Windows() -> [UIWindow] {
+@MainActor public func JJC_Windows() -> [UIWindow] {
     if #available(iOS 15.0, *) {
         return UIApplication.shared.connectedScenes.map({ $0 as? UIWindowScene }).compactMap({ $0 }).first?.windows ?? []
     } else {
@@ -72,12 +72,12 @@ public func JJC_Windows() -> [UIWindow] {
 }
 
 /// JJCAPI - KeyWindow
-public func JJC_KeyWindow() -> UIWindow? {
+@MainActor public func JJC_KeyWindow() -> UIWindow? {
     return JJC_Windows().first
 }
 
 /// JJCAPI - 是否是刘海屏
-public func JJC_IsIPhoneX() -> Bool {
+@MainActor public func JJC_IsIPhoneX() -> Bool {
     if #available(iOS 11.0, *) {
         return JJC_KeyWindow()?.safeAreaInsets.bottom ?? 0 > 0
     } else {
@@ -86,7 +86,7 @@ public func JJC_IsIPhoneX() -> Bool {
 }
 
 /// JJCAPI - 状态栏高度
-public func JJC_StatusH() -> CGFloat {
+@MainActor public func JJC_StatusH() -> CGFloat {
     if #available(iOS 13.0, *) {
         return JJC_KeyWindow()?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
     } else {
@@ -95,7 +95,7 @@ public func JJC_StatusH() -> CGFloat {
 }
 
 /// JJCAPI - （状态栏+导航栏）高度
-public func JJC_StatusNaviH() -> CGFloat {
+@MainActor public func JJC_StatusNaviH() -> CGFloat {
     if #available(iOS 13.0, *) {
         return (JJC_KeyWindow()?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0) + JJC_NaviH
     } else {
@@ -104,12 +104,12 @@ public func JJC_StatusNaviH() -> CGFloat {
 }
 
 /// JJCAPI - 底部 TabBar 高度
-public func JJC_TabBarH() -> CGFloat {
+@MainActor public func JJC_TabBarH() -> CGFloat {
     return JJC_IsIPhoneX() ? (49.0 + 34.0) : 49.0
 }
 
 /// JJCAPI - 缩放比例(750*1334) px
-public func JJC_IPhone6sRatio(_ padding: CGFloat) -> CGFloat {
+@MainActor public func JJC_IPhone6sRatio(_ padding: CGFloat) -> CGFloat {
     return CGFloat((JJC_IsIPad ? roundf(Float(padding * 0.5) * 1.5) : roundf(Float(padding) * 0.5)))
 }
 
@@ -153,6 +153,7 @@ public func JJC_HexColorA(_ hexString: String, _ a: CGFloat? = 1.0) -> UIColor {
 }
 
 /// JJCAPI - 颜色 - 获取动态颜色
+@available(iOS 13.0, *)
 public func JJC_DynamicColor(_ any: UIColor, _ light: UIColor? = nil, _ dark: UIColor) -> UIColor {
     UIColor { traitCollection in
         if traitCollection.userInterfaceStyle == .dark {
@@ -225,7 +226,7 @@ public func JJC_Log<T>(_ log: T, file: String = #file, method: String = #functio
 // MARK: - 本地化
 /// JJJCAPI - 本地语言 - 获取当前手机系统语言【设置->通用->语言->首选语言顺序】
 /// - 此处也可以通过 UserDefaults.standard.value(forKey: "AppleLanguages") 获取
-public func JJC_systemLanguage() -> String {
+@MainActor public func JJC_systemLanguage() -> String {
     return JJCLocal.jjc_systemLanguageInfo().systemLanguage
 }
 
@@ -233,7 +234,7 @@ public func JJC_systemLanguage() -> String {
 /// - `bundle` 和 `objClass`
 ///   - 是用于获取 `mainBundle（Bundle.main）` 的，主要是用于区分是获取主工程的资源文件，还是子工程的资源文件；
 ///   - bundle 参数获取 mainBundle 优先级高于通过 objClass 参数获取 mainBundle；
-public func JJC_Language(_ bundle: Bundle? = nil, objClass: AnyClass? = nil) -> String {
+@MainActor public func JJC_Language(_ bundle: Bundle? = nil, objClass: AnyClass? = nil) -> String {
     return JJCLocal.jjc_language(bundle, objClass: objClass)
 }
 
@@ -244,13 +245,13 @@ public func JJC_Language(_ bundle: Bundle? = nil, objClass: AnyClass? = nil) -> 
 /// - `bundleName`：获取到 `mainBundle` 后，获取内部的 `xxx.bundle` 资源文件名称，主要取决于资源放的位置；
 /// - `lproj`：语言文件
 /// - 参考链接：https://www.jianshu.com/p/b64ff9d8e7ce、https://www.jianshu.com/p/173076faa742
-public func JJC_Local(_ key: String, _ comment: String? = nil, bundle: Bundle? = nil, objClass: AnyClass? = nil, bundleFileName: String? = nil, lproj: String? = nil) -> String {
+@MainActor public func JJC_Local(_ key: String, _ comment: String? = nil, bundle: Bundle? = nil, objClass: AnyClass? = nil, bundleFileName: String? = nil, lproj: String? = nil) -> String {
     return JJCLocal.jjc_local(key, comment, bundle: bundle, objClass: objClass, bundleFileName: bundleFileName, lproj: lproj)
 }
 
 // MARK: - 弹框提醒
 /// JJCAPI - 弹框 Alert - title、message、leftTitle、leftStyle、rightTitle、rightStyle、leftAction、rightAction
-public func JJC_Alert(title: String? = nil,
+@MainActor public func JJC_Alert(title: String? = nil,
                       message: String,
                       leftTitle: String? = nil,
                       leftStyle: UIAlertAction.Style? = .cancel,
@@ -282,7 +283,7 @@ public func JJC_Alert(title: String? = nil,
 }
 
 /// JJCAPI - HUD - 纯文本类型弹框
-public func JJC_HUD_Message(_ content: String,
+@MainActor public func JJC_HUD_Message(_ content: String,
                             offset: CGPoint = .zero,
                             view: UIView? = nil,
                             completion: (() -> Void)? = nil) {
@@ -292,7 +293,7 @@ public func JJC_HUD_Message(_ content: String,
 }
 
 /// JJCAPI - HUD - 成功失败弹框
-public func JJC_HUD_SuccessOrFailure(_ content: String? = nil,
+@MainActor public func JJC_HUD_SuccessOrFailure(_ content: String? = nil,
                                      isSuccess: Bool = true,
                                      lproj: String? = nil,
                                      offset: CGPoint = .zero,
@@ -306,7 +307,7 @@ public func JJC_HUD_SuccessOrFailure(_ content: String? = nil,
 }
 
 /// JJCAPI - HUD - 加载中、加载进度弹框
-public func JJC_HUD_LoadingOrProgress(_ content: String? = nil,
+@MainActor public func JJC_HUD_LoadingOrProgress(_ content: String? = nil,
                                       isLoading: Bool = true,
                                       lproj: String? = nil,
                                       offset: CGPoint = .zero,
@@ -320,7 +321,7 @@ public func JJC_HUD_LoadingOrProgress(_ content: String? = nil,
 
 // MARK: - 圆角
 /// JJCAPI - 圆角 - 继承 UIView - view、radius、width、color
-public func JJC_RadiusBorder<T: UIView>(_ view: T, radius: CGFloat?, borderWidth: CGFloat?, borderColor: UIColor?) {
+@MainActor public func JJC_RadiusBorder<T: UIView>(_ view: T, radius: CGFloat?, borderWidth: CGFloat?, borderColor: UIColor?) {
     if let newRadius = radius {
         view.layer.cornerRadius = newRadius
         view.layer.masksToBounds = true
@@ -368,6 +369,7 @@ public func JJC_UUID() -> String {
 }
 
 /// JJCAPI - 系统信息 - 获取当前浅色、深色模式类型
+@MainActor @available(iOS 13.0, *)
 public func JJC_CurThemeMode(isTheme: Bool = false) -> UIUserInterfaceStyle {
     if isTheme {
         return JJCTheme.shared.jjc_curTheme()
@@ -377,6 +379,7 @@ public func JJC_CurThemeMode(isTheme: Bool = false) -> UIUserInterfaceStyle {
 }
 
 /// JJCAPI - 切换浅色、深色模式
+@MainActor @available(iOS 13.0, *)
 public func JJC_ThemeMode(_ style: UIUserInterfaceStyle, isTheme: Bool = false) {
     if isTheme {
         JJCTheme.shared.jjc_switchTheme(style)
@@ -387,7 +390,7 @@ public func JJC_ThemeMode(_ style: UIUserInterfaceStyle, isTheme: Bool = false) 
 
 /// JJCAPI - 获取当前控制器视图 UIViewController
 /// 参考链接：https://blog.51cto.com/928343994/5209078
-public func JJC_CurViewController() -> UIViewController {
+@MainActor public func JJC_CurViewController() -> UIViewController {
     var currentVC: UIViewController? = nil
     var keyWindow = JJC_KeyWindow()
     
@@ -428,7 +431,7 @@ public func JJC_CurViewController() -> UIViewController {
 /// 参考链接：https://blog.51cto.com/928343994/5209078
 /// root：根控制器；present：跳转方式 present；push：跳转方式 push
 /// tabBarVC：当前控制器是 UITabBarController；naviVC：当前控制器是 UINavigationController；vc：普通的 UIViewController
-public func JJC_CurViewControllerLinkLayer() -> [[(vc: UIViewController, type: [String])]] {
+@MainActor public func JJC_CurViewControllerLinkLayer() -> [[(vc: UIViewController, type: [String])]] {
     var curVC: UIViewController? = JJC_CurViewController()
     var allVCList = [[(vc: UIViewController, type: [String])]]()
     while curVC != nil, let tempCurVC = curVC {
@@ -454,7 +457,7 @@ public func JJC_CurViewControllerLinkLayer() -> [[(vc: UIViewController, type: [
 }
 
 /// JJCAPI - 延迟执行方法（通过 DispatchQueue）
-public func JJC_AsyncAfter(_ delay: Double = 0, isToMain: Bool = true, completion: @escaping () -> Void) {
+public func JJC_AsyncAfter(_ delay: Double = 0, isToMain: Bool = true, completion: @escaping @Sendable () -> Void) {
     DispatchQueue.global().asyncAfter(deadline: .now() + delay) {
         if isToMain {
             DispatchQueue.main.async {

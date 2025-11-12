@@ -30,14 +30,16 @@ public enum JJCThemeColor: String {
 }
 
 public typealias JJCThemeColorParams = (key: JJCThemeColor, name: String, unspecified: String, light: String, dark: String)
-public func JJC_ThemeColor(_ key: JJCThemeColor, update: JJCThemeColorParams? = nil) -> UIColor {
+@available(iOS 13.0, *)
+@MainActor public func JJC_ThemeColor(_ key: JJCThemeColor, update: JJCThemeColorParams? = nil) -> UIColor {
     return JJCTheme.shared.jjc_color(key, update: update).dynamic
 }
 
 
+@MainActor
 open class JJCTheme: NSObject {
     /// JJCTheme - 单例
-    public static let shared = JJCTheme()
+    @MainActor public static let shared = JJCTheme()
     /// JJCTheme - 主题存入沙盒
     fileprivate let key_sandBox_theme = "jjc_key_sandBox_theme"
     /// JJCTheme - 自定义颜色存入沙盒
@@ -108,6 +110,7 @@ extension JJCTheme {
 // MARK: - 获取颜色
 extension JJCTheme {
     /// JJCTheme - 动态颜色（暗黑模式适配）
+    @available(iOS 13.0, *)
     public func jjc_getDynamicColor(_ any: UIColor, _ light: UIColor? = nil, _ dark: UIColor) -> UIColor {
         UIColor { traitCollection in
             if traitCollection.userInterfaceStyle == .dark {
@@ -145,6 +148,7 @@ extension JJCTheme {
     }
     
     /// JJCTheme - 根据 key 获取、更新所需的颜色
+    @available(iOS 13.0, *)
     public func jjc_color(_ key: JJCThemeColor, update: JJCThemeColorParams? = nil) -> (`dynamic`: UIColor, unspecified: UIColor, light: UIColor, dark: UIColor) {
         var keyIndex = 0
         var keyItem: JJCThemeColorParams = (key, "", "", "", "")
@@ -189,6 +193,7 @@ extension JJCTheme {
 // MARK: - 更改系统控件颜色
 extension JJCTheme {
     /// JJCTheme - 获取当前浅色、深色模式类型
+    @available(iOS 13.0, *)
     public func jjc_curTheme() -> UIUserInterfaceStyle {
         var style = UITraitCollection.current.userInterfaceStyle
         if let tempStyle = UserDefaults.standard.value(forKey: key_sandBox_theme) as? Int {
@@ -198,12 +203,14 @@ extension JJCTheme {
     }
 
     /// JJCAPI - 切换浅色、深色模式
+    @MainActor @available(iOS 13.0, *)
     public func jjc_switchTheme(_ style: UIUserInterfaceStyle) {
         JJC_KeyWindow()?.overrideUserInterfaceStyle = style
         UserDefaults.standard.set(style.rawValue, forKey: key_sandBox_theme)
     }
     
     /// JJCTheme - 更改状态栏背景色
+    @MainActor @available(iOS 13.0, *)
     public func jjc_setStatusColor(_ color: UIColor) {
         if let rect = JJC_KeyWindow()?.windowScene?.statusBarManager?.statusBarFrame {
             let statusV = UIView(frame: rect)
@@ -213,7 +220,7 @@ extension JJCTheme {
     }
     
     /// JJCTheme - 更改导航栏背景色
-    public func jjc_setNavigationBarColor(_ color: UIColor, controller: UIViewController) {
+    @MainActor public func jjc_setNavigationBarColor(_ color: UIColor, controller: UIViewController) {
         // 虽然可以更改背景色，但是有透明效果，且界面有滚动的情况，颜色会消失
 //        controller.navigationController?.navigationBar.backgroundColor = color
         // 虽然可以更改背景色，但是有透明效果，且最开始渲染的时候没有更改颜色，只有界面滚动的情况才有更改颜色

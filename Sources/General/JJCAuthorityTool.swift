@@ -5,7 +5,7 @@
 //  Created by mxgx on 2024/6/9.
 //
 
-import UIKit
+@preconcurrency import UIKit
 import AdSupport
 import AppTrackingTransparency
 
