@@ -52,6 +52,7 @@
 		7DC6019B2C3FD3BF001B62F1 /* JJCToolsAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC6019A2C3FD3BF001B62F1 /* JJCToolsAssets.swift */; };
 		7DC6019D2C3FD41E001B62F1 /* JJCTools.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 7DC6019C2C3FD41D001B62F1 /* JJCTools.podspec */; };
 		7DC6FFE42C3FD064001B62F1 /* JJCTools.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DC6FFD92C3FD063001B62F1 /* JJCTools.framework */; };
+		7DD14A6C2EC39CB300B45BB6 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DD14A6B2EC39CB300B45BB6 /* Package.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -111,6 +112,7 @@
 		7DC6019C2C3FD41D001B62F1 /* JJCTools.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = JJCTools.podspec; sourceTree = "<group>"; };
 		7DC6FFD92C3FD063001B62F1 /* JJCTools.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = JJCTools.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7DC6FFE32C3FD064001B62F1 /* JJCToolsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JJCToolsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7DD14A6B2EC39CB300B45BB6 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -233,6 +235,7 @@
 		7DC6FFCF2C3FD063001B62F1 = {
 			isa = PBXGroup;
 			children = (
+				7DD14A6B2EC39CB300B45BB6 /* Package.swift */,
 				7DC6019C2C3FD41D001B62F1 /* JJCTools.podspec */,
 				7DC6016D2C3FD2BA001B62F1 /* Sources */,
 				7DC6FFDA2C3FD063001B62F1 /* Products */,
@@ -400,6 +403,7 @@
 				7DC601942C3FD2BA001B62F1 /* JJCJSON.swift in Sources */,
 				7DC601742C3FD2BA001B62F1 /* Array+JJCAPI.swift in Sources */,
 				7DC601892C3FD2BA001B62F1 /* JJCICloudTool.swift in Sources */,
+				7DD14A6C2EC39CB300B45BB6 /* Package.swift in Sources */,
 				7DC601852C3FD2BA001B62F1 /* JJCAPI.swift in Sources */,
 				7DC601842C3FD2BA001B62F1 /* UIView+JJCAPI.swift in Sources */,
 				7DC601712C3FD2BA001B62F1 /* JJCTabBarController.swift in Sources */,
