@@ -20,4 +20,8 @@ open class JJCNavigationController: UINavigationController, UIGestureRecognizerD
         }
         super.pushViewController(viewController, animated: animated)
     }
+    
+    open override var childForStatusBarStyle: UIViewController? {
+        return topViewController
+    }
 }

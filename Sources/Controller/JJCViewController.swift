@@ -22,6 +22,18 @@ open class JJCViewController: UIViewController {
     open override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        
+        // 修复 iOS 15 系统下，导航栏显示问题
+        // 参考链接：https://baijiahao.baidu.com/s?id=1711749740139600655&wfr=spider&for=pc
+        // 参考链接：https://www.jianshu.com/p/9e362ffba244
+        if #available(iOS 15, *) {
+            let appearance = UINavigationBarAppearance()
+            appearance.configureWithOpaqueBackground()
+            appearance.backgroundColor = .white
+            navigationController?.navigationBar.standardAppearance = appearance
+            navigationController?.navigationBar.scrollEdgeAppearance = navigationController?.navigationBar.standardAppearance
+        }
+        
         if #available(iOS 13.0, *) {
             themeUI()
         } else {
