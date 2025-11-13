@@ -53,10 +53,14 @@ open class JJCWebViewController: JJCViewController {
     }
     
     deinit {
-        webView.removeObserver(self, forKeyPath: WebViewProgressObserveKey)
-        webView.removeObserver(self, forKeyPath: WebViewURLObserveKey)
-        webView.removeObserver(self, forKeyPath: WebViewTitleObserveKey)
-        webView.removeObserver(self, forKeyPath: WebViewGoBackObserveKey)
+        DispatchQueue.main.async { [weak self] in
+            if let weakSelf = self {
+                weakSelf.webView.removeObserver(weakSelf, forKeyPath: weakSelf.WebViewProgressObserveKey)
+                weakSelf.webView.removeObserver(weakSelf, forKeyPath: weakSelf.WebViewURLObserveKey)
+                weakSelf.webView.removeObserver(weakSelf, forKeyPath: weakSelf.WebViewTitleObserveKey)
+                weakSelf.webView.removeObserver(weakSelf, forKeyPath: weakSelf.WebViewGoBackObserveKey)
+            }
+        }
     }
 }
 
@@ -86,14 +90,17 @@ extension JJCWebViewController {
     
     /// Action - 观察者
     open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        
         switch keyPath {
         case WebViewProgressObserveKey:
             // 进度条
-            progressV.progress = Float(webView.estimatedProgress)
-            if webView.estimatedProgress >= 1.0 {
-                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) { [weak self] in
-                    self?.progressV.progress = 0
+            DispatchQueue.main.async { [weak self] in
+                if let weakSelf = self {
+                    weakSelf.progressV.progress = Float(weakSelf.webView.estimatedProgress)
+                    if weakSelf.webView.estimatedProgress >= 1.0 {
+                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) { [weak self] in
+                            self?.progressV.progress = 0
+                        }
+                    }
                 }
             }
         case WebViewURLObserveKey:

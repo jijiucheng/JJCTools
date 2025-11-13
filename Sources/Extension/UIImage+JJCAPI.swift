@@ -56,7 +56,7 @@ extension UIImage {
     }
     
     /// UIImage - 根据 UIView 生成图片
-    public static func jjc_getImage(view: UIView?) -> UIImage? {
+    @MainActor public static func jjc_getImage(view: UIView?) -> UIImage? {
         if let newView = view {
             UIGraphicsBeginImageContext(newView.bounds.size)
             newView.layer.render(in: UIGraphicsGetCurrentContext()!)

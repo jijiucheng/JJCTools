@@ -10,7 +10,7 @@ import UIKit
 
 extension UITableView {
     /// UITableView - 关闭隐式动画刷新
-    public func reloadByDisableActions() {
+    public func jjc_reloadByDisableActions() {
         CATransaction.setDisableActions(true)
         self.reloadData()
         CATransaction.commit()

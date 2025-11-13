@@ -87,59 +87,42 @@ extension UIView {
 extension UIView {
     /// UIView - 设置圆角、边框、阴影：radius、borderWidth、borderColor、shadowColor、shadowOffset、shadowOpacity、shadowRadius
     public func jjc_radiusBorderShadow(radius: CGFloat,
-                                       borderWidth: CGFloat? = nil,
-                                       borderColor: UIColor? = nil,
-                                       shadowColor: UIColor? = nil,
-                                       shadowOffset: CGSize? = nil,
-                                       shadowOpacity: Float? = nil,
-                                       shadowRadius: CGFloat? = nil) {
+                                       border: (width: CGFloat?, color: UIColor?)?,
+                                       shadow: (color: UIColor?, offset: CGSize?, opacity: Float?, radius: CGFloat?)?) {
         layer.cornerRadius = radius
         layer.masksToBounds = true
-        if let newBorderWidth = borderWidth {
-            layer.borderWidth = newBorderWidth
+        if let borderWidth = border?.width {
+            layer.borderWidth = borderWidth
         }
-        if let newBorderColor = borderColor {
-            layer.borderColor = newBorderColor.cgColor
+        if let borderColor = border?.color {
+            layer.borderColor = borderColor.cgColor
         }
-        if shadowColor != nil || shadowOffset != nil || shadowOpacity != nil || shadowRadius != nil {
+        if shadow != nil {
             layer.masksToBounds = false
-            if let newShadowColor = shadowColor {
-                layer.shadowColor = newShadowColor.cgColor
+            if let shadowColor = shadow?.color {
+                layer.shadowColor = shadowColor.cgColor
             }
-            if let newShadowOffset = shadowOffset {
-                layer.shadowOffset = newShadowOffset
+            if let shadowOffset = shadow?.offset {
+                layer.shadowOffset = shadowOffset
             }
-            if let newShadowOpacity = shadowOpacity {
-                layer.shadowOpacity = newShadowOpacity
+            if let shadowOpacity = shadow?.opacity {
+                layer.shadowOpacity = shadowOpacity
             }
-            if let newShadowRadius = shadowRadius {
-                layer.shadowRadius = newShadowRadius
+            if let shadowRadius = shadow?.radius {
+                layer.shadowRadius = shadowRadius
             }
         }
     }
     
     /// UIView - 设置圆角、边框：radius、borderWidth、borderColor
     public func jjc_radiusBorder(radius: CGFloat,
-                                 borderWidth: CGFloat? = nil,
-                                 borderColor: UIColor? = nil) {
-        jjc_radiusBorderShadow(radius: radius,
-                               borderWidth: borderWidth,
-                               borderColor: borderColor,
-                               shadowColor: nil,
-                               shadowOffset: nil,
-                               shadowOpacity: nil,
-                               shadowRadius: nil)
+                                 border: (width: CGFloat?, color: UIColor?)?) {
+        jjc_radiusBorderShadow(radius: radius, border: border, shadow: nil)
     }
     
     /// UIView - 设置圆角：radius
     public func jjc_radius(radius: CGFloat) {
-        jjc_radiusBorderShadow(radius: radius,
-                               borderWidth: nil,
-                               borderColor: nil,
-                               shadowColor: nil,
-                               shadowOffset: nil,
-                               shadowOpacity: nil,
-                               shadowRadius: nil)
+        jjc_radiusBorderShadow(radius: radius, border: nil, shadow: nil)
     }
 }
 

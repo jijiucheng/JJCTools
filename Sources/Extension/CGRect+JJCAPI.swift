@@ -11,12 +11,12 @@ import UIKit
 // MARK: - 设置 CGRect 属性
 extension CGRect {
     /// CGRect - 获取 宽度为屏幕宽度，高度为 0 的 CGRect
-    public static func jjc_screenWidthZero() -> CGRect {
+    @MainActor public static func jjc_screenWidthZero() -> CGRect {
         return CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 0)
     }
     
     /// CGRect - 获取 高度为屏幕高度，宽度为 0 的 CGRect
-    public static func jjc_screenHeightZero() -> CGRect {
+    @MainActor public static func jjc_screenHeightZero() -> CGRect {
         return CGRect(x: 0, y: 0, width: 0, height: UIScreen.main.bounds.size.height)
     }
     

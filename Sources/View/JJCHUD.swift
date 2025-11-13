@@ -191,11 +191,11 @@ extension JJCHUD {
     }
     
     /// 隐藏
-    public class func hide(_ view: UIView, animate: Bool = true, delay: Double = 0, completion: (() -> Void)? = nil) {
+    public class func hide(_ view: UIView, animate: Bool = true, delay: Double = 0, completion: (@Sendable () -> Void)? = nil) {
         JJCHUD().hide(view, animate: animate, delay: delay, completion: completion)
     }
     
-    fileprivate func hide(_ view: UIView, animate: Bool = true, delay: Double = 0, completion: (() -> Void)? = nil) {
+    fileprivate func hide(_ view: UIView, animate: Bool = true, delay: Double = 0, completion: (@Sendable () -> Void)? = nil) {
         DispatchQueue.global().asyncAfter(deadline: .now() + delay) {
             DispatchQueue.main.async {
                 for subView in view.subviews.reversed() where subView is JJCHUD {

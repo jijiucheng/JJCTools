@@ -13,15 +13,16 @@ import MediaPlayer
 public class JJCDevice: NSObject {}
 
 // MARK: - 获取系统属性
+@MainActor
 extension JJCDevice {
     /// JJCDevice - 获取设备号 ID【通过访问 IDFA 获取】
-    public static func jjc_deviceID() -> String {
+    @available(iOS 13.0.0, *)
+    public static func jjc_deviceId() async -> String {
         var targetString = ""
         if #available(iOS 14, *) {
-            ATTrackingManager.requestTrackingAuthorization { (status) in
-                if status == .authorized {
-                    targetString = ASIdentifierManager.shared().advertisingIdentifier.uuidString
-                }
+            let status = await ATTrackingManager.requestTrackingAuthorization()
+            if status == .authorized {
+                targetString = ASIdentifierManager.shared().advertisingIdentifier.uuidString
             }
         } else {
             if ASIdentifierManager.shared().isAdvertisingTrackingEnabled {
@@ -58,6 +59,7 @@ extension JJCDevice {
 }
 
 // MARK: - 获取设备类型
+@MainActor
 extension JJCDevice {
     /// JJCDevice - 判断是否是某一设备
     public static func jjc_device(_ type: UIUserInterfaceIdiom) -> Bool {
@@ -93,9 +95,9 @@ extension JJCDevice {
         return (UIDevice.current.userInterfaceIdiom == .tv)
     }
     
-    /// 是否是刘海屏
-    @MainActor public static func jjc_isIPhoneX() -> Bool {
-        return JJC_IsIPhoneX()
+    /// 是否是刘海屏设备
+    public static func jjc_isHasSensorArea() -> Bool {
+        return JJC_IsHasSensorArea()
     }
 }
 
@@ -110,7 +112,7 @@ extension JJCDevice {
     }
     
     /// JJCDevice - 调节系统音量（参考链接：https://juejin.cn/post/7049606971032338439）
-    public static func jjc_updateSystemVolume(_ value: CGFloat) {
+    @MainActor public static func jjc_updateSystemVolume(_ value: CGFloat) {
         let volumeV = MPVolumeView()
         if let childV = volumeV.subviews.first as? UISlider {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {

@@ -53,43 +53,44 @@ extension JJCApp {
 // MARK: - 常见 App 信息校验
 extension JJCApp {
     /// JJCApp - 校验两个版本号大小
-    public static func jjc_checkIsUpdateVersion(oldRelease: String, oldDebug: String? = nil, newRelease: String, newDebug: String? = nil) -> Bool {
-        let oldReleaseList = oldRelease.jjc_split(byCharacter: ".")
-        let newReleaseList = newRelease.jjc_split(byCharacter: ".")
+    public static func jjc_checkIsUpdateVersion(_ old: (release: String, debug: String?), _ new: (release: String, debug: String?)) -> Bool {
+        var result = false
+        // release 检验
+        let oldReleaseList = old.release.jjc_split(byCharacter: ".")
+        let newReleaseList = new.release.jjc_split(byCharacter: ".")
         if oldReleaseList.count > 0 && newReleaseList.count > 0 && oldReleaseList.count == newReleaseList.count {
             for index in 0..<newReleaseList.count {
                 let old = Int(oldReleaseList[index]) ?? 0
                 let new = Int(newReleaseList[index]) ?? 0
                 if new > old {
-                    return true
+                    result = true
                 } else if new < old {
-                    return false
+                    result = false
                 }
             }
         }
-        
-        let oldDebugList = oldDebug?.jjc_split(byCharacter: ".") ?? []
-        let newDebugList = newDebug?.jjc_split(byCharacter: ".") ?? []
+        // debug 校验
+        let oldDebugList = old.debug?.jjc_split(byCharacter: ".") ?? []
+        let newDebugList = new.debug?.jjc_split(byCharacter: ".") ?? []
         if oldDebugList.count > 0 && newDebugList.count > 0 {
             for index in 0..<newDebugList.count {
                 let old = Int(oldDebugList[index]) ?? 0
                 let new = Int(newDebugList[index]) ?? 0
                 if new > old {
-                    return true
+                    result = true
                 } else if new < old {
-                    return false
+                    result = false
                 }
             }
         }
-        
-        return false
+        return result
     }
 }
 
 // MARK: - 常见权限检测
 extension JJCApp {
     /// JJCApp - 检查是否开启通知权限
-    public static func jjc_checkPermission_notification(completion: @escaping (Bool) -> ()) {
+    public static func jjc_checkPermission_notification(completion: @escaping @Sendable (Bool) -> ()) {
         UNUserNotificationCenter.current().getNotificationSettings { (setting) in
             completion(setting.notificationCenterSetting == .enabled)
         }
@@ -99,7 +100,7 @@ extension JJCApp {
 // MARK: - 常见的跳转
 extension JJCApp {
     /// JJCApp - 跳转 App 设置界面
-    public static func jjc_open_appSetting() {
+    @MainActor public static func jjc_open_appSetting() {
         if let url = URL(string: UIApplication.openSettingsURLString) {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }

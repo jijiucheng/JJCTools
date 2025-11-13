@@ -10,7 +10,7 @@ import UIKit
 
 public class JJCGlobalClass: NSObject {}
 
-// MARK: - 全局常量（基础设备信息）
+// MARK: - 全局常量
 
 /// @MainActor
 /// - 是 Swift 5.5+ 引入的全局演员（global actor），用来把所有代码都强制放到主线程执行，编译期就保证线程安全，不需要手动写 DispatchQueue.main.async {}
@@ -26,36 +26,35 @@ public class JJCGlobalClass: NSObject {}
 ///   - 物理像素密度（nativeScale）：3.0
 ///   - 物理分辨率（px）：1179 * 2556
 
-/// JJCAPI - 物理像素密度（nativeScale）
+/// JJCAPI - 基础尺寸 - 物理像素密度（nativeScale）
 @MainActor public let JJC_ScreenNativeScale = UIScreen.main.nativeScale
-/// JJCAPI - 物理像素、物理分辨率（px）
+/// JJCAPI - 基础尺寸 - 物理像素、物理分辨率（px）
 @MainActor public let JJC_ScreenNativeSize = UIScreen.main.nativeBounds.size
-/// JJCAPI - 屏幕尺寸、逻辑尺寸（pt）
+/// JJCAPI - 基础尺寸 - 屏幕尺寸、逻辑尺寸（pt）
 @MainActor public let JJC_ScreenSize = UIScreen.main.responds(to: #selector(getter: UIScreen.nativeBounds)) ? CGSize(width: JJC_ScreenNativeSize.width / JJC_ScreenNativeScale, height: JJC_ScreenNativeSize.height / JJC_ScreenNativeScale) : UIScreen.main.bounds.size
-/// JJCAPI - 屏幕宽度、逻辑尺寸宽度（pt）
+/// JJCAPI - 基础尺寸 - 屏幕宽度、逻辑尺寸宽度（pt）
 @MainActor public let JJC_ScreenW = JJC_ScreenSize.width
-/// JJCAPI - 屏幕高度、逻辑尺寸高度（pt）
+/// JJCAPI - 基础尺寸 - 屏幕高度、逻辑尺寸高度（pt）
 @MainActor public let JJC_ScreenH = JJC_ScreenSize.height
-/// JJCAPI - 导航栏高度
+/// JJCAPI - 基础尺寸 - 导航栏高度
 public let JJC_NaviH: CGFloat = 44.0
-
-/// JJCAPI - 基础间隙
+/// JJCAPI - 基础尺寸 - 基础间隙
 public let JJC_Margin: CGFloat = 10
 
-/// JJCAPI - 沙盒 Document 路径
+/// JJCAPI - 沙盒路径 - Document 路径
 public let JJC_DocumentPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first ?? ""
-/// JJCAPI - 沙盒 Cache 路径
+/// JJCAPI - 沙盒路径 - Cache 路径
 public let JJC_CachePath = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).first ?? ""
-/// JJCAPI - 沙盒 temp 路径
+/// JJCAPI - 沙盒路径 - temp 路径
 public let JJC_TempPath = NSTemporaryDirectory()
 
-/// JJCAPI - 是否为 iPhone
+/// JJCAPI - 设备类型 - 是否为 iPhone
 @MainActor public let JJC_IsIPhone = (UIDevice.current.userInterfaceIdiom == .phone)
-/// JJCAPI - 是否为 iPad
+/// JJCAPI - 设备类型 - 是否为 iPad
 @MainActor public let JJC_IsIPad = (UIDevice.current.userInterfaceIdiom == .pad)
-/// JJCAPI - 是否为 CarPlay
+/// JJCAPI - 设备类型 - 是否为 CarPlay
 @MainActor public let JJC_IsCarPlay = (UIDevice.current.userInterfaceIdiom == .carPlay)
-/// JJCAPI - 判断当前设备是否横屏
+/// JJCAPI - 设备类型 - 判断当前设备是否横屏
 @MainActor public let JJC_IsLandScape = (UIDevice.current.orientation == .landscapeLeft || UIDevice.current.orientation == .landscapeRight)
 
 /// JJCAPI - 系统信息 - JJCTools main bundle
@@ -95,8 +94,8 @@ public func JJC_Version() -> (release: String, debug: String, full: String) {
     return JJC_Windows().first
 }
 
-/// JJCAPI - 是否是刘海屏
-@MainActor public func JJC_IsIPhoneX() -> Bool {
+/// JJCAPI - 是否是刘海屏设备
+@MainActor public func JJC_IsHasSensorArea() -> Bool {
     if #available(iOS 11.0, *) {
         return JJC_KeyWindow()?.safeAreaInsets.bottom ?? 0 > 0
     } else {
@@ -124,7 +123,7 @@ public func JJC_Version() -> (release: String, debug: String, full: String) {
 
 /// JJCAPI - 底部 TabBar 高度
 @MainActor public func JJC_TabBarH() -> CGFloat {
-    return JJC_IsIPhoneX() ? (49.0 + 34.0) : 49.0
+    return JJC_IsHasSensorArea() ? (49.0 + 34.0) : 49.0
 }
 
 /// JJCAPI - 缩放比例(750*1334) px

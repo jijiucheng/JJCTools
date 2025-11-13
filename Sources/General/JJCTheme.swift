@@ -84,10 +84,11 @@ open class JJCTheme: NSObject {
         customColors = defaultColors
         if let jsonString = UserDefaults.standard.value(forKey: key_sandBox_customColors) as? String {
             let jsonArray = JJCDataModelTool.jjc_toArrayFromJSONString(jsonString)
-            var array = [JJCThemeColorParams]()
+            let array = [JJCThemeColorParams]()
             for item in jsonArray {
-                
+                print(item)
             }
+            print(array)
         }
     }
 }

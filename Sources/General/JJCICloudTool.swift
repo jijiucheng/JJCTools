@@ -132,7 +132,7 @@ extension JJCICloudTool {
         do {
             let data: Data = try JSONSerialization.data(withJSONObject: ["测试备份数据"] as Any, options: .prettyPrinted)
             return data
-        } catch let error {
+        } catch _ {
             let data: Data = try JSONSerialization.data(withJSONObject: [""] as Any, options: .prettyPrinted)
             return data
         }

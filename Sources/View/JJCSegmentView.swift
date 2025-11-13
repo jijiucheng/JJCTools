@@ -144,9 +144,9 @@ extension JJCSegmentView {
             btnInfoList.append((title: title, selectedTitle: selectedTitle, maxWidth: titleW))
         }
         // 添加按钮
-        var btnStartX: CGFloat = 0
+        var _: CGFloat = 0
         var btnMaxWidth: CGFloat = 0
-        for (index, title) in titles.enumerated() {
+        for (index, _) in titles.enumerated() {
             // 动态计算宽度
             var titleW = btnInfoList[index].maxWidth
             titleW = max(titleW, minItemWidth)

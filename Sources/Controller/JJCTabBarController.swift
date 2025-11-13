@@ -21,10 +21,8 @@
 import UIKit
 
 open class JJCTabBarController: UITabBarController {
-
     open override func viewDidLoad() {
         super.viewDidLoad()
-        
         // 设置默认选中文字颜色
         UITabBar.appearance().tintColor = JJC_HexColorA("#282828")
         UITabBar.appearance().unselectedItemTintColor = JJC_HexColorA("#282828")
@@ -33,9 +31,7 @@ open class JJCTabBarController: UITabBarController {
         jjc_setTopLineColor(JJC_RGBA_255(230, 230, 230))
         jjc_addAllChildController()
     }
-}
-
-extension JJCTabBarController {
+    
     /// 设置 TabBar 顶部分割线颜色
     /// 参考链接：https://www.jianshu.com/p/5a63ad6229fd
     @objc open func jjc_setTopLineColor(_ color: UIColor?) {
@@ -46,24 +42,24 @@ extension JJCTabBarController {
             
             // 去除毛玻璃色
             tabBar.backgroundColor = .white
-//            let customBgView = UIView(frame: tabBar.bounds)
-//            customBgView.backgroundColor = .white
-//            UITabBar.appearance().insertSubview(customBgView, at: 0)
+            //            let customBgView = UIView(frame: tabBar.bounds)
+            //            customBgView.backgroundColor = .white
+            //            UITabBar.appearance().insertSubview(customBgView, at: 0)
             
             
-//            UITabBar.appearance().shadowImage = UIImage()
-//            UITabBar.appearance().backgroundImage = UIImage()
-//            UITabBar.appearance().backgroundColor = UIColor.white
-//            
-//            let redLine = UIView(frame: CGRect(x: 0, y: 0, width: tabBar.bounds.width, height: 1))
-//            redLine.backgroundColor = tempColor
-//
-//            UIGraphicsBeginImageContextWithOptions(tabBar.bounds.size, false, 0)
-//            redLine.layer.render(in: UIGraphicsGetCurrentContext()!)
-//            let image = UIGraphicsGetImageFromCurrentImageContext()
-//            UIGraphicsEndImageContext()
-//            
-//            UITabBar.appearance().backgroundImage = image
+            //            UITabBar.appearance().shadowImage = UIImage()
+            //            UITabBar.appearance().backgroundImage = UIImage()
+            //            UITabBar.appearance().backgroundColor = UIColor.white
+            //
+            //            let redLine = UIView(frame: CGRect(x: 0, y: 0, width: tabBar.bounds.width, height: 1))
+            //            redLine.backgroundColor = tempColor
+            //
+            //            UIGraphicsBeginImageContextWithOptions(tabBar.bounds.size, false, 0)
+            //            redLine.layer.render(in: UIGraphicsGetCurrentContext()!)
+            //            let image = UIGraphicsGetImageFromCurrentImageContext()
+            //            UIGraphicsEndImageContext()
+            //
+            //            UITabBar.appearance().backgroundImage = image
         }
     }
     
@@ -71,23 +67,27 @@ extension JJCTabBarController {
     @objc open func jjc_addAllChildController() {}
     
     /// 添加子视图
-    @objc open func jjc_addChildController(_ nav: UINavigationController, normalImage: UIImage?, selectedImage: UIImage?, title: String?, titleColor: UIColor?, titleFont: UIFont?, selectTitle: String?, selectTitleColor: UIColor?, selectTitleFont: UIFont?) {
-        nav.tabBarItem.image = normalImage
-        nav.tabBarItem.selectedImage = selectedImage
-        nav.tabBarItem.title = title
-        if let tempTitleColor = titleColor {
-            nav.tabBarItem.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: tempTitleColor], for: .normal)
+    open func jjc_addChildController(_ nav: UINavigationController, image: (normal: UIImage?, selected: UIImage?)?, normalTitle: (title: String?, color: UIColor?, font: UIFont?)?, selectedTitle: (title: String?, color: UIColor?, font: UIFont?)?) {
+        nav.tabBarItem.image = image?.normal
+        nav.tabBarItem.selectedImage = image?.selected
+        nav.tabBarItem.title = normalTitle?.title
+        if let normalColor = normalTitle?.color {
+            nav.tabBarItem.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: normalColor], for: .normal)
         }
-        if let tempTitleFont = titleFont {
-            nav.tabBarItem.setTitleTextAttributes([NSAttributedString.Key.font: tempTitleFont], for: .normal)
+        if let normalFont = normalTitle?.font {
+            nav.tabBarItem.setTitleTextAttributes([NSAttributedString.Key.font: normalFont], for: .normal)
         }
-        if let tempTitleColor = selectTitleColor {
-            nav.tabBarItem.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: tempTitleColor], for: .selected)
+        if let selectedColor = selectedTitle?.color {
+            nav.tabBarItem.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: selectedColor], for: .selected)
         }
-        if let tempTitleFont = selectTitleFont {
-            nav.tabBarItem.setTitleTextAttributes([NSAttributedString.Key.font: tempTitleFont], for: .selected)
+        if let selectedFont = selectedTitle?.font {
+            nav.tabBarItem.setTitleTextAttributes([NSAttributedString.Key.font: selectedFont], for: .selected)
         }
-        
         addChild(nav)
+    }
+    
+    /// 添加子视图 @objc
+    @objc open func jjc_addChildController(_ nav: UINavigationController, normalImage: UIImage?, selectedImage: UIImage?, title: String?, titleColor: UIColor?, titleFont: UIFont?, selectTitle: String?, selectTitleColor: UIColor?, selectTitleFont: UIFont?) {
+        self.jjc_addChildController(nav, image: (normalImage, selectedImage), normalTitle: (title, titleColor, titleFont), selectedTitle: (selectTitle, selectTitleColor, selectTitleFont))
     }
 }

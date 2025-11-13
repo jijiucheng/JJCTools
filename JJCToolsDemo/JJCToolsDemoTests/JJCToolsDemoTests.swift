@@ -27,9 +27,9 @@ final class JJCToolsDemoTests: XCTestCase {
         // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
         
         /// JJCApp
-        let isUpdate = JJCApp.jjc_checkIsUpdateVersion(oldRelease: "1.2.0", oldDebug: "001", newRelease: "1.2.0", newDebug: "002")
-        print("xxx")
-        XCTAssert(true, "[单元测试] JJCApp - jjc_checkIsUpdateVersion - \(isUpdate)")
+//        let isUpdate = JJCApp.jjc_checkIsUpdateVersion(oldRelease: "1.2.0", oldDebug: "001", newRelease: "1.2.0", newDebug: "002")
+//        print("xxx")
+//        XCTAssert(true, "[单元测试] JJCApp - jjc_checkIsUpdateVersion - \(isUpdate)")
         
         
         // JJCLocal

@@ -13,7 +13,7 @@ public class JJCAuthorityTool: NSObject {}
 
 extension JJCAuthorityTool {
     /// SystemTool - 校验通知权限状态
-    public static func checkNotificationAuthorizationStatus(isRequest: Bool = false, completion: ((_ isRequest: Bool, _ status: UNAuthorizationStatus?, _ requestResult: (granted: Bool, error: (any Error)?)?) -> Void)? = nil) {
+    public static func checkNotificationAuthorizationStatus(isRequest: Bool = false, completion: (@Sendable (_ isRequest: Bool, _ status: UNAuthorizationStatus?, _ requestResult: (granted: Bool, error: (any Error)?)?) -> Void)? = nil) {
         // 获取当前通知权限状态
         UNUserNotificationCenter.current().getNotificationSettings { settings in
             JJC_Log("[日志] 通知权限 - 当前通知权限状态 --- \(settings.authorizationStatus)")
@@ -30,7 +30,8 @@ extension JJCAuthorityTool {
     }
     
     /// SystemTool - 隐私追踪权限
-    public static func checkTrackingAuthorizationStatus(isRequest: Bool = false, completion: ((_ isRequest: Bool, _ isAuthority: Bool, _ advertisingId: String) -> Void)? = nil) {
+    @available(iOS 13.0.0, *)
+    public static func checkTrackingAuthorizationStatus(isRequest: Bool = false, completion: (@Sendable (_ isRequest: Bool, _ isAuthority: Bool, _ advertisingId: String) -> Void)? = nil) async {
         // 获取 IDFA（如需使用 IDFA 功能请添加此代码并在初始化方法的 advertisingIdentifier 参数中填写对应值）
         var isAuthority = false
         if #available(iOS 14, *) {
@@ -55,15 +56,14 @@ extension JJCAuthorityTool {
         // 申请 IDFA 权限
         var advertisingId = ASIdentifierManager.shared().advertisingIdentifier.uuidString
         if #available(iOS 14, *), !isAuthority && isRequest {
-            ATTrackingManager.requestTrackingAuthorization { status in
-                JJC_Log("[日志] 隐私追踪权限 - 请求隐私追踪权限结果 - \(status.rawValue)")
-                if status == .authorized {
-                    isAuthority = true
-                    advertisingId = ASIdentifierManager.shared().advertisingIdentifier.uuidString
-                }
-                JJC_Log("[日志] 获取用户 IDFA 结果 - AdvertisingId - \(advertisingId)")
-                completion?(isRequest, isAuthority, advertisingId)
+            let status = await ATTrackingManager.requestTrackingAuthorization()
+            JJC_Log("[日志] 隐私追踪权限 - 请求隐私追踪权限结果 - \(status.rawValue)")
+            if status == .authorized {
+                isAuthority = true
+                advertisingId = ASIdentifierManager.shared().advertisingIdentifier.uuidString
             }
+            JJC_Log("[日志] 获取用户 IDFA 结果 - AdvertisingId - \(advertisingId)")
+            completion?(isRequest, isAuthority, advertisingId)
         } else {
             JJC_Log("[日志] 获取用户 IDFA 结果 - AdvertisingId - \(advertisingId)")
             completion?(isRequest, isAuthority, advertisingId)
